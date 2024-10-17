@@ -1,33 +1,27 @@
-/**
- * Created by Syed Afzal
- */
-require("./config/config");
-
+// server/server.js
 const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const db = require("./db");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const authRoutes = require("./routes/authRoutes");
+
+dotenv.config();
 
 const app = express();
-
-//connection from db here
-db.connect(app);
-
+app.use(express.json());
+const cors = require("cors");
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
-//  adding routes
-require("./routes")(app);
+// Conectar a MongoDB
+mongoose
+  .connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error(err));
 
-app.on("ready", () => {
-  app.listen(3000, () => {
-    console.log("Server is up on port", 3000);
-  });
-});
+// Rutas
+app.use("/api/auth", authRoutes);
 
-module.exports = app;
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

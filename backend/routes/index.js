@@ -1,10 +1,25 @@
 const express = require("express");
 const serverResponses = require("../utils/helpers/responses");
 const messages = require("../config/messages");
+const Receta = require("../models/recetas");
 const { Todo } = require("../models/todos/todo");
 
 const routes = (app) => {
   const router = express.Router();
+
+  router.post("/recipes", (req, res) => {
+    const { title, ingredients, instructions } = req.body;
+    
+    const receta = new Receta({ title, ingredients, instructions });
+
+    receta.save()
+      .then((result) => {
+        serverResponses.sendSuccess(res, messages.SUCCESSFUL, result);
+      })
+      .catch((error) => {
+        serverResponses.sendError(res, messages.FAILED, error);
+      });
+  });
 
   router.post("/todos", (req, res) => {
     const todo = new Todo({

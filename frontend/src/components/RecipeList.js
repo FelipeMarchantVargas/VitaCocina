@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import '../stylesheets/RecipeList.css'; 
+import NavBar from "./NavBar"; // Importamos el NavBar
+import "../stylesheets/RecipeList.css"; 
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado para saber si el usuario está autenticado
   const [userName, setUserName] = useState(""); // Estado para almacenar el nombre del usuario
-
-  const history = useNavigate(); // Hook para la navegación
 
   useEffect(() => {
     // Función para verificar si el usuario está logueado
@@ -34,14 +32,6 @@ const RecipeList = () => {
     fetchRecipes();
   }, []);
 
-  const navigateToRegister = () => {
-    history("/register");
-  };
-
-  const navigateToLogin = () => {
-    history("/login");
-  };
-
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // Elimina el token al cerrar sesión
     localStorage.removeItem("userName"); // Elimina el nombre del usuario
@@ -52,21 +42,13 @@ const RecipeList = () => {
 
   return (
     <div>
+      <NavBar 
+        isAuthenticated={isAuthenticated} 
+        userName={userName} 
+        handleLogout={handleLogout} 
+      />
+
       <h1>Recetas Saludables</h1>
-      
-      <div className="user-info">
-        {isAuthenticated ? (
-          <div className="button-container">
-            <p>Bienvenido, {userName}!</p>
-            <button onClick={handleLogout}>Cerrar Sesión</button>
-          </div>
-        ) : (
-          <div className="button-container">
-            <button onClick={navigateToRegister}>Registrarse</button>
-            <button onClick={navigateToLogin}>Iniciar Sesión</button>
-          </div>
-        )}
-      </div>
 
       <div className="recipe-list">
         {recipes.map((recipe) => (

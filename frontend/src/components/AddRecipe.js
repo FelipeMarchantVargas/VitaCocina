@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import '../AddRecipe.css';
 
 const AddRecipe = () => {
   const [title, setTitle] = useState("");
@@ -39,10 +40,10 @@ const AddRecipe = () => {
 
   return (
     <div>
-      <h2>Add Recipe</h2>
+      <h2>Agregar receta</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Title:</label>
+          <label>Título:</label>
           <input
             type="text"
             value={title}
@@ -51,13 +52,13 @@ const AddRecipe = () => {
           />
         </div>
         <div>
-          <label>Ingredients:</label>
+          <label>Ingredientes:</label>
           {ingredients.map((ingredient, index) => (
             <div key={index}>
               <input
                 type="text"
                 name="name"
-                placeholder="Name"
+                placeholder="Nombre"
                 value={ingredient.name}
                 onChange={(e) => handleIngredientChange(index, e)}
                 required
@@ -65,7 +66,7 @@ const AddRecipe = () => {
               <input
                 type="number"
                 name="quantity"
-                placeholder="Quantity"
+                placeholder="Cantidad"
                 value={ingredient.quantity}
                 onChange={(e) => handleIngredientChange(index, e)}
                 required
@@ -73,18 +74,18 @@ const AddRecipe = () => {
               <input
                 type="text"
                 name="unit_measure"
-                placeholder="Unit Measure"
+                placeholder="Unidad de medida"
                 value={ingredient.unit_measure}
                 onChange={(e) => handleIngredientChange(index, e)}
                 required
               />
-              <button type="button" onClick={() => handleRemoveIngredient(index)}>Remove</button>
+              <button type="button" onClick={() => handleRemoveIngredient(index)}>Quitar</button>
             </div>
           ))}
-          <button type="button" onClick={handleAddIngredient}>Add Ingredient</button>
+          <button type="button" onClick={handleAddIngredient}>Agregar ingrediente</button>
         </div>
         <div>
-          <label>Nutrition:</label>
+          <label>Nutrición:</label>
           <input
             type="text"
             value={nutrition}
@@ -93,7 +94,7 @@ const AddRecipe = () => {
           />
         </div>
         <div>
-          <label>Vegan:</label>
+          <label>Vegana:</label>
           <input
             type="checkbox"
             checked={vegan}
@@ -101,7 +102,7 @@ const AddRecipe = () => {
           />
         </div>
         <div>
-          <label>Instructions:</label>
+          <label>Instrucciones:</label>
           <textarea
             value={instructions}
             onChange={(e) => setInstructions(e.target.value)}
@@ -115,7 +116,7 @@ const AddRecipe = () => {
             onChange={(e) => setTips(e.target.value)}
           />
         </div>
-        <button type="submit">Add Recipe</button>
+        <button type="submit">Agregar receta</button>
       </form>
     </div>
   );

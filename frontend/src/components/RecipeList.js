@@ -23,9 +23,15 @@ const RecipeList = () => {
       <div className="recipe-list">
         {recipes.map((recipe) => (
           <div key={recipe._id} className="recipe-card">
+            <img src={recipe.image} alt={recipe.title} />
             <h2>{recipe.title}</h2>
             <p>{recipe.description}</p>
-            <img src={recipe.image} alt={recipe.title} />
+            <ol>
+              {recipe.ingredients.map((ingredient, index) => (
+                <li key={index}>{ingredient}</li>
+              ))}
+            <p>{recipe.instructions}</p>
+            </ol>
           </div>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import '../stylesheets/RecipeList.css'; // Importa el archivo CSS
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
@@ -23,14 +24,20 @@ const RecipeList = () => {
       <div className="recipe-list">
         {recipes.map((recipe) => (
           <div key={recipe._id} className="recipe-card">
+            <h1>{recipe.title}</h1>
             <img src={recipe.image} alt={recipe.title} />
-            <h2>{recipe.title}</h2>
             <p>{recipe.description}</p>
+            <typography>Ingredientes:</typography>
             <ol>
-              {recipe.ingredients.map((ingredient, index) => (
+              {(recipe.ingredients || []).map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>
               ))}
-            <p>{recipe.instructions}</p>
+            </ol>
+            <typography>Instrucciones:</typography>
+            <ol>
+              {(recipe.instructions || []).map((instruction, index) => (
+                <li key={index}>{instruction}</li>
+              ))}
             </ol>
           </div>
         ))}

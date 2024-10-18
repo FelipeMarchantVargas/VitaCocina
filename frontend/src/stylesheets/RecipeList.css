@@ -77,3 +77,65 @@ body {
     }
   }
   
+  /* Botón de registro */
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.register-button {
+  background-color: #4caf50; /* Verde saludable */
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.register-button:hover {
+  background-color: #45a049; /* Cambio de color al pasar el cursor */
+}
+
+/* Estilos para la sección de botones */
+button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-align: center;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.button-container {
+  text-align: center; /* Para centrar los botones */
+  margin-top: 20px;
+}
+
+/* Asegura que el ancho del botón sea razonable y no se extienda */
+button {
+  width: auto;
+  min-width: 150px;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+  button {
+    width: 90%; /* Para pantallas pequeñas, botones más grandes pero no todo el ancho */
+  }
+}

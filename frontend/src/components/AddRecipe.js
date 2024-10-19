@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import NavBar from "./NavBar";
 import "../stylesheets/AddRecipe.css";
 
 const AddRecipe = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState("");
   const [recipeData, setRecipeData] = useState({
     title: "",
     description: "",
@@ -21,6 +24,29 @@ const AddRecipe = () => {
     comments: [],
     ratings: [],
   });
+
+  useEffect(() => {
+
+    const checkAuth = () => {
+      const token = localStorage.getItem("authToken");
+      const user = localStorage.getItem("userName");
+      if (token && user) {
+        setIsAuthenticated(true);
+        setUserName(user);
+      }
+    };
+
+    checkAuth();
+  });
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken"); // Elimina el token al cerrar sesión
+    localStorage.removeItem("userName"); // Elimina el nombre del usuario
+    setIsAuthenticated(false); // Actualiza el estado
+    setUserName(""); // Limpia el nombre del usuario
+    alert("Has cerrado sesión");
+  };
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -95,11 +121,17 @@ const AddRecipe = () => {
   };
 
   return (
+    <>
+    <NavBar
+      isAuthenticated={isAuthenticated}
+      userName={userName}
+      handleLogout={handleLogout}
+    />
     <form onSubmit={handleSubmit}>
-      <h2>Add a New Recipe</h2>
+      <h2>Agregar receta</h2>
 
       <label>
-        Title:
+        Nombre:
         <input
           type="text"
           name="title"
@@ -110,7 +142,7 @@ const AddRecipe = () => {
       </label>
 
       <label>
-        Description:
+        Descripción:
         <input
           type="text"
           name="description"
@@ -120,7 +152,7 @@ const AddRecipe = () => {
         />
       </label>
 
-      <h3>Ingredients</h3>
+      <h3>Ingredientes</h3>
       {recipeData.ingredients.map((ingredient, index) => (
         <input
           key={index}
@@ -131,10 +163,10 @@ const AddRecipe = () => {
         />
       ))}
       <button type="button" onClick={addIngredient}>
-        Add Ingredient
+        Agregar ingrediente
       </button>
 
-      <h3>Instructions</h3>
+      <h3>Instrucciones</h3>
       {recipeData.instructions.map((instruction, index) => (
         <input
           key={index}
@@ -145,11 +177,11 @@ const AddRecipe = () => {
         />
       ))}
       <button type="button" onClick={addInstruction}>
-        Add Instruction
+        Agregar instrucción
       </button>
 
       <label>
-        Image URL:
+        URL Imágen:
         <input
           type="text"
           name="image"
@@ -158,9 +190,9 @@ const AddRecipe = () => {
         />
       </label>
 
-      <h3>Nutrition Information</h3>
+      <h3>Información nutricional</h3>
       <label>
-        Calories:
+        Calorías:
         <input
           type="number"
           name="calories"
@@ -169,7 +201,7 @@ const AddRecipe = () => {
         />
       </label>
       <label>
-        Protein (g):
+        Proteína (g):
         <input
           type="number"
           name="protein"
@@ -178,7 +210,7 @@ const AddRecipe = () => {
         />
       </label>
       <label>
-        Fat (g):
+        Lípidos (g):
         <input
           type="number"
           name="fat"
@@ -187,7 +219,7 @@ const AddRecipe = () => {
         />
       </label>
       <label>
-        Carbs (g):
+        Carbohidratos (g):
         <input
           type="number"
           name="carbs"
@@ -197,7 +229,7 @@ const AddRecipe = () => {
       </label>
 
       <label>
-        Category:
+        Categoría:
         <input
           type="text"
           name="category"
@@ -207,7 +239,7 @@ const AddRecipe = () => {
       </label>
 
       <label>
-        Time (in minutes):
+        Tiempo (en minutos):
         <input
           type="number"
           name="time"
@@ -217,7 +249,7 @@ const AddRecipe = () => {
       </label>
 
       <label>
-        Difficulty:
+        Dificultad:
         <input
           type="text"
           name="difficulty"
@@ -226,8 +258,9 @@ const AddRecipe = () => {
         />
       </label>
 
-      <button type="submit">Submit Recipe</button>
+      <button type="submit">Agregar receta</button>
     </form>
+    </>
   );
 };
 

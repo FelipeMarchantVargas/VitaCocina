@@ -62,9 +62,11 @@ const RecipeList = () => {
       <h1>Recetas Saludables</h1>
 
       {isAuthenticated && (
-        <button onClick={handleAddRecipeClick} className="add-recipe-button">
-          Agregar Receta
-        </button>
+        <div className="center-button">
+          <button onClick={handleAddRecipeClick} className="add-recipe-button">
+            Agregar Receta
+          </button>
+        </div>
       )}
 
       <div className="recipe-list">

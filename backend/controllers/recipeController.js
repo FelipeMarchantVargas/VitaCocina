@@ -25,19 +25,7 @@ exports.getRecipeById = async (req, res) => {
 
 // Crear una nueva receta
 exports.createRecipe = async (req, res) => {
-  const { title, description, ingredients, instructions, image, nutrition, category, time, difficulty } = req.body;
-
-  const recipe = new Recipe({
-    title,
-    description,
-    ingredients,
-    instructions,
-    image,
-    nutrition,
-    category,
-    time,
-    difficulty,
-  });
+  const recipe = new Recipe(req.body);
 
   try {
     const newRecipe = await recipe.save();

@@ -1,54 +1,35 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-//para despues crear el carrito de compras automatico
-//pienso que es util guardar ingredientes con unidades, para hacer por ejemplo
-//750 ml de leche + 250ml de leche en recetas distintas = 1000ml en el carrito de compras
-//o si no, despues saldrian cosas inconsistentes como
-//para comprar: medio kilo de harina, dos tazas de harina, 300g de harina (en una misma lista)
-const ingredientSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    quantity: {
-        type: Number,
-        required: true
-    },
-    unit_measure: {
-        type: String,
-        required: true
-    }
-  });
-  
-//probablemente le faltan cosas
-const RecipeSchema = new mongoose.Schema({
-    title: {
-        type: String,
-        required: true
-    },
-    ingredients: {
-        type: [ingredientSchema],
-        required: true
-    },
-    nutrition: {
-        type: String,
-        required: true
-    },
-    vegan: {
-        type: Boolean,
-        required: true
-    },
-    instructions: {
-        type: String,
-        required: true
-    },
-    tips: {
-        type: String,
-        required: true
-    },
+const commentSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  text: { type: String, required: true },
+  date: { type: Date, default: Date.now },
 });
 
+const ratingSchema = new mongoose.Schema({
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  value: { type: Number, required: true, min: 1, max: 5 },
+});
 
-const Recipe = mongoose.model('Recipes', RecipeSchema);
+const recipeSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  ingredients: { type: [String], required: true },
+  instructions: { type: [String], required: true },
+  image: { type: String },
+  nutrition: {
+    calories: Number,
+    protein: Number,
+    fat: Number,
+    carbs: Number,
+  },
+  category: { type: String },
+  time: { type: Number }, // Time in minutes
+  difficulty: { type: String },
+  comments: [commentSchema],
+  ratings: [ratingSchema],
+});
+
+const Recipe = mongoose.model("Recipe", recipeSchema);
 
 module.exports = Recipe;

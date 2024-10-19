@@ -13,7 +13,7 @@ exports.getAllRecipes = async (req, res) => {
 // Obtener una receta por ID
 exports.getRecipeById = async (req, res) => {
   try {
-    const recipe = await Recipe.findById(req.params.id);
+    const recipe = await Recipe.findById(req.params.id).populate("comments.user", "name").populate("ratings.user", "name");
     if (!recipe) {
       return res.status(404).json({ message: "Recipe not found" });
     }
@@ -70,5 +70,53 @@ exports.deleteRecipe = async (req, res) => {
     res.json({ message: "Recipe deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+// Agregar un comentario a una receta
+exports.addComment = async (req, res) => {
+  const { text } = req.body;
+  const userId = req.user._id;
+
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    const comment = { user: userId, text };
+    recipe.comments.push(comment);
+    await recipe.save();
+
+    res.status(201).json(recipe);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+// Agregar una valoración a una receta
+exports.addRating = async (req, res) => {
+  const { value } = req.body;
+  const userId = req.user._id;
+
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    const existingRating = recipe.ratings.find(rating => rating.user.toString() === userId.toString());
+    if (existingRating) {
+      existingRating.value = value;
+    } else {
+      const rating = { user: userId, value };
+      recipe.ratings.push(rating);
+    }
+
+    await recipe.save();
+
+    res.status(201).json(recipe);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };

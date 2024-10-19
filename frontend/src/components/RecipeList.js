@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NavBar from "./NavBar"; // Importamos el NavBar
 import "../stylesheets/RecipeList.css"; 
+import { useNavigate } from "react-router-dom";
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado para saber si el usuario está autenticado
   const [userName, setUserName] = useState(""); // Estado para almacenar el nombre del usuario
+  const Navigator = useNavigate();
 
   useEffect(() => {
     // Función para verificar si el usuario está logueado
@@ -40,6 +42,10 @@ const RecipeList = () => {
     alert("Has cerrado sesión");
   };
 
+  const handleRecipeClick = (id) => {
+    Navigator(`/recipes/${id}`);
+  };
+
   return (
     <div>
       <NavBar 
@@ -52,7 +58,7 @@ const RecipeList = () => {
 
       <div className="recipe-list">
         {recipes.map((recipe) => (
-          <div key={recipe._id} className="recipe-card">
+          <div key={recipe._id} className="recipe-card" onClick={() => handleRecipeClick(recipe._id)}>
             <h1>{recipe.title}</h1>
             <img src={recipe.image} alt={recipe.title} />
             <p>{recipe.description}</p>

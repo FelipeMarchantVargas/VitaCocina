@@ -1,0 +1,36 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #4CAF50; /* Cambia el color según prefieras */
+}
+
+.navbar h1 {
+  margin: 0;
+  color: white;
+  font-size: 24px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-links p {
+  color: white;
+  margin-right: 20px;
+}
+
+.nav-button {
+  background-color: white;
+  color: #4CAF50;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.nav-button:hover {
+  background-color: #45a049; /* Efecto hover */
+}

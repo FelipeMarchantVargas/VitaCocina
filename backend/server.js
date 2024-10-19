@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const authRoutes = require("./routes/authRoutes");
-const recetasRoutes = require("./routes/recipeRoutes");
+const recipeRoutes = require("./routes/recipes");
 
 dotenv.config();
 
@@ -23,8 +23,7 @@ mongoose
 
 // Rutas
 app.use("/api/auth", authRoutes);
-app.use("/api/recipes", recetasRoutes);
-
+app.use("/api/recipes", recipeRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

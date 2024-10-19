@@ -49,6 +49,11 @@ const RecipeList = () => {
     Navigator("/create-recipe");
   };
 
+  // Función para navegar al formulario para agregar una receta
+  const handleAddRecipeClick = () => {
+    Navigator("/add");
+  };
+
   return (
     <div>
       <NavBar

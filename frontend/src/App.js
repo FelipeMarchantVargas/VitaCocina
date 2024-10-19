@@ -7,12 +7,15 @@ import Login from "./components/Login";
 import RecipeDetail from "./components/RecipeDetail";
 import RecipeList from "./components/RecipeList";
 import Register from "./components/Register";
+import AddRecipe from "./components/AddRecipe";
+
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<RecipeList />} />
+        <Route path="/add" element={<AddRecipe />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/create-recipe" element={<CreateRecipe />} />

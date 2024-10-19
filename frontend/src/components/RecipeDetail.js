@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import "../stylesheets/RecipeDetail.css";
 import NavBar from "./NavBar"; // Importamos el NavBar
-import "../stylesheets/RecipeDetail.css"; 
 
 const RecipeDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState(null);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
@@ -21,7 +22,6 @@ const RecipeDetail = () => {
     }
   };
   useEffect(() => {
-
     const checkAuth = () => {
       const token = localStorage.getItem("authToken");
       const user = localStorage.getItem("userName");
@@ -39,9 +39,13 @@ const RecipeDetail = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
-      await axios.post(`/api/recipes/${id}/comments`, { text: comment }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.post(
+        `/api/recipes/${id}/comments`,
+        { text: comment },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setComment("");
       fetchRecipe();
     } catch (err) {
@@ -53,9 +57,13 @@ const RecipeDetail = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
-      await axios.post(`/api/recipes/${id}/ratings`, { value: rating }, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      await axios.post(
+        `/api/recipes/${id}/ratings`,
+        { value: rating },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setRating(0);
       fetchRecipe();
     } catch (err) {
@@ -71,20 +79,46 @@ const RecipeDetail = () => {
     alert("Has cerrado sesión");
   };
 
+  const handleEdit = () => {
+    navigate(`/recipes/edit/${id}`); // Redirige a una página de edición
+  };
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta receta?"
+    );
+    if (confirmed) {
+      try {
+        const token = localStorage.getItem("authToken");
+        await axios.delete(`/api/recipes/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert("Receta eliminada exitosamente");
+        navigate("/");
+      } catch (err) {
+        console.error(err);
+        alert("Error al eliminar la receta");
+      }
+    }
+  };
+
   if (!recipe) return <div>Loading...</div>;
 
-  const getValueOrDefault = (value) => (value !== undefined ? value : "No hay información disponible");
+  const getValueOrDefault = (value) =>
+    value !== undefined ? value : "No hay información disponible";
 
   return (
     <div>
-      <NavBar 
-        isAuthenticated={isAuthenticated} 
-        userName={userName} 
-        handleLogout={handleLogout} 
+      <NavBar
+        isAuthenticated={isAuthenticated}
+        userName={userName}
+        handleLogout={handleLogout}
       />
       <div className="recipe-detail">
         <h1>{getValueOrDefault(recipe.title)}</h1>
-        <img src={getValueOrDefault(recipe.image)} alt={getValueOrDefault(recipe.title)} />
+        <img
+          src={getValueOrDefault(recipe.image)}
+          alt={getValueOrDefault(recipe.title)}
+        />
         <p>{getValueOrDefault(recipe.description)}</p>
         <h2>Ingredientes</h2>
         <ul>
@@ -111,7 +145,9 @@ const RecipeDetail = () => {
         <h2>Comentarios</h2>
         <ul>
           {(recipe.comments || []).map((comment, index) => (
-            <li key={index}>{comment.user.name}: {comment.text}</li>
+            <li key={index}>
+              {comment.user.name}: {comment.text}
+            </li>
           ))}
         </ul>
         {isAuthenticated && (
@@ -129,21 +165,34 @@ const RecipeDetail = () => {
         <h2>Valoraciones</h2>
         <ul>
           {(recipe.ratings || []).map((rating, index) => (
-            <li key={index}>{rating.user.name}: {rating.value} estrellas</li>
+            <li key={index}>
+              {rating.user.name}: {rating.value} estrellas
+            </li>
           ))}
         </ul>
         {isAuthenticated && (
           <form onSubmit={handleRatingSubmit}>
-            <select value={rating} onChange={(e) => setRating(e.target.value)} required>
+            <select
+              value={rating}
+              onChange={(e) => setRating(e.target.value)}
+              required>
               <option value="">Selecciona una valoración</option>
               {[1, 2, 3, 4, 5].map((value) => (
-                <option key={value} value={value}>{value} estrellas</option>
+                <option key={value} value={value}>
+                  {value} estrellas
+                </option>
               ))}
             </select>
             <button type="submit">Enviar Valoración</button>
           </form>
         )}
       </div>
+      {isAuthenticated && (
+        <div className="update-delete">
+          <button onClick={handleEdit}>Editar Receta</button>
+          <button onClick={handleDelete}>Eliminar Receta</button>
+        </div>
+      )}
     </div>
   );
 };

@@ -10,6 +10,17 @@ exports.getAllRecipes = async (req, res) => {
   }
 };
 
+exports.getFilteredRecipes = async (req, res) => {
+  const { filter } = req.params;
+  const query = JSON.parse(filter);
+  try {
+    const recipes = await Recipe.find(query);
+    res.json(recipes);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Obtener una receta por ID
 exports.getRecipeById = async (req, res) => {
   try {

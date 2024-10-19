@@ -8,6 +8,7 @@ const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado para saber si el usuario está autenticado
   const [userName, setUserName] = useState(""); // Estado para almacenar el nombre del usuario
+  const [searchQuery, setSearchQuery] = useState(""); // Estado para almacenar el valor de búsqueda
   const Navigator = useNavigate();
 
   useEffect(() => {
@@ -50,6 +51,18 @@ const RecipeList = () => {
     Navigator("/add");
   };
 
+  const handleSearch = async () => {
+    const query = {
+      title: { $regex: searchQuery, $options: "i" } // Case-insensitive search
+    };
+    try {
+      const res = await axios.get(`/api/recipes/filter/${encodeURIComponent(JSON.stringify(query))}`);
+      setRecipes(res.data); // Actualiza las recetas con los resultados filtrados
+    } catch (err) {
+      console.error("Error fetching filtered recipes:", err);
+    }
+  };
+
   return (
     <div>
       <NavBar
@@ -59,6 +72,18 @@ const RecipeList = () => {
       />
 
       <h1>Recetas Saludables</h1>
+
+      <div className="search-bar-container">
+        <input
+          type="text"
+          placeholder="Buscar por título..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Actualiza el estado de búsqueda
+          className="search-input"
+        />
+        <button onClick={handleSearch} className="search-button">Buscar</button>
+      </div>
+
 
       {isAuthenticated && (
         <div className="center-button">

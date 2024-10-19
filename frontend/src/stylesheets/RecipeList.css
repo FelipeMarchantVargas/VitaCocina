@@ -160,3 +160,19 @@ button {
   border-radius: 12px; /* Rounded corners */
   transition: background-color 0.3s ease;
 }
+
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.search-input {
+  flex: 1;
+  padding: 8px;
+  margin-right: 8px;
+}
+
+.search-button {
+  padding: 8px 16px;
+}

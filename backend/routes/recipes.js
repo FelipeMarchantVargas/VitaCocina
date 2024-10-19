@@ -1,6 +1,7 @@
 const express = require("express");
 const {
   getAllRecipes,
+  getFilteredRecipes,
   getRecipeById,
   createRecipe,
   updateRecipe,
@@ -14,6 +15,7 @@ const router = express.Router();
 
 // Rutas de recetas
 router.get("/", getAllRecipes);
+router.get("/filter/:filter", getFilteredRecipes);
 router.get("/:id", getRecipeById);
 router.post("/", createRecipe);
 router.put("/:id", updateRecipe);

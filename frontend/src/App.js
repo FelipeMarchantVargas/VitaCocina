@@ -1,11 +1,12 @@
 // client/src/App.js
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Register from "./components/Register";
-import RecipeList from "./components/RecipeList";
-import RecipeDetail from "./components/RecipeDetail";
+import CreateRecipe from "./components/CreateRecipe";
+import EditRecipe from "./components/EditRecipe";
 import Login from "./components/Login";
-
+import RecipeDetail from "./components/RecipeDetail";
+import RecipeList from "./components/RecipeList";
+import Register from "./components/Register";
 
 function App() {
   return (
@@ -14,7 +15,9 @@ function App() {
         <Route path="/" element={<RecipeList />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/create-recipe" element={<CreateRecipe />} />
         <Route path="/recipes/:id" element={<RecipeDetail />} />
+        <Route path="/recipes/edit/:id" element={<EditRecipe />} />
       </Routes>
     </Router>
   );

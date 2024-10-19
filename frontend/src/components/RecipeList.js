@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
 import axios from "axios";
-import NavBar from "./NavBar"; // Importamos el NavBar
-import "../stylesheets/RecipeList.css"; 
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../stylesheets/RecipeList.css";
+import NavBar from "./NavBar"; // Importamos el NavBar
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
@@ -45,20 +45,34 @@ const RecipeList = () => {
   const handleRecipeClick = (id) => {
     Navigator(`/recipes/${id}`);
   };
+  const handleCreateRecipe = () => {
+    Navigator("/create-recipe");
+  };
 
   return (
     <div>
-      <NavBar 
-        isAuthenticated={isAuthenticated} 
-        userName={userName} 
-        handleLogout={handleLogout} 
+      <NavBar
+        isAuthenticated={isAuthenticated}
+        userName={userName}
+        handleLogout={handleLogout}
       />
 
       <h1>Recetas Saludables</h1>
 
+      {isAuthenticated && (
+        <div className="create-recipe-container">
+          <button className="create-recipe-button" onClick={handleCreateRecipe}>
+            Crear Nueva Receta
+          </button>
+        </div>
+      )}
+
       <div className="recipe-list">
         {recipes.map((recipe) => (
-          <div key={recipe._id} className="recipe-card" onClick={() => handleRecipeClick(recipe._id)}>
+          <div
+            key={recipe._id}
+            className="recipe-card"
+            onClick={() => handleRecipeClick(recipe._id)}>
             <h1>{recipe.title}</h1>
             <img src={recipe.image} alt={recipe.title} />
             <p>{recipe.description}</p>

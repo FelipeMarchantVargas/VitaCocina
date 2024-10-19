@@ -45,11 +45,7 @@ const RecipeList = () => {
   const handleRecipeClick = (id) => {
     Navigator(`/recipes/${id}`);
   };
-  const handleCreateRecipe = () => {
-    Navigator("/create-recipe");
-  };
-
-  // Función para navegar al formulario para agregar una receta
+  
   const handleAddRecipeClick = () => {
     Navigator("/add");
   };
@@ -65,10 +61,10 @@ const RecipeList = () => {
       <h1>Recetas Saludables</h1>
 
       {isAuthenticated && (
-        <div className="create-recipe-container">
-          <button className="create-recipe-button" onClick={handleCreateRecipe}>
-            Crear Nueva Receta
-          </button>
+        <div className="center-button">
+        <button onClick={handleAddRecipeClick} className="add-recipe-button">
+          Agregar Receta
+        </button>
         </div>
       )}
 

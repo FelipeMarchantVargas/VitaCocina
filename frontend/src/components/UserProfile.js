@@ -39,34 +39,6 @@ const UserProfile = () => {
 
     fetchUser();
   }, [navigate]);
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const token = localStorage.getItem("authToken");
-  //       const userId = localStorage.getItem("userName");
-  //       // alert("Todo bien de momento, aqui vamos al IF y empiezan los problemas");
-  //       if (token && userId) {
-  //         setIsAuthenticated(true);
-  //         const res = await axios.get(`/api/users/${userId}`, {
-  //           headers: { Authorization: `Bearer ${token}` },
-  //         });
-  //         setUser(res.data);
-  //       } else {
-  //         alert("Error al cargar la información del usuario, algo fallo en el login");
-  //         navigate("/login"); // Redirigir al login si no está autenticado
-  //       }
-  //     } catch (err) {
-  //       console.error(err);
-  //       alert("Error al cargar la información del usuario");
-  //       navigate("/login");
-  //     }
-  //   };
-  //   fetchUser();
-  // }, [navigate]);
-
-  // if (!isAuthenticated) {
-  //   return <div>Cargando...</div>;
-  // }
 
   const handleChange = (e) => {
     setUser({
@@ -75,45 +47,6 @@ const UserProfile = () => {
     });
   };
 
-  // const handleUpdate = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const token = localStorage.getItem("authToken");
-  //     await axios.put(`/api/users/${user._id}`, user, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     alert("Perfil actualizado con éxito");
-  //   } catch (err) {
-  //     console.error(err);
-  //     alert("Error al actualizar el perfil");
-  //   }
-  // };
-
-  // const handleDelete = async () => {
-  //   try {
-  //     const token = localStorage.getItem("authToken");
-  //     await axios.delete(`/api/users/${user._id}`, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     });
-  //     alert("Cuenta eliminada con éxito");
-  //     navigate("/register");
-  //   } catch (err) {
-  //     console.error(err);
-  //     alert("Error al eliminar la cuenta");
-  //   }
-  // };
-
-  // const handleLogout = () => {
-  //   localStorage.removeItem("authToken");
-  //   localStorage.removeItem("userId");
-  //   localStorage.removeItem("userName");
-  //   setIsAuthenticated(false);
-  //   navigate("/login");
-  // };
-
-  // if (!isAuthenticated) {
-  //   return <div>Cargando...</div>;
-  // }
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {

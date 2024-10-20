@@ -15,48 +15,73 @@ const UserProfile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      try {
-        const token = localStorage.getItem("authToken");
-        const userId = localStorage.getItem("userId");
-        if (token && userId) {
-          setIsAuthenticated(true);
-          const res = await axios.get(`/api/users/${userId}`, {
+      const token = localStorage.getItem("authToken");
+      const userName = localStorage.getItem("userName"); // Usar userName en lugar de userId
+
+      if (token && userName) {
+        try {
+          const res = await axios.get(`/api/users/${userName}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
-        } else {
-          navigate("/login"); // Redirigir al login si no está autenticado
+          setIsAuthenticated(true);
+        } catch (err) {
+          console.error(err);
+          alert("Error al cargar la información del usuario");
+          navigate("/login");
         }
-      } catch (err) {
-        console.error(err);
-        alert("Error al cargar la información del usuario");
+      } else {
+        alert("Error al cargar la información del usuario, algo falló en el login");
         navigate("/login");
       }
     };
+
     fetchUser();
   }, [navigate]);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const token = localStorage.getItem("authToken");
+  //       const userId = localStorage.getItem("userName");
+  //       // alert("Todo bien de momento, aqui vamos al IF y empiezan los problemas");
+  //       if (token && userId) {
+  //         setIsAuthenticated(true);
+  //         const res = await axios.get(`/api/users/${userId}`, {
+  //           headers: { Authorization: `Bearer ${token}` },
+  //         });
+  //         setUser(res.data);
+  //       } else {
+  //         alert("Error al cargar la información del usuario, algo fallo en el login");
+  //         navigate("/login"); // Redirigir al login si no está autenticado
+  //       }
+  //     } catch (err) {
+  //       console.error(err);
+  //       alert("Error al cargar la información del usuario");
+  //       navigate("/login");
+  //     }
+  //   };
+  //   fetchUser();
+  // }, [navigate]);
 
-  if (!isAuthenticated) {
-    return <div>Cargando...</div>;
-  }
+  // if (!isAuthenticated) {
+  //   return <div>Cargando...</div>;
+  // }
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUser((prevUser) => ({
-      ...prevUser,
-      [name]: value,
-    }));
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
-      const userId = localStorage.getItem("userId");
-      await axios.put(`/api/users/${userId}`, user, {
+      await axios.put(`/api/users/${user._id}`, user, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      alert("Perfil actualizado exitosamente");
+      alert("Perfil actualizado con éxito");
     } catch (err) {
       console.error(err);
       alert("Error al actualizar el perfil");
@@ -64,25 +89,16 @@ const UserProfile = () => {
   };
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(
-      "¿Estás seguro de que deseas eliminar tu cuenta?"
-    );
-    if (confirmed) {
-      try {
-        const token = localStorage.getItem("authToken");
-        const userId = localStorage.getItem("userId");
-        await axios.delete(`/api/users/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        localStorage.removeItem("authToken");
-        localStorage.removeItem("userId");
-        localStorage.removeItem("userName");
-        alert("Cuenta eliminada exitosamente");
-        navigate("/"); // Redirige a la página principal
-      } catch (err) {
-        console.error(err);
-        alert("Error al eliminar la cuenta");
-      }
+    try {
+      const token = localStorage.getItem("authToken");
+      await axios.delete(`/api/users/${user._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      alert("Cuenta eliminada con éxito");
+      navigate("/register");
+    } catch (err) {
+      console.error(err);
+      alert("Error al eliminar la cuenta");
     }
   };
 

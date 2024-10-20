@@ -3,7 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #4CAF50; /* Cambia el color según prefieras */
+  background-color: #4caf50; /* Cambia el color según prefieras */
 }
 
 .navbar h1 {
@@ -23,10 +23,11 @@
 }
 
 .nav-button {
-  background-color: white;
-  color: #4CAF50;
-  border: none;
   padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
   margin-left: 10px;
 }

@@ -14,19 +14,36 @@ const NavBar = ({ isAuthenticated, userName, handleLogout }) => {
     navigate("/login");
   };
 
+  const navigateToProfile = () => {
+    navigate("/user"); // Redirige a la página de perfil
+  };
+
   return (
     <nav className="navbar">
-      <h1><Link to="/">Recetas Saludables</Link></h1> {/* Logo o nombre del sitio que redirige al home */}
+      <h1>
+        <Link to="/">Recetas Saludables</Link>{" "}
+        {/* Logo o nombre del sitio que redirige al home */}
+      </h1>
       <div className="navbar-links">
         {isAuthenticated ? (
           <>
             <p>Bienvenido, {userName}!</p>
-            <button onClick={handleLogout} className="nav-button">Cerrar Sesión</button>
+            <button onClick={navigateToProfile} className="nav-button">
+              Perfil
+            </button>{" "}
+            {/* Botón para acceder al perfil */}
+            <button onClick={handleLogout} className="nav-button">
+              Cerrar Sesión
+            </button>
           </>
         ) : (
           <>
-            <button onClick={navigateToRegister} className="nav-button">Registrarse</button>
-            <button onClick={navigateToLogin} className="nav-button">Iniciar Sesión</button>
+            <button onClick={navigateToRegister} className="nav-button">
+              Registrarse
+            </button>
+            <button onClick={navigateToLogin} className="nav-button">
+              Iniciar Sesión
+            </button>
           </>
         )}
       </div>

@@ -4,7 +4,7 @@ describe('Create User', () => {
   const user = {
     name: 'TestUser',
     email: 'testuser@example.com',
-    password: 'password123'
+    password: 'S4f3_p@ssw0rd'
   };
 
   it('should register a new user', () => {

@@ -5,8 +5,8 @@ const { protect } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/:name", protect, getUserByName);
-router.put("/:name", protect, updateUser);
-router.delete("/:name", protect, deleteUser);
+router.get("/:name", getUserByName);
+router.put("/:name", updateUser);
+router.delete("/:name", deleteUser);
 
 module.exports = router;

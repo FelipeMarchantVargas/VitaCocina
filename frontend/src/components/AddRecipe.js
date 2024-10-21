@@ -157,6 +157,7 @@ const AddRecipe = () => {
         <input
           key={index}
           type="text"
+          name="ingredient"
           value={ingredient}
           onChange={(e) => handleArrayChange(e, index, "ingredients")}
           required
@@ -171,6 +172,7 @@ const AddRecipe = () => {
         <input
           key={index}
           type="text"
+          name="instructions"
           value={instruction}
           onChange={(e) => handleArrayChange(e, index, "instructions")}
           required

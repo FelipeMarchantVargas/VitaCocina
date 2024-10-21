@@ -14,7 +14,8 @@ const RecipeList = () => {
   useEffect(() => {
     // Función para verificar si el usuario está logueado
     const checkAuth = () => {
-      const token = localStorage.getItem("authToken"); // Verifica si hay un token guardado
+      const token = true; // Verifica si hay un token guardado
+      // const token = localStorage.getItem("authToken"); // Verifica si hay un token guardado
       const user = localStorage.getItem("userName"); // Recupera el nombre del usuario si está almacenado
       if (token && user) {
         setIsAuthenticated(true); // Si hay token, el usuario está autenticado
@@ -48,7 +49,7 @@ const RecipeList = () => {
   };
   
   const handleAddRecipeClick = () => {
-    Navigator("/add");
+    Navigator("/addRecipe");
   };
 
   const handleSearch = async () => {

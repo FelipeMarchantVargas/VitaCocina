@@ -14,7 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<RecipeList />} />
-        <Route path="/add" element={<AddRecipe />} />
+        <Route path="/addRecipe" element={<AddRecipe />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/recipes/:id" element={<RecipeDetail />} />

@@ -132,11 +132,14 @@ Se utilizó Cypress para realizar pruebas end-to-end (E2E) de la aplicación. La
 
 ## Problemas encontrados y soluciones
 
+Durante el desarrollo de este proyecto, el equipo enfrentó diversos desafíos, tanto en la implementación técnica como en la integración de las herramientas de testing automatizado. A pesar de que el flujo de trabajo general se mantuvo organizado gracias al uso de GitHub y la implementación de GitFlow para manejar branches y funciones de cada integrante, se presentaron problemas específicos al momento de integrar y utilizar la herramienta de testing seleccionada, Cypress. Estos problemas fueron abordados mediante diferentes estrategias, que detallamos a continuación:
+
 - **Problema**: Confusión entre las alertas de inicio de sesión y actualización de receta en las pruebas de Cypress.
   - **Solución**: Separar las alertas y asegurarse de que se manejen en el orden correcto.
 
 - **Problema**: Integración del campo "tips" en el modelo de receta y en todos los archivos pertinentes.
-  - **Solución**: Actualizar el modelo de receta en el backend, los controladores, las rutas y los componentes del frontend para manejar el nuevo campo "tips".
+  - **Solución**: Actualizar el modelo de receta en el backend, los controladores, las rutas y los componentes del frontend para manejar el nuevo campo "tips". Esto ocurrio porque no 
 
 - **Problema**: Estilos inconsistentes en los formularios de creación y edición de recetas.
   - **Solución**: Asegurarse de que los estilos CSS sean consistentes y que los nuevos campos estén correctamente estilizados.
+

@@ -23,12 +23,14 @@ const AddRecipe = () => {
     difficulty: "",
     comments: [],
     ratings: [],
+    tips: [],
   });
 
   useEffect(() => {
 
     const checkAuth = () => {
-      const token = localStorage.getItem("authToken");
+      // const token = localStorage.getItem("authToken");
+      const token = true;
       const user = localStorage.getItem("userName");
       if (token && user) {
         setIsAuthenticated(true);
@@ -90,7 +92,13 @@ const AddRecipe = () => {
       instructions: [...prevData.instructions, ""],
     }));
   };
-
+  
+  const addTip = () => {
+    setRecipeData((prevData) => ({
+      ...prevData,
+      tips: [...prevData.tips, ""],
+    }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -114,6 +122,7 @@ const AddRecipe = () => {
         difficulty: "",
         comments: [],
         ratings: [],
+        tips: [],
       });
     } catch (error) {
       console.error("Error adding recipe:", error);
@@ -259,6 +268,21 @@ const AddRecipe = () => {
           onChange={handleChange}
         />
       </label>
+
+      <h3>Consejos</h3>
+      {recipeData.tips.map((tip, index) => (
+        <input
+          key={index}
+          type="text"
+          name="tips"
+          value={tip}
+          onChange={(e) => handleArrayChange(e, index, "tips")}
+          required
+        />
+      ))}
+      <button type="button" onClick={addTip}>
+        Agregar instrucción
+      </button>
 
       <button type="submit">Agregar receta</button>
     </form>

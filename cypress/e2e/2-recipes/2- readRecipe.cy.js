@@ -7,7 +7,7 @@ describe('Read Recipe', () => {
     //   cy.contains('This is a test recipe');
     //   cy.contains('Ingredient 1');
     //   cy.contains('Step 1');
-        cy.get('input[placeholder="Buscar por título..."]').type('fideos con salsa');
+      cy.get('input[placeholder="Buscar por título..."]').type('fideos con salsa');
   
       // Click the search button
       cy.get('button').contains('Buscar').click();

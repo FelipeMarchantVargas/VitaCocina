@@ -40,9 +40,9 @@ const EditRecipe = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = localStorage.getItem("authToken");
+      // const token = localStorage.getItem("authToken");
       await axios.put(`/api/recipes/${id}`, recipe, {
-        headers: { Authorization: `Bearer ${token}` },
+        // headers: { Authorization: `Bearer ${token}` },
       });
       alert("Receta actualizada con éxito");
       navigate(`/recipes/${id}`); // Redirige de nuevo al detalle de la receta

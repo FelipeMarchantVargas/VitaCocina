@@ -1,70 +1,81 @@
-# Getting Started with Create React App
+# README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Alcances de la herramienta
 
-## Available Scripts
+Esta herramienta está diseñada para gestionar recetas saludables, permitiendo a los usuarios crear, editar, eliminar y buscar recetas. Además, los usuarios pueden registrarse, iniciar sesión y gestionar su perfil. La herramienta incluye tanto un frontend desarrollado en React como un backend desarrollado en Node.js con Express y MongoDB.
 
-In the project directory, you can run:
+## Descripción del trabajo realizado
 
-### `npm start`
+### Proyecto
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+El proyecto consiste en una aplicación web completa para la gestión de recetas. Incluye las siguientes funcionalidades:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Frontend**: Desarrollado en React, permite a los usuarios interactuar con la aplicación a través de una interfaz gráfica. Las principales características incluyen:
+  - Registro e inicio de sesión de usuarios.
+  - Creación, edición y eliminación de recetas.
+  - Búsqueda y visualización de recetas.
+  - Gestión del perfil de usuario.
 
-### `npm test`
+- **Backend**: Desarrollado en Node.js con Express y MongoDB, maneja la lógica del servidor y la persistencia de datos. Las principales características incluyen:
+  - Autenticación y autorización de usuarios.
+  - CRUD (Crear, Leer, Actualizar, Eliminar) de recetas.
+  - Gestión de comentarios y valoraciones de recetas.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Especificar dependencias entre la herramienta y la aplicación
 
-### `npm run build`
+- **Frontend**:
+  - React
+  - React Router DOM
+  - Axios
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Backend**:
+  - Express
+  - Mongoose
+  - Bcryptjs
+  - Jsonwebtoken
+  - Cors
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Pruebas**:
+  - Cypress
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Pruebas
 
-### `npm run eject`
+### Estrategia de pruebas utilizadas
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Se utilizó Cypress para realizar pruebas end-to-end (E2E) de la aplicación. Las pruebas E2E verifican que la aplicación funcione correctamente desde la perspectiva del usuario final, interactuando con la interfaz de usuario y verificando que las funcionalidades clave funcionen como se espera.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Procedimiento de ejecución de pruebas
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. **Configuración**:
+   - Asegúrate de que el servidor backend esté en funcionamiento, ejecutando el comando `npm start`.
+   - Inicia el servidor frontend con `npm run start`.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. **Ejecución de pruebas**:
+   - Abre Cypress con el comando `npx cypress open`.
+   - Selecciona el archivo de prueba que deseas ejecutar (por ejemplo, `3-updateRecipe.cy.js`).
+   - Cypress abrirá una ventana del navegador y ejecutará las pruebas automáticamente.
 
-## Learn More
+### Reporte de resultados
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- **Prueba de actualización de receta**:
+  - Verifica que un usuario pueda iniciar sesión, editar una receta existente y guardar los cambios.
+  - Resultado esperado: La receta se actualiza correctamente y se muestra un mensaje de éxito.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **Prueba de eliminación de receta**:
+  - Verifica que un usuario pueda eliminar una receta existente.
+  - Resultado esperado: La receta se elimina correctamente y se muestra un mensaje de éxito.
 
-### Code Splitting
+- **Prueba de búsqueda de receta**:
+  - Verifica que un usuario pueda buscar una receta por título y ver los resultados.
+  - Resultado esperado: La receta buscada se muestra en los resultados de búsqueda.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Problemas encontrados y soluciones
 
-### Analyzing the Bundle Size
+- **Problema**: Confusión entre las alertas de inicio de sesión y actualización de receta en las pruebas de Cypress.
+  - **Solución**: Separar las alertas y asegurarse de que se manejen en el orden correcto.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Problema**: Integración del campo "tips" en el modelo de receta y en todos los archivos pertinentes.
+  - **Solución**: Actualizar el modelo de receta en el backend, los controladores, las rutas y los componentes del frontend para manejar el nuevo campo "tips".
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Problema**: Estilos inconsistentes en los formularios de creación y edición de recetas.
+  - **Solución**: Asegurarse de que los estilos CSS sean consistentes y que los nuevos campos estén correctamente estilizados.

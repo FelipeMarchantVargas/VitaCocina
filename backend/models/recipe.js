@@ -26,9 +26,8 @@ const recipeSchema = new mongoose.Schema({
   category: { type: String },
   time: { type: Number }, // Time in minutes
   difficulty: { type: String },
-  tips: { type: [String] },
   comments: [commentSchema],
-  ratings: [ratingSchema]
+  ratings: [ratingSchema],
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);

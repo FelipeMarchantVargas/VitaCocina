@@ -139,7 +139,7 @@ Durante el desarrollo de este proyecto, el equipo enfrentó diversos desafíos, 
 
   En las pruebas automatizadas con Cypress, observamos que las alertas generadas por el inicio de sesión y la actualización de recetas no se distinguían correctamente. Esto generaba fallos en las pruebas, ya que Cypress no podía determinar a qué acción pertenecía cada alerta.
 
-  - **Solución**: Para solucionar este problema, decidimos separar las alertas, asegurándonos de que cada una tuviera un identificador único. De esta manera, Cypress pudo diferenciar entre las alertas generadas en diferentes partes del flujo. Además, organizamos las pruebas para que las alertas se manejaran en el orden correcto, evitando confusiones durante la ejecución.
+  - **Solución**: Para solucionar este problema, decidimos separar las alertas. De esta manera, Cypress pudo diferenciar entre las alertas generadas en diferentes partes del flujo. Además, organizamos las pruebas para que las alertas se manejaran en el orden correcto, evitando confusiones durante la ejecución.
 
 ---
 

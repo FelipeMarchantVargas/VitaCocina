@@ -134,12 +134,27 @@ Se utilizó Cypress para realizar pruebas end-to-end (E2E) de la aplicación. La
 
 Durante el desarrollo de este proyecto, el equipo enfrentó diversos desafíos, tanto en la implementación técnica como en la integración de las herramientas de testing automatizado. A pesar de que el flujo de trabajo general se mantuvo organizado gracias al uso de GitHub y la implementación de GitFlow para manejar branches y funciones de cada integrante, se presentaron problemas específicos al momento de integrar y utilizar la herramienta de testing seleccionada, Cypress. Estos problemas fueron abordados mediante diferentes estrategias, que detallamos a continuación:
 
-- **Problema**: Confusión entre las alertas de inicio de sesión y actualización de receta en las pruebas de Cypress.
-  - **Solución**: Separar las alertas y asegurarse de que se manejen en el orden correcto.
+---
+- **Problema 1: Confusión entre las alertas de inicio de sesión y actualización de receta en las pruebas de Cypress.**
 
-- **Problema**: Integración del campo "tips" en el modelo de receta y en todos los archivos pertinentes.
-  - **Solución**: Actualizar el modelo de receta en el backend, los controladores, las rutas y los componentes del frontend para manejar el nuevo campo "tips". Esto ocurrio porque no 
+  En las pruebas automatizadas con Cypress, observamos que las alertas generadas por el inicio de sesión y la actualización de recetas no se distinguían correctamente. Esto generaba fallos en las pruebas, ya que Cypress no podía determinar a qué acción pertenecía cada alerta.
 
-- **Problema**: Estilos inconsistentes en los formularios de creación y edición de recetas.
-  - **Solución**: Asegurarse de que los estilos CSS sean consistentes y que los nuevos campos estén correctamente estilizados.
+  - **Solución**: Para solucionar este problema, decidimos separar las alertas, asegurándonos de que cada una tuviera un identificador único. De esta manera, Cypress pudo diferenciar entre las alertas generadas en diferentes partes del flujo. Además, organizamos las pruebas para que las alertas se manejaran en el orden correcto, evitando confusiones durante la ejecución.
 
+---
+
+- **Problema 2: Integración del campo "tips" en el modelo de receta y en todos los archivos pertinentes.**
+
+  Al agregar un nuevo campo llamado "tips" al modelo de receta, surgieron múltiples errores debido a que inicialmente no habíamos considerado este campo en la base de datos ni en los formularios de la aplicación. Esto afectó tanto al backend como al frontend, además de los tests automatizados.
+
+  - **Solución**: Actualizamos el modelo de receta en el backend para incluir el campo "tips", modificando los esquemas de base de datos, los controladores y las rutas. También actualizamos los componentes del frontend para mostrar y manejar este nuevo campo en los formularios. Se realizaron los ajustes pertinentes en las pruebas automatizadas para verificar que el campo "tips" estuviera correctamente integrado en toda la aplicación. Este problema surgió porque inicialmente no habíamos planificado la inclusión de "tips", lo que requirió una modificación completa para su correcta implementación.
+
+---
+
+- **Problema 3: Estilos inconsistentes en los formularios de creación y edición de recetas.**
+
+  Detectamos inconsistencias visuales en los formularios de creación y edición de recetas, donde algunos elementos no estaban alineados correctamente o no seguían el estilo global de la aplicación, lo que impactaba negativamente la experiencia del usuario.
+
+  - **Solución**: Aseguramos que los estilos CSS fueran consistentes en todos los formularios, aplicando un diseño coherente a los nuevos y antiguos campos. Además, nos aseguramos de que todos los inputs tuvieran un campo `name` definido, lo que facilitó su acceso desde las pruebas en Cypress. Esto permitió no solo mejorar la apariencia visual, sino también garantizar la correcta funcionalidad en las pruebas automatizadas.
+
+---

@@ -23,8 +23,8 @@ const RecipeDetail = () => {
   };
   useEffect(() => {
     const checkAuth = () => {
-      // const token = localStorage.getItem("authToken");
-      const token = true;
+      const token = localStorage.getItem("authToken");
+      // const token = localStorage.getItem("authToken") || true;
       const user = localStorage.getItem("userName");
       if (token && user) {
         setIsAuthenticated(true);
@@ -40,9 +40,14 @@ const RecipeDetail = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
+      // const token = localStorage.getItem("authToken") || true;
+      // setUserName(localStorage.getItem("userName"));
       await axios.post(
         `/api/recipes/${id}/comments`,
-        { text: comment },
+        { 
+          text: comment,
+          user: userName
+         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -89,9 +94,9 @@ const RecipeDetail = () => {
     );
     if (confirmed) {
       try {
-        // const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem("authToken");
         await axios.delete(`/api/recipes/${id}`, {
-          // headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` },
         });
         alert("Receta eliminada exitosamente");
         navigate("/");

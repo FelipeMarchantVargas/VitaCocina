@@ -15,8 +15,8 @@ const UserProfile = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const token = true;
-      // const token = localStorage.getItem("authToken");
+      // const token = localStorage.getItem("authToken") || true;
+      const token = localStorage.getItem("authToken");
       const userName = localStorage.getItem("userName"); // Usar userName en lugar de userId
 
       if (token && userName) {

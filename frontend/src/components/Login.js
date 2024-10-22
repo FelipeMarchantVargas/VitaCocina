@@ -26,7 +26,7 @@ const Login = () => {
     try {
       const res = await axios.post("/api/auth/login", formData);
       const token = res.data.token;
-      // localStorage.setItem("authToken", token); // Guarda el token en el localStorage
+      localStorage.setItem("authToken", token); // Guarda el token en el localStorage
       localStorage.setItem("userName", res.data.name); // Guarda el nombre del usuario en el localStorage
 
       alert(res.data.message); // Opcional: mensaje de éxito

@@ -29,8 +29,8 @@ const AddRecipe = () => {
   useEffect(() => {
 
     const checkAuth = () => {
-      // const token = localStorage.getItem("authToken");
-      const token = true;
+      const token = localStorage.getItem("authToken");
+      // const token = localStorage.getItem("authToken") || true;
       const user = localStorage.getItem("userName");
       if (token && user) {
         setIsAuthenticated(true);

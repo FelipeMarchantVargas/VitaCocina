@@ -21,7 +21,7 @@ router.get("/:id", getRecipeById);
 router.post("/", createRecipe);
 router.put("/:id", updateRecipe);
 router.delete("/:id", deleteRecipe);
-router.post("/:id/comments", addComment);
-router.post("/:id/ratings", addRating);
+router.post("/:id/comments", protect, addComment);
+router.post("/:id/ratings", protect, addRating);
 
 module.exports = router;

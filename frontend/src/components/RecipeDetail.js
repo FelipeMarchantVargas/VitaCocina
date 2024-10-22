@@ -13,6 +13,99 @@ const RecipeDetail = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
 
+  // const fetchRecipe = async () => {
+  //   try {
+  //     const res = await axios.get(`/api/recipes/${id}`);
+  //     setRecipe(res.data);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+  // useEffect(() => {
+  //   const checkAuth = () => {
+  //     const token = localStorage.getItem("authToken");
+  //     // const token = localStorage.getItem("authToken") || true;
+  //     const user = localStorage.getItem("userName");
+  //     if (token && user) {
+  //       setIsAuthenticated(true);
+  //       setUserName(user);
+  //     }
+  //   };
+
+  //   fetchRecipe();
+  //   checkAuth();
+  // }, [id]);
+
+  // const handleCommentSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     // const token = localStorage.getItem("authToken") || true;
+  //     // setUserName(localStorage.getItem("userName"));
+  //     await axios.post(
+  //       `/api/recipes/${id}/comments`,
+  //       { 
+  //         text: comment,
+  //         user: userName
+  //        },
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       }
+  //     );
+  //     setComment("");
+  //     fetchRecipe();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // const handleRatingSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const token = localStorage.getItem("authToken");
+  //     await axios.post(
+  //       `/api/recipes/${id}/ratings`,
+  //       { value: rating },
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       }
+  //     );
+  //     setRating(0);
+  //     fetchRecipe();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // const handleLogout = () => {
+  //   localStorage.removeItem("authToken"); // Elimina el token al cerrar sesión
+  //   localStorage.removeItem("userName"); // Elimina el nombre del usuario
+  //   setIsAuthenticated(false); // Actualiza el estado
+  //   setUserName(""); // Limpia el nombre del usuario
+  //   alert("Has cerrado sesión");
+  // };
+
+  // const handleEdit = () => {
+  //   navigate(`/recipes/edit/${id}`); // Redirige a una página de edición
+  // };
+  // const handleDelete = async () => {
+  //   const confirmed = window.confirm(
+  //     "¿Estás seguro de que deseas eliminar esta receta?"
+  //   );
+  //   if (confirmed) {
+  //     try {
+  //       const token = localStorage.getItem("authToken");
+  //       await axios.delete(`/api/recipes/${id}`, {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       });
+  //       alert("Receta eliminada exitosamente");
+  //       navigate("/");
+  //     } catch (err) {
+  //       console.error(err);
+  //       alert("Error al eliminar la receta");
+  //     }
+  //   }
+  // };
   const fetchRecipe = async () => {
     try {
       const res = await axios.get(`/api/recipes/${id}`);
@@ -24,7 +117,6 @@ const RecipeDetail = () => {
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem("authToken");
-      // const token = localStorage.getItem("authToken") || true;
       const user = localStorage.getItem("userName");
       if (token && user) {
         setIsAuthenticated(true);
@@ -40,14 +132,9 @@ const RecipeDetail = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
-      // const token = localStorage.getItem("authToken") || true;
-      // setUserName(localStorage.getItem("userName"));
       await axios.post(
         `/api/recipes/${id}/comments`,
-        { 
-          text: comment,
-          user: userName
-         },
+        { text: comment },
         {
           headers: { Authorization: `Bearer ${token}` },
         }

@@ -16,9 +16,23 @@ describe('Read User', () => {
       expect(str).to.equal('Logged in successfully');
     });
     cy.window().then((win) => {
-      // win.localStorage.setItem('authToken', 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5j6k7l8m9n0o1p2q3r4s5t6u7v8w9x0y1z2'); // Reemplaza 'your-auth-token' con el token real
-      win.localStorage.setItem('userName', user.name);
+      cy.request({
+        method: 'POST',
+        url: '/api/auth/login',
+        body: {
+          email: user.email,
+          password: user.password
+        }
+      }).then((response) => {
+        const token = response.body.token;
+        win.localStorage.setItem('authToken', token);
+        win.localStorage.setItem('userName', user.name);
+      });
     });
+
+    // Verificar que el token se ha almacenado correctamente
+    cy.window().its('localStorage.authToken').should('exist');
+
     cy.visit('/user');
     cy.contains('TestUser');
   });

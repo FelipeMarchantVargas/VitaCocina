@@ -22,7 +22,7 @@ const UserProfile = () => {
       if (token && userName) {
         try {
           const res = await axios.get(`/api/users/${userName}`, {
-            // headers: { Authorization: `Bearer ${token}` },
+            headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
           console.log(res.data);

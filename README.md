@@ -151,10 +151,10 @@ Durante el desarrollo de este proyecto, el equipo enfrentó diversos desafíos, 
 
 ---
 
-- **Problema 3: Estilos inconsistentes en los formularios de creación y edición de recetas.**
+- **Problema 3 errores en los formularios de creación y edición de recetas.**
 
-  Detectamos inconsistencias visuales en los formularios de creación y edición de recetas, donde algunos elementos no estaban alineados correctamente o no seguían el estilo global de la aplicación, lo que impactaba negativamente la experiencia del usuario.
+  Detectamos errores en los formularios de creación y edición de recetas, donde algunos elementos no funcionaban correctamente.
 
-  - **Solución**: Aseguramos que los estilos CSS fueran consistentes en todos los formularios, aplicando un diseño coherente a los nuevos y antiguos campos. Además, nos aseguramos de que todos los inputs tuvieran un campo `name` definido, lo que facilitó su acceso desde las pruebas en Cypress. Esto permitió no solo mejorar la apariencia visual, sino también garantizar la correcta funcionalidad en las pruebas automatizadas.
+  - **Solución**: Aseguramos que cada input de los formularios tenga un "name" para poder identificarlo en el cypress. 
 
 ---

@@ -2,6 +2,9 @@
 
 Este documento proporciona instrucciones detalladas para la instalación y ejecución del proyecto de gestión de recetas saludables. El proyecto consta de dos partes principales: el frontend desarrollado en React y el backend desarrollado en Node.js con Express y MongoDB.
 
+## Video presentación
+[Click aquí para ver el video de presentación.](https://youtu.be/B7Y-aXVVrFA)
+
 ## Requisitos Previos
 
 Antes de comenzar, asegúrate de tener instalados los siguientes componentes en tu sistema:

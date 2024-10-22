@@ -69,7 +69,10 @@ const UserProfile = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Cuenta eliminada con éxito");
-      navigate("/register");
+      localStorage.removeItem("authToken");
+      localStorage.removeItem("userName");
+      setIsAuthenticated(false);
+      navigate("/");
     } catch (err) {
       console.error(err);
       alert("Error al eliminar la cuenta");

@@ -155,6 +155,6 @@ Durante el desarrollo de este proyecto, el equipo enfrentó diversos desafíos, 
 
   Detectamos errores en los formularios de creación y edición de recetas, donde algunos elementos no funcionaban correctamente.
 
-  - **Solución**: Aseguramos que cada input de los formularios tenga un "name" para poder identificarlo en el cypress. 
+  - **Solución**: Aseguramos que cada input de los formularios tenga un "name" y "token" para poder identificarlo en el cypress. 
 
 ---

@@ -19,10 +19,15 @@ describe('Update Recipe', () => {
     };
   
     const user = {
-      name: 'TestUser',
-      email: 'testuser@example.com',
-      password: 'S4f3_p@ssw0rd'
+      name: 'aa',
+      email: 'aa@aa.aa',
+      password: 'aa'
     };
+    // const user = {
+    //   name: 'TestUser',
+    //   email: 'testuser@example.com',
+    //   password: 'S4f3_p@ssw0rd'
+    // };
   
     before(() => {
       // Log in before running the tests
@@ -34,7 +39,18 @@ describe('Update Recipe', () => {
         expect(str).to.equal('Logged in successfully');
       });
       cy.window().then((win) => {
-        win.localStorage.setItem('userName', user.name);
+        cy.request({
+          method: 'POST',
+          url: '/api/auth/login',
+          body: {
+            email: user.email,
+            password: user.password
+          }
+        }).then((response) => {
+          const token = response.body.token;
+          win.localStorage.setItem('authToken', token);
+          win.localStorage.setItem('userName', user.name);
+        });
       });
     });
   

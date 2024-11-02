@@ -21,7 +21,7 @@ const NavBar = ({ isAuthenticated, userName, handleLogout }) => {
   return (
     <nav className="navbar">
       <h1>
-        <Link to="/">Recetas Saludables</Link>{" "}
+        <Link to="/">VitaCocina</Link>{" "}
         {/* Logo o nombre del sitio que redirige al home */}
       </h1>
       <div className="navbar-links">

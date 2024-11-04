@@ -74,3 +74,5 @@ npx cypress open
 ```
 Ejecuta las pruebas:
 Selecciona el archivo de prueba que deseas ejecutar en la interfaz de Cypress.
+
+---

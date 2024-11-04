@@ -6,26 +6,22 @@ import NavBar from "./NavBar"; // Importamos el NavBar
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado para saber si el usuario está autenticado
-  const [userName, setUserName] = useState(""); // Estado para almacenar el nombre del usuario
-  const [searchQuery, setSearchQuery] = useState(""); // Estado para almacenar el valor de búsqueda
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [calories, setCalories] = useState("");
+  const [proteins, setProteins] = useState("");
+  const [fat, setFat] = useState("");
+  const [carbohydrates, setCarbohydrates] = useState("");
   const Navigator = useNavigate();
 
   useEffect(() => {
-    // Función para verificar si el usuario está logueado
     const checkAuth = () => {
-      // const token = localStorage.getItem("authToken") || true;
-      let token;
-      if (localStorage.getItem("authToken")){
-        token = localStorage.getItem("authToken");
-      } else {
-        token = true;
-      } // Verifica si hay un token guardado
-      // const token = localStorage.getItem("authToken"); // Verifica si hay un token guardado
-      const user = localStorage.getItem("userName"); // Recupera el nombre del usuario si está almacenado
+      let token = localStorage.getItem("authToken") || true;
+      const user = localStorage.getItem("userName");
       if (token && user) {
-        setIsAuthenticated(true); // Si hay token, el usuario está autenticado
-        setUserName(user); // Guarda el nombre del usuario
+        setIsAuthenticated(true);
+        setUserName(user);
       }
     };
 
@@ -33,20 +29,22 @@ const RecipeList = () => {
       try {
         const res = await axios.get("/api/recipes");
         setRecipes(res.data);
+        //AQUI YA estan todos l,os datos de las recetas 
+        console.log(res.data)
       } catch (err) {
         console.error(err);
       }
     };
 
-    checkAuth(); // Verifica si el usuario está logueado al cargar el componente
+    checkAuth();
     fetchRecipes();
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken"); // Elimina el token al cerrar sesión
-    localStorage.removeItem("userName"); // Elimina el nombre del usuario
-    setIsAuthenticated(false); // Actualiza el estado
-    setUserName(""); // Limpia el nombre del usuario
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userName");
+    setIsAuthenticated(false);
+    setUserName("");
     alert("Has cerrado sesión");
   };
 
@@ -60,15 +58,21 @@ const RecipeList = () => {
 
   const handleSearch = async () => {
     const query = {
-      title: { $regex: searchQuery, $options: "i" } // Case-insensitive search
+      title: { $regex: searchQuery, $options: "i" },
+      ...(calories && { "nutrition.calories": { $lte: parseInt(calories) } }), // Filtra por calorías
+      ...(proteins && { "nutrition.protein": { $gte: parseInt(proteins) } }), // Filtra por proteínas
+      ...(fat && { "nutrition.fat": { $lte: parseInt(fat) } }), // Filtra por grasa
+      ...(carbohydrates && { "nutrition.carbs": { $lte: parseInt(carbohydrates) } }) // Filtra por carbohidratos
     };
+  
     try {
       const res = await axios.get(`/api/recipes/filter/${encodeURIComponent(JSON.stringify(query))}`);
-      setRecipes(res.data); // Actualiza las recetas con los resultados filtrados
+      setRecipes(res.data);
     } catch (err) {
       console.error("Error fetching filtered recipes:", err);
     }
   };
+  
 
   return (
     <div>
@@ -85,18 +89,45 @@ const RecipeList = () => {
           type="text"
           placeholder="Buscar por título..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Actualiza el estado de búsqueda
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="search-input"
+        />
+        <input
+          type="number"
+          placeholder="Máx Calorías"
+          value={calories}
+          onChange={(e) => setCalories(e.target.value)}
+          className="search-input"
+        />
+        <input
+          type="number"
+          placeholder="Mín Proteínas"
+          value={proteins}
+          onChange={(e) => setProteins(e.target.value)}
+          className="search-input"
+        />
+        <input
+          type="number"
+          placeholder="Máx Grasa"
+          value={fat}
+          onChange={(e) => setFat(e.target.value)}
+          className="search-input"
+        />
+        <input
+          type="number"
+          placeholder="Máx Carbohidratos"
+          value={carbohydrates}
+          onChange={(e) => setCarbohydrates(e.target.value)}
           className="search-input"
         />
         <button onClick={handleSearch} className="search-button">Buscar</button>
       </div>
 
-
       {isAuthenticated && (
         <div className="center-button">
-        <button onClick={handleAddRecipeClick} className="add-recipe-button">
-          Agregar Receta
-        </button>
+          <button onClick={handleAddRecipeClick} className="add-recipe-button">
+            Agregar Receta
+          </button>
         </div>
       )}
 
@@ -105,10 +136,15 @@ const RecipeList = () => {
           <div
             key={recipe._id}
             className="recipe-card"
-            onClick={() => handleRecipeClick(recipe._id)}>
+            onClick={() => handleRecipeClick(recipe._id)}
+          >
             <h1>{recipe.title}</h1>
             <img src={recipe.image} alt={recipe.title} />
             <p>{recipe.description}</p>
+            <p>Calorías: {recipe.calories}</p>
+            <p>Proteínas: {recipe.proteins}</p>
+            <p>Grasa: {recipe.fat}</p>
+            <p>Carbohidratos: {recipe.carbohydrates}</p>
             <ol>
               {(recipe.ingredients || []).map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>

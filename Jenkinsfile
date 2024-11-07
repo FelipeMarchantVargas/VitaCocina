@@ -24,12 +24,10 @@ pipeline {
         }
 
         stage('Build') {
-            stage('Frontend Build') {
-                steps {
-                    dir('frontend') {
-                        echo 'Building frontend...'
-                        sh 'npm run build'
-                    }
+            steps {
+                dir('frontend') {
+                    echo 'Building frontend...'
+                    sh 'npm run build'
                 }
             }
         }

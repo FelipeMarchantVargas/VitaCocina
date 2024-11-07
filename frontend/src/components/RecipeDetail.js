@@ -44,7 +44,7 @@ const RecipeDetail = () => {
   //     // setUserName(localStorage.getItem("userName"));
   //     await axios.post(
   //       `/api/recipes/${id}/comments`,
-  //       { 
+  //       {
   //         text: comment,
   //         user: userName
   //        },
@@ -126,6 +126,7 @@ const RecipeDetail = () => {
 
     fetchRecipe();
     checkAuth();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleCommentSubmit = async (e) => {

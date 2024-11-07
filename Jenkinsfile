@@ -34,14 +34,10 @@ pipeline {
 
         stage('Test') {
             steps {
-                dir('cypress') {
-                    echo 'Running Cypress tests...'
-                    sh 'npm install'  // Instala Cypress si no está instalado
-                    sh 'npx cypress run'
-                }
+                echo 'Running Cypress tests...'
+                sh 'npx cypress run --config-file cypress.config.js'
             }
         }
-
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'

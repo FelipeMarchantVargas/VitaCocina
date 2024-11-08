@@ -8,6 +8,7 @@ import RecipeDetail from "./components/RecipeDetail";
 import RecipeList from "./components/RecipeList";
 import Register from "./components/Register";
 import UserProfile from "./components/UserProfile";
+import TipList from "./components/TipList"; // Importa el nuevo componente
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/recipes/:id" element={<RecipeDetail />} />
         <Route path="/recipes/edit/:id" element={<EditRecipe />} />
         <Route path="/user" element={<UserProfile />} />
+        <Route path="/tips" element={<TipList />} />
       </Routes>
     </Router>
   );

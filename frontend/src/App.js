@@ -21,7 +21,7 @@ function App() {
         <Route path="/recipes/:id" element={<RecipeDetail />} />
         <Route path="/recipes/edit/:id" element={<EditRecipe />} />
         <Route path="/user" element={<UserProfile />} />
-        <Route path="/tips" element={<TipList />} /> {/* Nueva ruta */}
+        <Route path="/tips" element={<TipList />} />
       </Routes>
     </Router>
   );

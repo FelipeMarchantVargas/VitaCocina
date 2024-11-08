@@ -13,6 +13,7 @@ const RecipeList = () => {
   const [proteins, setProteins] = useState("");
   const [fat, setFat] = useState("");
   const [carbohydrates, setCarbohydrates] = useState("");
+  const [noResults, setNoResults] = useState(false); // Estado para manejar el mensaje de "no se encontraron recetas"
   const Navigator = useNavigate();
 
   useEffect(() => {
@@ -29,7 +30,7 @@ const RecipeList = () => {
       try {
         const res = await axios.get("/api/recipes");
         setRecipes(res.data);
-        //AQUI YA estan todos l,os datos de las recetas 
+        // setNoResults(res.data.length === 0); // Actualiza el estado de noResults
         console.log(res.data)
       } catch (err) {
         console.error(err);
@@ -68,6 +69,7 @@ const RecipeList = () => {
     try {
       const res = await axios.get(`/api/recipes/filter/${encodeURIComponent(JSON.stringify(query))}`);
       setRecipes(res.data);
+      setNoResults(res.data.length === 0);
     } catch (err) {
       console.error("Error fetching filtered recipes:", err);
     }
@@ -132,7 +134,15 @@ const RecipeList = () => {
       )}
 
       <div className="recipe-list">
-        {recipes.map((recipe) => (
+      {noResults ? (
+        <>
+        <div/>
+        <div>
+          <h1 className="centered-message">No se encontraron recetas según los filtros aplicados.</h1>
+        </div>
+        </>
+        ) : (
+        recipes.map((recipe) => (
           <div
             key={recipe._id}
             className="recipe-card"
@@ -157,7 +167,8 @@ const RecipeList = () => {
               ))}
             </ol>
           </div>
-        ))}
+        ))
+      )}  
       </div>
     </div>
   );

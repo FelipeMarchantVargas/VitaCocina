@@ -1,12 +1,13 @@
-// server/routes/userRoutes.js
+// backend/routes/userRoutes.js
 const express = require("express");
-const { getUserByName, updateUser, deleteUser } = require("../controllers/userController");
-const { protect } = require("../middleware/authMiddleware");
+const { getUserByName, updateUser, deleteUser, getAllUsers } = require("../controllers/userController");
+const { protect, admin } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-router.get("/:name", getUserByName);
-router.put("/:name", updateUser);
-router.delete("/:name", deleteUser);
+router.get("/", protect, admin, getAllUsers);
+router.get("/:name", protect, getUserByName);
+router.put("/:name", protect, updateUser);
+router.delete("/:name", protect, deleteUser);
 
 module.exports = router;

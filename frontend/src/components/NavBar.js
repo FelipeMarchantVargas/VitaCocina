@@ -1,11 +1,28 @@
-// client/src/components/NavBar.js
-import React from "react";
-import { Link, useNavigate } from "react-router-dom"; // Para navegación
-import "../stylesheets/NavBar.css"; // Asegúrate de tener un archivo CSS para estilizar tu navbar
+// frontend/src/components/NavBar.js
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "../stylesheets/NavBar.css";
 
-const NavBar = ({ isAuthenticated, userName, handleLogout }) => {
+const NavBar = ({ handleLogout }) => {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    const user = localStorage.getItem("userName");
+    const admin = localStorage.getItem("isAdmin") === "true";
+    if (token && user) {
+      setIsAuthenticated(true);
+      setUserName(user);
+      setIsAdmin(admin);
+    }
+  }, []);
+
+  const navigateToMenu = () => {
+    navigate("/");
+  };
   const navigateToRegister = () => {
     navigate("/register");
   };
@@ -15,23 +32,32 @@ const NavBar = ({ isAuthenticated, userName, handleLogout }) => {
   };
 
   const navigateToProfile = () => {
-    navigate("/user"); // Redirige a la página de perfil
+    navigate("/user");
+  };
+
+  const navigateToAdmin = () => {
+    navigate("/admin");
   };
 
   return (
     <nav className="navbar">
       <h1>
-        <Link to="/">VitaCocina</Link>{" "}
-        {/* Logo o nombre del sitio que redirige al home */}
+        <button onClick={navigateToMenu} className="nav-menu-button">
+          VitaCocina
+        </button>
       </h1>
       <div className="navbar-links">
         {isAuthenticated ? (
           <>
-            <p>Bienvenido, {userName}!</p>
+            <p>Bienvenido, {isAdmin ? "admin " : ""}{userName}!</p>
+            {isAdmin && (
+              <button onClick={navigateToAdmin} className="nav-button">
+                Admin Dashboard
+              </button>
+            )}
             <button onClick={navigateToProfile} className="nav-button">
               Perfil
-            </button>{" "}
-            {/* Botón para acceder al perfil */}
+            </button>
             <button onClick={handleLogout} className="nav-button">
               Cerrar Sesión
             </button>

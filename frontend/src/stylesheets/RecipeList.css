@@ -176,3 +176,11 @@ button {
 .search-button {
   padding: 8px 16px;
 }
+
+/* frontend/src/stylesheets/RecipeList.css */
+.centered-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 24px;
+  color: #333;
+}

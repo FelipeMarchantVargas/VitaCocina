@@ -28,7 +28,6 @@ const recipeSchema = new mongoose.Schema({
   difficulty: { type: String },
   comments: [commentSchema],
   ratings: [ratingSchema],
-  tips: { type: [String] },
 });
 
 const Recipe = mongoose.model("Recipe", recipeSchema);

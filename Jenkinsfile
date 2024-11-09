@@ -39,16 +39,16 @@ pipeline {
                 stage('Start Frontend Server') {
                     steps {
                         dir('frontend') {
-                            echo 'Starting frontend server...'
-                            sh 'nohup npx serve -s build -l 3000 &'
+                            echo 'Starting frontend server in background...'
+                            sh 'npm run start &'
                         }
                     }
                 }
                 stage('Start Backend Server') {
                     steps {
                         dir('backend') {
-                            echo 'Starting backend server...'
-                            sh 'npm run start '
+                            echo 'Starting backend server in background...'
+                            sh 'npm run start &'
                         }
                     }
                 }

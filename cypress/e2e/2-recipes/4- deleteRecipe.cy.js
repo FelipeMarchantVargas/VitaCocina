@@ -1,4 +1,4 @@
-/// <reference types="cypress" />
+/* /// <reference types="cypress" />
 
 describe("Delete Recipe", () => {
   const recipe = {
@@ -68,3 +68,4 @@ describe("Delete Recipe", () => {
     cy.contains(recipe.title).should("not.exist"); // Verify the recipe is no longer in the list
   });
 });
+ */

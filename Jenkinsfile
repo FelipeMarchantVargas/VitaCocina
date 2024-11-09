@@ -22,6 +22,8 @@ pipeline {
                     echo 'Installing frontend dependencies...'
                     sh 'npm install'
                 }
+                echo 'Installing PM2 globally...'
+                sh 'npm install -g pm2'
             }
         }
 
@@ -39,16 +41,16 @@ pipeline {
                 stage('Start Frontend Server') {
                     steps {
                         dir('frontend') {
-                            echo 'Starting frontend server in background...'
-                            sh 'npm run start &'
+                            echo 'Starting frontend server with PM2...'
+                            sh 'pm2 start npm --name frontend -- run start'
                         }
                     }
                 }
                 stage('Start Backend Server') {
                     steps {
                         dir('backend') {
-                            echo 'Starting backend server in background...'
-                            sh 'npm run start &'
+                            echo 'Starting backend server with PM2...'
+                            sh 'pm2 start npm --name backend -- run start'
                         }
                     }
                 }
@@ -78,6 +80,10 @@ pipeline {
     }
 
     post {
+        always {
+            echo 'Stopping all PM2 processes...'
+            sh 'pm2 stop all && pm2 delete all' // Limpia los procesos al final del pipeline
+        }
         success {
             echo 'Pipeline completed successfully!'
         }

@@ -33,6 +33,30 @@ pipeline {
                 }
             }
         }
+        stage('Start Servers') {
+            parallel {
+                stage('Start Frontend Server') {
+                    steps {
+                        dir('frontend') {
+                            echo 'Starting frontend server...'
+                            sh 'nohup npx serve -s build -l 3000 &'
+                        }
+                    }
+                }
+                stage('Start Backend Server') {
+                    steps {
+                        dir('backend') {
+                            echo 'Starting backend server...'
+                            sh 'nohup npm run start &'
+                        }
+                    }
+                }
+            }
+            steps {
+                echo 'Waiting for servers to start...'
+                sleep 10 // Ajusta el tiempo si es necesario
+            }
+        }
 
         stage('Test') {
             steps {

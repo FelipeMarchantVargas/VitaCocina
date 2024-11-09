@@ -1,28 +1,28 @@
 /// <reference types="cypress" />
 
 describe("Delete Recipe", () => {
-  /* const recipe = {
-      title: 'Updated Recipe',
-      description: 'This is a test recipe',
-      ingredients: ['Ingredient 1', 'Ingredient 2'],
-      instructions: ['Step 1', 'Step 2'],
-      image: 'https://example.com/image.jpg',
-      nutrition: {
-        calories: 200,
-        protein: 10,
-        fat: 5,
-        carbs: 30,
-      },
-      category: 'Dessert',
-      time: 30,
-      difficulty: 'Fácil'
-    };
-  
-    const user = {
-      name: 'aa',
-      email: 'aa@aa.aa',
-      password: 'aa'
-    }; */
+  const recipe = {
+    title: "Updated Recipe",
+    description: "This is a test recipe",
+    ingredients: ["Ingredient 1", "Ingredient 2"],
+    instructions: ["Step 1", "Step 2"],
+    image: "https://example.com/image.jpg",
+    nutrition: {
+      calories: 200,
+      protein: 10,
+      fat: 5,
+      carbs: 30,
+    },
+    category: "Dessert",
+    time: 30,
+    difficulty: "Fácil",
+  };
+
+  /* const user = {
+    name: "aa",
+    email: "aa@aa.aa",
+    password: "aa",
+  }; */
   // const user = {
   //   name: 'TestUser',
   //   email: 'testuser@example.com',

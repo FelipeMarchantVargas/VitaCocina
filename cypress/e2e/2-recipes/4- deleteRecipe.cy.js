@@ -18,11 +18,11 @@ describe("Delete Recipe", () => {
     difficulty: "Fácil",
   };
 
-  /* const user = {
+  const user = {
     name: "aa",
     email: "aa@aa.aa",
     password: "aa",
-  }; */
+  };
   // const user = {
   //   name: 'TestUser',
   //   email: 'testuser@example.com',
@@ -38,7 +38,7 @@ describe("Delete Recipe", () => {
     cy.on("window:alert", (str) => {
       expect(str).to.equal("Logged in successfully");
     });
-    cy.window().then((win) => {
+    /* cy.window().then((win) => {
       cy.request({
         method: "POST",
         url: "/api/auth/login",
@@ -51,7 +51,7 @@ describe("Delete Recipe", () => {
         win.localStorage.setItem("authToken", token);
         win.localStorage.setItem("userName", user.name);
       });
-    });
+    }); */
   });
 
   it("should delete the recipe", () => {

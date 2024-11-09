@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         NODE_ENV = 'production'
-        MONGO_URI = 'mongodb+srv://felipemarchantv:xg42ei2Qorq5ArwF@cluster0.9yy7i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-        JWT_SECRET = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5j6k7l8m9n0o1p2q3r4s5t6u7v8w9x0y1z2'
+        MONGO_URI = 'mongodb+srv://usuario:contraseña@cluster0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+        JWT_SECRET = 'tu_secreto_jwt'
         DISPLAY = ''
         XDG_RUNTIME_DIR = '/tmp/runtime-jenkins'
     }
@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/equipo-6-VC/VitaCocina', branch: 'main'
+                git url: 'https://github.com/tu-usuario/tu-repositorio', branch: 'main'
             }
         }
 
@@ -22,12 +22,10 @@ pipeline {
                     echo 'Installing frontend dependencies...'
                     sh 'npm install'
                 }
-                echo 'Installing PM2 globally...'
-                sh 'npm install -g pm2'
             }
         }
 
-        stage('Build') {
+        stage('Build Frontend') {
             steps {
                 dir('frontend') {
                     echo 'Building frontend...'
@@ -41,16 +39,16 @@ pipeline {
                 stage('Start Frontend Server') {
                     steps {
                         dir('frontend') {
-                            echo 'Starting frontend server with PM2...'
-                            sh 'pm2 start npm --name frontend -- run start'
+                            echo 'Starting frontend server...'
+                            sh 'nohup npm run start &'
                         }
                     }
                 }
                 stage('Start Backend Server') {
                     steps {
                         dir('backend') {
-                            echo 'Starting backend server with PM2...'
-                            sh 'pm2 start npm --name backend -- run start'
+                            echo 'Starting backend server...'
+                            sh 'nohup npm run start &'
                         }
                     }
                 }
@@ -60,13 +58,13 @@ pipeline {
         stage('Wait for Servers') {
             steps {
                 echo 'Waiting for servers to start...'
-                sleep 10 // Ajusta el tiempo si es necesario
+                sleep 10 // Ajusta el tiempo según sea necesario
             }
         }
 
-        stage('Test') {
+        stage('Run Tests') {
             steps {
-                echo 'Running Cypress tests...'
+                echo 'Running tests...'
                 sh 'npx cypress run --config-file cypress.config.js --headless --browser electron'
             }
         }
@@ -74,15 +72,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'
-                // Aquí puedes agregar los comandos necesarios para desplegar tu aplicación
+                // Agrega aquí los comandos necesarios para desplegar tu aplicación
             }
         }
     }
 
     post {
         always {
-            echo 'Stopping all PM2 processes...'
-            sh 'pm2 stop all && pm2 delete all' // Limpia los procesos al final del pipeline
+            echo 'Cleaning up...'
+            sh 'pkill -f "npm run start" || true' // Detiene los servidores iniciados
         }
         success {
             echo 'Pipeline completed successfully!'

@@ -48,7 +48,7 @@ pipeline {
                     steps {
                         dir('backend') {
                             echo 'Starting backend server...'
-                            sh 'nohup npm run start &'
+                            sh 'npm run start '
                         }
                     }
                 }

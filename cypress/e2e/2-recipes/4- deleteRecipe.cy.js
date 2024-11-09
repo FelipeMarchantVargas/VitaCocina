@@ -38,6 +38,7 @@ describe("Delete Recipe", () => {
     cy.on("window:alert", (str) => {
       expect(str).to.equal("Logged in successfully");
     });
+    cy.wait(500);
     cy.window().then((win) => {
       cy.request({
         method: "POST",

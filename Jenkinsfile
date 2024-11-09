@@ -37,7 +37,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Running Cypress tests...'
-                sh 'npx cypress run --config-file cypress.config.js --headless'
+                sh 'npx cypress run --config-file cypress.config.js --browser "edge" --spec "cypress/e2e/**/**"'
             }
         }
         stage('Deploy') {

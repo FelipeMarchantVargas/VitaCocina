@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/tu-usuario/tu-repositorio', branch: 'main'
+                git url: 'https://github.com/tu-usuario/tu-repositorio', branch: 'main', credentialsId: '7c5e35c1-4c0a-42b5-a706-31c61de2fe98'
             }
         }
 

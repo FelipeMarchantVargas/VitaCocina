@@ -58,11 +58,11 @@ describe("Delete Recipe", () => {
     cy.visit("/");
     cy.contains(recipe.title).click();
     //   cy.contains('Eliminar Receta').click();
-    cy.contains("Eliminar Receta").click();
-    cy.on("window:confirm", () => true); // Confirm the deletion
     cy.window().then((win) => {
       cy.spy(win.console, "log").as("log");
     });
+    cy.contains("Eliminar Receta").click();
+    cy.on("window:confirm", () => true); // Confirm the deletion
     cy.get("@log").should("be.calledWith", "Receta eliminada exitosamente");
     cy.visit("/"); // Adjust the URL to match your application's URL
     cy.contains(recipe.title).should("not.exist"); // Verify the recipe is no longer in the list

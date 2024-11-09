@@ -187,6 +187,7 @@ const RecipeDetail = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         alert("Receta eliminada exitosamente");
+        console.log("Receta eliminada exitosamente");
         navigate("/");
       } catch (err) {
         console.error(err);

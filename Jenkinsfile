@@ -78,10 +78,6 @@ pipeline {
     }
 
     post {
-        always {
-            echo 'Stopping all PM2 processes...'
-            sh 'pm2 stop all && pm2 delete all' // Limpia los procesos al final del pipeline
-        }
         success {
             echo 'Pipeline completed successfully!'
         }

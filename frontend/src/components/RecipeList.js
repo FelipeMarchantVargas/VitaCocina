@@ -141,10 +141,10 @@ const RecipeList = () => {
             <h1>{recipe.title}</h1>
             <img src={recipe.image} alt={recipe.title} />
             <p>{recipe.description}</p>
-            <p>Calorías: {recipe.calories}</p>
-            <p>Proteínas: {recipe.proteins}</p>
-            <p>Grasa: {recipe.fat}</p>
-            <p>Carbohidratos: {recipe.carbohydrates}</p>
+            <p>Calorías: {recipe.nutrition.calories}</p>
+            <p>Proteínas: {recipe.nutrition.protein}</p>
+            <p>Grasa: {recipe.nutrition.fat}</p>
+            <p>Carbohidratos: {recipe.nutrition.carbs}</p>
             <ol>
               {(recipe.ingredients || []).map((ingredient, index) => (
                 <li key={index}>{ingredient}</li>

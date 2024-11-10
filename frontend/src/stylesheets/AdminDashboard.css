@@ -1,0 +1,59 @@
+/* frontend/src/stylesheets/AdminDashboard.css */
+.admin-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-dashboard h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.admin-dashboard section {
+  margin-bottom: 40px;
+}
+
+.admin-dashboard ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.admin-dashboard li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.admin-dashboard .column {
+  flex: 1;
+  text-align: center;
+}
+
+.admin-dashboard .column-name {
+  flex: 1;
+  text-align: justify;
+}
+
+.admin-dashboard .column button {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.admin-dashboard .column button:hover {
+  background-color: #45a049;
+}
+
+.admin-dashboard .no-results {
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  padding: 20px;
+}

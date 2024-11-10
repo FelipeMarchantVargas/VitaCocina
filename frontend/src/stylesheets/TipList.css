@@ -1,27 +1,80 @@
 /* frontend/src/stylesheets/TipList.css */
 .tip-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
   padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .tip-card {
-  background-color: #f9f9f9;
-  border-radius: 8px;
+  background-color: #fff;
+  border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  transition: transform 0.2s ease-in-out;
   width: 300px;
   text-align: center;
+  cursor: pointer;
+}
+
+.tip-card:hover {
+  transform: scale(1.05);
 }
 
 .tip-card h1 {
   font-size: 24px;
+  color: #1b5e20;
   margin-bottom: 10px;
 }
 
 .tip-card p {
   font-size: 16px;
   color: #333;
+}
+
+.add-tip-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-tip-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-tip-form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.add-tip-form input,
+.add-tip-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-tip-form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.add-tip-form button:hover {
+  background-color: #45a049;
 }

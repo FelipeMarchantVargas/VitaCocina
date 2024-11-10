@@ -1,0 +1,49 @@
+/* frontend/src/stylesheets/TipDetail.css */
+.tip-detail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tip-detail h1 {
+  font-size: 2em;
+  color: #1b5e20;
+  margin-bottom: 20px;
+}
+
+.tip-detail p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  color: #333;
+}
+
+.update-delete {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.update-delete button {
+  padding: 10px 20px;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.update-delete button {
+  background-color: #f44336;
+  color: white;
+}
+
+.update-delete button:hover {
+  background-color: #d32f2f;
+}

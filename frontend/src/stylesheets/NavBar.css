@@ -32,6 +32,16 @@
   margin-left: 10px;
 }
 
+.nav-menu-button {
+  padding: 10px 15px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .nav-button:hover {
   background-color: #45a049; /* Efecto hover */
 }

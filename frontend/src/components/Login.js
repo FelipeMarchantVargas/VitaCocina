@@ -25,9 +25,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post("/api/auth/login", formData);
-      const token = res.data.token;
-      localStorage.setItem("authToken", token); // Guarda el token en el localStorage
-      localStorage.setItem("userName", res.data.name); // Guarda el nombre del usuario en el localStorage
+      const { token, name, isAdmin } = res.data;
+      localStorage.setItem("authToken", token);
+      localStorage.setItem("userName", name);
+      localStorage.setItem("isAdmin", isAdmin); // Guardar si el usuario es administrador
 
       alert(res.data.message); // Opcional: mensaje de éxito
       console.log(res)

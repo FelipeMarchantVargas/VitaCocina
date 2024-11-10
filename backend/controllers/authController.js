@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, isAdmin } = req.body;
 
   try {
     // Verificar si el usuario ya existe
@@ -21,6 +21,7 @@ exports.registerUser = async (req, res) => {
       name,
       email,
       password: hashedPassword,
+      isAdmin,
     });
 
     await user.save();
@@ -49,12 +50,12 @@ exports.loginUser = async (req, res) => {
 
     // Crear el token JWT
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
+      { userId: user._id, email: user.email, isAdmin: user.isAdmin },
       process.env.JWT_SECRET, // Debes cambiar esto a una variable de entorno para mayor seguridad
       { expiresIn: "1h" }
     );
 
-    res.status(200).json({token, message: "Logged in successfully", name: user.name});
+    res.status(200).json({token, message: "Logged in successfully", name: user.name, isAdmin: user.isAdmin});
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

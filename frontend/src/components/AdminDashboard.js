@@ -60,10 +60,6 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleEditTip = (id) => {
-    navigate(`/tips/edit/${id}`);
-  };
-
   const handleDeleteTip = async (id) => {
     const confirmed = window.confirm("¿Estás seguro de que deseas eliminar este consejo?");
     if (confirmed) {
@@ -76,11 +72,7 @@ const AdminDashboard = () => {
       }
     }
   };
-
-  const handleEditUser = (id) => {
-    navigate(`/users/edit/${id}`);
-  };
-
+  
   const handleDeleteUser = async (id) => {
     const confirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (confirmed) {

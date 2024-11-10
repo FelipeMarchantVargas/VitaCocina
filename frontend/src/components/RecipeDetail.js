@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../stylesheets/RecipeDetail.css";
 import NavBar from "./NavBar"; // Importamos el NavBar
@@ -13,14 +13,14 @@ const RecipeDetail = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
 
-  const fetchRecipe = async () => {
+  const fetchRecipe = useCallback(async () => {
     try {
       const res = await axios.get(`/api/recipes/${id}`);
       setRecipe(res.data);
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [id]);
 
   useEffect(() => {
     const checkAuth = () => {
@@ -34,7 +34,7 @@ const RecipeDetail = () => {
 
     fetchRecipe();
     checkAuth();
-  }, [id]);
+  }, [id, fetchRecipe]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // Elimina el token al cerrar sesión

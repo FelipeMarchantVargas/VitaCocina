@@ -16,6 +16,7 @@ describe("Create Recipe", () => {
     category: "Dessert",
     time: 30,
     difficulty: "Fácil",
+    tips: ["Hola!", "este es un ejemplo"],
   };
 
   const user = {
@@ -32,6 +33,20 @@ describe("Create Recipe", () => {
     cy.get('button[type="submit"]').click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("Logged in successfully");
+    });
+    cy.window().then((win) => {
+      cy.request({
+        method: "POST",
+        url: "/api/auth/login",
+        body: {
+          email: user.email,
+          password: user.password,
+        },
+      }).then((response) => {
+        const token = response.body.token;
+        win.localStorage.setItem("authToken", token);
+        win.localStorage.setItem("userName", user.name);
+      });
     });
   });
 
@@ -59,6 +74,12 @@ describe("Create Recipe", () => {
     cy.get('input[name="category"]').type(recipe.category);
     cy.get('input[name="time"]').type(recipe.time.toString());
     cy.get('input[name="difficulty"]').type(recipe.difficulty);
+    recipe.tips.forEach((tip, index) => {
+      if (index > 0) {
+        cy.get("button").contains("Agregar consejo").click();
+      }
+      cy.get(`input[name="tips"]`).eq(index).type(tip);
+    });
     cy.get('button[type="submit"]').click();
     cy.on("window:alert", (str) => {
       expect(str).to.equal("Recipe added successfully!");

@@ -80,11 +80,11 @@ pipeline {
     post {
         success {
             echo 'Pipeline completed successfully!'
-            slackSend(channel: '#proyecto', color: 'good', message: "Build exitoso")
+            slackSend(channel: '#proyecto', color: 'good', message: "Build exitoso :)")
         }
         failure {
             echo 'Pipeline failed.'
-            slackSend(channel: '#proyecto', color: 'good', message: "Build fallido")
+            slackSend(channel: '#proyecto', color: 'good', message: "Build fallido :(")
         }
     }
 }

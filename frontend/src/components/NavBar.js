@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../stylesheets/NavBar.css";
 
-const NavBar = ({ handleLogout }) => {
+const NavBar = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
@@ -20,9 +20,16 @@ const NavBar = ({ handleLogout }) => {
     }
   }, []);
 
-  const navigateToMenu = () => {
-    navigate("/");
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("isAdmin");
+    setIsAuthenticated(false);
+    setUserName("");
+    setIsAdmin(false);
+    navigate("/login");
   };
+
   const navigateToRegister = () => {
     navigate("/register");
   };
@@ -39,10 +46,14 @@ const NavBar = ({ handleLogout }) => {
     navigate("/admin");
   };
 
+  const navigateToTips = () => {
+    navigate("/tips");
+  };
+  
   return (
     <nav className="navbar">
       <h1>
-        <button onClick={navigateToMenu} className="nav-menu-button">
+        <button onClick={() => navigate("/")} className="nav-button home-button">
           VitaCocina
         </button>
       </h1>
@@ -55,6 +66,9 @@ const NavBar = ({ handleLogout }) => {
                 Admin Dashboard
               </button>
             )}
+            <button onClick={navigateToTips} className="nav-button">
+              Tips
+            </button>
             <button onClick={navigateToProfile} className="nav-button">
               Perfil
             </button>

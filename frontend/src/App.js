@@ -1,4 +1,4 @@
-// client/src/App.js
+// frontend/src/App.js
 import React from "react";
 import { Route, BrowserRouter as Router, Routes, Navigate } from "react-router-dom";
 import AddRecipe from "./components/AddRecipe";
@@ -9,6 +9,7 @@ import RecipeList from "./components/RecipeList";
 import Register from "./components/Register";
 import UserProfile from "./components/UserProfile";
 import TipList from "./components/TipList";
+import TipDetail from "./components/TipDetail";
 import AdminDashboard from "./components/AdminDashboard";
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/recipes/edit/:id" element={<EditRecipe />} />
         <Route path="/user" element={<UserProfile />} />
         <Route path="/tips" element={<TipList />} />
+        <Route path="/tips/:id" element={<TipDetail />} />
         <Route path="/admin" element={<PrivateRoute element={AdminDashboard} />} /> {/* Ruta protegida */}
       </Routes>
     </Router>

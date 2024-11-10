@@ -13,7 +13,13 @@ exports.getAllTips = async (req, res) => {
 
 // Crear un nuevo consejo
 exports.createTip = async (req, res) => {
-  const tip = new Tip(req.body);
+  const { title, content } = req.body;
+
+  if (!title || !content) {
+    return res.status(400).json({ message: "Title and content are required" });
+  }
+
+  const tip = new Tip({ title, content });
 
   try {
     await tip.save();

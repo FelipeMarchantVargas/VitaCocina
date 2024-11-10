@@ -49,7 +49,7 @@ const NavBar = () => {
   const navigateToTips = () => {
     navigate("/tips");
   };
-  
+
   return (
     <nav className="navbar">
       <h1>

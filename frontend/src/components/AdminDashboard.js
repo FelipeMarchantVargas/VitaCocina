@@ -72,7 +72,7 @@ const AdminDashboard = () => {
       }
     }
   };
-  
+
   const handleDeleteUser = async (id) => {
     const confirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (confirmed) {
@@ -119,8 +119,6 @@ const AdminDashboard = () => {
                 <li key={tip._id}>
                   <div className="column-name">{tip.title}</div>
                   <div className="column">
-                    {/* <button onClick={() => handleEditTip(tip._id)}>Editar</button> */}
-                    <div/>
                     <button onClick={() => handleDeleteTip(tip._id)}>Eliminar</button>
                   </div>
                 </li>
@@ -138,8 +136,6 @@ const AdminDashboard = () => {
                 <li key={user._id}>
                   <div className="column-name">{user.name} ({user.email})</div>
                   <div className="column">
-                    {/* <button onClick={() => handleEditUser(user._id)}>Editar</button> */}
-                    <div/>
                     <button onClick={() => handleDeleteUser(user._id)}>Eliminar</button>
                   </div>
                 </li>

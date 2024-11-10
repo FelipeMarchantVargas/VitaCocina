@@ -1,6 +1,7 @@
 // server/controllers/userController.js
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
+const Recipe = require("../models/Recipe");
 
 exports.getUserByName = async (req, res) => {
     try {
@@ -48,6 +49,58 @@ exports.deleteUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
     res.json({ message: "User deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.addFavorite = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const recipe = await Recipe.findById(req.params.recipeId);
+
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    if (!user.favorites.includes(recipe._id)) {
+      user.favorites.push(recipe._id);
+      await user.save();
+    }
+
+    res.status(200).json(user.favorites);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.removeFavorite = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const recipe = await Recipe.findById(req.params.recipeId);
+
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    user.favorites = user.favorites.filter(
+      (favorite) => favorite.toString() !== recipe._id.toString()
+    );
+    await user.save();
+
+    res.status(200).json(user.favorites);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getFavorites = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate("favorites");
+    if (!user.favorites) {
+      return res.status(200).json([]);
+    }
+    res.status(200).json(user.favorites);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

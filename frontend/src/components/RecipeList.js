@@ -6,6 +6,7 @@ import NavBar from "./NavBar"; // Importamos el NavBar
 
 const RecipeList = () => {
   const [recipes, setRecipes] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,7 +19,7 @@ const RecipeList = () => {
 
   useEffect(() => {
     const checkAuth = () => {
-      let token = localStorage.getItem("authToken") || true;
+      const token = localStorage.getItem("authToken");
       const user = localStorage.getItem("userName");
       if (token && user) {
         setIsAuthenticated(true);
@@ -30,8 +31,19 @@ const RecipeList = () => {
       try {
         const res = await axios.get("/api/recipes");
         setRecipes(res.data);
-        // setNoResults(res.data.length === 0); // Actualiza el estado de noResults
-        console.log(res.data)
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const fetchFavorites = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const res = await axios.get("/api/users/favorites", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFavorites(res.data.map(favorite => favorite._id));
+        console.log(res.data);
       } catch (err) {
         console.error(err);
       }
@@ -39,7 +51,10 @@ const RecipeList = () => {
 
     checkAuth();
     fetchRecipes();
-  }, []);
+    if (isAuthenticated) {
+      fetchFavorites();
+    }
+  }, [isAuthenticated]);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
@@ -74,7 +89,25 @@ const RecipeList = () => {
       console.error("Error fetching filtered recipes:", err);
     }
   };
-  
+
+  const handleFavorite = async (recipeId) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      if (favorites.includes(recipeId)) {
+        await axios.delete(`/api/users/favorites/${recipeId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFavorites(favorites.filter((id) => id !== recipeId));
+      } else {
+        await axios.post(`/api/users/favorites/${recipeId}`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFavorites([...favorites, recipeId]);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   return (
     <div>
@@ -166,6 +199,11 @@ const RecipeList = () => {
                 <li key={index}>{instruction}</li>
               ))}
             </ol>
+            {isAuthenticated && (
+              <button onClick={() => handleFavorite(recipe._id)}>
+                {favorites.includes(recipe._id) ? "Quitar de favoritos" : "Agregar a favoritos"}
+              </button>
+            )}
           </div>
         ))
       )}  

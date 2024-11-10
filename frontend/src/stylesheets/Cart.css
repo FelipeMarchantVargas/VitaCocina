@@ -1,0 +1,25 @@
+/* frontend/src/stylesheets/Cart.css */
+.cart {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cart h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.cart ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.cart ul li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}

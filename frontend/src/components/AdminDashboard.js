@@ -73,13 +73,13 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleDeleteUser = async (id) => {
+  const handleDeleteUser = async (name) => {
     const confirmed = window.confirm("¿Estás seguro de que deseas eliminar este usuario?");
     if (confirmed) {
       try {
         const token = localStorage.getItem("authToken");
-        await axios.delete(`/api/users/${id}`, { headers: { Authorization: `Bearer ${token}` } });
-        setUsers(users.filter((user) => user._id !== id));
+        await axios.delete(`/api/users/${name}`, { headers: { Authorization: `Bearer ${token}` } });
+        setUsers(users.filter((user) => user.name !== name));
       } catch (err) {
         console.error(err);
       }
@@ -136,7 +136,7 @@ const AdminDashboard = () => {
                 <li key={user._id}>
                   <div className="column-name">{user.name} ({user.email})</div>
                   <div className="column">
-                    <button onClick={() => handleDeleteUser(user._id)}>Eliminar</button>
+                    <button onClick={() => handleDeleteUser(user.name)}>Eliminar</button>
                   </div>
                 </li>
               ))}

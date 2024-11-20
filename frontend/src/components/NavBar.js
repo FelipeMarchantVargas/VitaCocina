@@ -50,6 +50,10 @@ const NavBar = () => {
     navigate("/tips");
   };
 
+  const navigateToCart = () => {
+    navigate("/cart");
+  };
+  
   return (
     <nav className="navbar">
       <h1>
@@ -68,6 +72,9 @@ const NavBar = () => {
             )}
             <button onClick={navigateToTips} className="nav-button">
               Tips
+            </button>
+            <button onClick={navigateToCart} className="nav-button">
+              Carrito
             </button>
             <button onClick={navigateToProfile} className="nav-button">
               Perfil

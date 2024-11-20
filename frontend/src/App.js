@@ -11,6 +11,7 @@ import UserProfile from "./components/UserProfile";
 import TipList from "./components/TipList";
 import TipDetail from "./components/TipDetail";
 import AdminDashboard from "./components/AdminDashboard";
+import Cart from "./components/Cart";
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
   const isAuthenticated = localStorage.getItem("authToken");
@@ -32,6 +33,7 @@ function App() {
         <Route path="/tips" element={<TipList />} />
         <Route path="/tips/:id" element={<TipDetail />} />
         <Route path="/admin" element={<PrivateRoute element={AdminDashboard} />} /> {/* Ruta protegida */}
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </Router>
   );

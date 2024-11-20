@@ -30,8 +30,7 @@ exports.updateUser = async (req, res) => {
       const salt = await bcrypt.genSalt(10);
       req.body.password = await bcrypt.hash(req.body.password, salt);
     }
-
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true }).select("-password");
+    const updatedUser = await User.findOneAndUpdate({ name: req.params.name }, req.body, { new: true }).select("-password");
     if (!updatedUser) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -43,7 +42,7 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    const deletedUser = await User.findOneAndDelete({ name: req.params.name });
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });
     }

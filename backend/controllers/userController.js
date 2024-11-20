@@ -1,7 +1,7 @@
 // server/controllers/userController.js
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-const Recipe = require("../models/Recipe");
+const Recipe = require("../models/recipes");
 
 exports.getUserByName = async (req, res) => {
     try {

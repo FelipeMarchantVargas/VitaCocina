@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     default: false,
     required: true 
   },
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Recipe" }],
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
 });
 
 const User = mongoose.model("User", userSchema);

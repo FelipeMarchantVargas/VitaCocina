@@ -20,10 +20,15 @@ const chrome = require('selenium-webdriver/chrome');
     let alert = await driver.switchTo().alert();
     await alert.accept();
 
-    // Navegar a la página de detalles de una receta
-    await driver.get('http://localhost:3000/recipes/1'); // Cambia el ID de la receta según sea necesario
+    // Navegar a la página principal
+    await driver.get('http://localhost:3000/');
+
+    // Seleccionar una receta
+    await driver.wait(until.elementLocated(By.linkText('Test Recipe')), 10000);
+    await driver.findElement(By.linkText('Test Recipe')).click();
 
     // Agregar un comentario
+    await driver.wait(until.elementLocated(By.name('comment')), 10000);
     await driver.findElement(By.name('comment')).sendKeys('Este es un comentario de prueba');
     await driver.findElement(By.css('button.add-comment')).click();
 

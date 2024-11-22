@@ -20,12 +20,19 @@ const chrome = require('selenium-webdriver/chrome');
     let alert = await driver.switchTo().alert();
     await alert.accept();
 
-    // Navegar a la página de detalles de una receta
-    await driver.get('http://localhost:3000/recipes/1'); // Cambia el ID de la receta según sea necesario
+    // Navegar a la página principal
+    await driver.get('http://localhost:3000/');
+
+    // Seleccionar una receta desde la página principal
+    await driver.wait(until.elementLocated(By.linkText('Fideos con Salsa')), 10000);
+    await driver.findElement(By.linkText('Fideos con Salsa')).click();
+
+    // Esperar a que el campo de valoración esté presente
+    await driver.wait(until.elementLocated(By.name('rating')), 10000);
 
     // Agregar una valoración
     await driver.findElement(By.name('rating')).sendKeys('5');
-    await driver.findElement(By.css('button.add-rating')).click();
+    await driver.findElement(By.css('button[type="submit"]')).click();
 
     // Verificar que la valoración se ha agregado correctamente
     await driver.wait(until.elementLocated(By.xpath("//*[contains(text(), '5 estrellas')]")), 10000);

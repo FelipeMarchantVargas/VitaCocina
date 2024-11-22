@@ -19,12 +19,21 @@ const chrome = require("selenium-webdriver/chrome");
     await driver.findElement(By.name("password")).sendKeys(user.password);
     await driver.findElement(By.css('button[type="submit"]')).click();
 
-    // Esperar a que aparezca el mensaje de alerta
-    await driver.wait(until.alertIsPresent(), 10000);
-    const alert = await driver.switchTo().alert();
-    const alertText = await alert.getText();
-    console.log(alertText);
-    await alert.accept();
+    try {
+      // Esperar a que la alerta esté presente
+      await driver.wait(until.alertIsPresent(), 5000);
+    
+      // Cambiar al contexto de la alerta
+      const alert = await driver.switchTo().alert();
+    
+      // Obtener el texto y aceptarla
+      const alertText = await alert.getText();
+      console.log("Texto de la alerta:", alertText);
+      await alert.accept();
+    } catch (error) {
+      console.error("No se detectó ninguna alerta:", error.message);
+    }
+    
 
     // Verificar que el token se ha almacenado correctamente
     const token = await driver.executeScript("return localStorage.getItem('authToken');");
@@ -32,22 +41,22 @@ const chrome = require("selenium-webdriver/chrome");
       throw new Error("Token not found in localStorage");
     }
 
-    // // Navegar a la página de perfil de usuario
-    // await driver.get("http://localhost:3000/user");
+    // Navegar a la página de perfil de usuario
+    await driver.get("http://localhost:3000/user");
 
-    // // Esperar hasta que el texto del usuario esté visible
-    // const userNameElement = await driver.wait(
-    //   until.elementLocated(By.xpath(`//*[contains(text(), '${user.name}')]`)),
-    //   15000 // Incrementa el tiempo de espera máximo
-    // );
+    // Esperar hasta que el texto del usuario esté visible
+    const userNameElement = await driver.wait(
+      until.elementLocated(By.xpath(`//*[contains(text(), '${user.name}')]`)),
+      15000 // Incrementa el tiempo de espera máximo
+    );
 
-    // // Verificar que el elemento esté visible
-    // const isDisplayed = await userNameElement.isDisplayed();
-    // if (!isDisplayed) {
-    //   throw new Error("User name is not displayed");
-    // }
+    // Verificar que el elemento esté visible
+    const isDisplayed = await userNameElement.isDisplayed();
+    if (!isDisplayed) {
+      throw new Error("User name is not displayed");
+    }
 
-    // console.log("User name is displayed correctly");
+    console.log("User name is displayed correctly");
 
   } catch (error) {
     console.error("Test failed:", error.message);

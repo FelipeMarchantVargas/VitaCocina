@@ -19,23 +19,19 @@ const chrome = require("selenium-webdriver/chrome");
     await driver.findElement(By.name("password")).sendKeys(user.password);
     await driver.findElement(By.css('button[type="submit"]')).click();
 
+    // Esperar a que la alerta esté presente y aceptarla si aparece
     try {
-      // Esperar a que la alerta esté presente
       await driver.wait(until.alertIsPresent(), 5000);
-    
-      // Cambiar al contexto de la alerta
       const alert = await driver.switchTo().alert();
-    
-      // Obtener el texto y aceptarla
       const alertText = await alert.getText();
       console.log("Texto de la alerta:", alertText);
       await alert.accept();
     } catch (error) {
       console.error("No se detectó ninguna alerta:", error.message);
     }
-    
 
     // Verificar que el token se ha almacenado correctamente
+    await driver.sleep(1000); // Esperar un momento para asegurarse de que el token se almacene
     const token = await driver.executeScript("return localStorage.getItem('authToken');");
     if (!token) {
       throw new Error("Token not found in localStorage");
@@ -45,18 +41,16 @@ const chrome = require("selenium-webdriver/chrome");
     await driver.get("http://localhost:3000/user");
 
     // Esperar hasta que el texto del usuario esté visible
-    const userNameElement = await driver.wait(
-      until.elementLocated(By.xpath(`//*[contains(text(), '${user.name}')]`)),
-      15000 // Incrementa el tiempo de espera máximo
-    );
+    await driver.wait(until.elementLocated(By.xpath(`//h1[contains(text(), 'Bienvenido, ${user.name}')]`)), 30000);
 
     // Verificar que el elemento esté visible
+    const userNameElement = await driver.findElement(By.xpath(`//h1[contains(text(), 'Bienvenido, ${user.name}')]`));
     const isDisplayed = await userNameElement.isDisplayed();
     if (!isDisplayed) {
-      throw new Error("User name is not displayed");
+      throw new Error("El nombre del usuario no está visible");
     }
 
-    console.log("User name is displayed correctly");
+    console.log("El nombre del usuario está visible en la página");
 
   } catch (error) {
     console.error("Test failed:", error.message);

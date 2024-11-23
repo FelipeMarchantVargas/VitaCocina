@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavBar from "./NavBar";
 import "../stylesheets/AddRecipe.css";
+import { useNavigate } from "react-router-dom";
 
 const AddRecipe = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -23,14 +24,14 @@ const AddRecipe = () => {
     difficulty: "",
     comments: [],
     ratings: [],
-    tips: [],
+    tips: [""],
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
 
     const checkAuth = () => {
       const token = localStorage.getItem("authToken");
-      // const token = localStorage.getItem("authToken") || true;
       const user = localStorage.getItem("userName");
       if (token && user) {
         setIsAuthenticated(true);
@@ -39,7 +40,7 @@ const AddRecipe = () => {
     };
 
     checkAuth();
-  });
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // Elimina el token al cerrar sesión
@@ -47,6 +48,7 @@ const AddRecipe = () => {
     setIsAuthenticated(false); // Actualiza el estado
     setUserName(""); // Limpia el nombre del usuario
     alert("Has cerrado sesión");
+    navigate("/login");
   };
 
 
@@ -102,7 +104,10 @@ const AddRecipe = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("/api/recipes", recipeData);
+      const token = localStorage.getItem("authToken");
+      await axios.post("/api/recipes", recipeData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       alert("Recipe added successfully!");
       // Reset form after submission
       setRecipeData({
@@ -122,10 +127,12 @@ const AddRecipe = () => {
         difficulty: "",
         comments: [],
         ratings: [],
-        tips: [],
+        tips: [""],
       });
+      navigate("/");
     } catch (error) {
       console.error("Error adding recipe:", error);
+      alert("Error adding recipe");
     }
   };
 
@@ -281,7 +288,7 @@ const AddRecipe = () => {
         />
       ))}
       <button type="button" onClick={addTip}>
-        Agregar instrucción
+        Agregar consejo
       </button>
 
       <button type="submit">Agregar receta</button>

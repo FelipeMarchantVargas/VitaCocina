@@ -9,16 +9,18 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    isAdmin: false,
   });
   
   const navigate = useNavigate();
 
-  const { name, email, password } = formData;
+  const { name, email, password, isAdmin } = formData;
 
   const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -64,6 +66,17 @@ const Register = () => {
           onChange={handleChange}
           required
         />
+      </div>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            name="isAdmin"
+            checked={isAdmin}
+            onChange={handleChange}
+          />
+          Administrador
+        </label>
       </div>
       <button type="submit">Register</button>
     </form>

@@ -15,6 +15,7 @@ const EditRecipe = () => {
     category: "",
     time: "",
     difficulty: "",
+    tips: [],
   });
 
   useEffect(() => {
@@ -80,7 +81,7 @@ const EditRecipe = () => {
           <input
             type="text"
             name="ingredients"
-            value={recipe.ingredients.join(", ")}
+            value={recipe.ingredients ? recipe.ingredients.join(", ") : ""}
             onChange={(e) =>
               setRecipe({ ...recipe, ingredients: e.target.value.split(",") })
             }
@@ -97,6 +98,17 @@ const EditRecipe = () => {
           />
         </label>
         <label>
+          Tips (separados por comas):
+          <input
+            type="text"
+            name="tips"
+            value={recipe.tips ? recipe.tips.join(", ") : ""}
+            onChange={(e) =>
+              setRecipe({ ...recipe, tips: e.target.value.split(",") })
+            }
+          />
+        </label>
+        <label>
           Calorías:
           <input
             type="number"
@@ -108,7 +120,6 @@ const EditRecipe = () => {
                 nutrition: { ...recipe.nutrition, calories: e.target.value },
               })
             }
-            required
           />
         </label>
         <label>
@@ -118,7 +129,6 @@ const EditRecipe = () => {
             name="category"
             value={recipe.category}
             onChange={handleChange}
-            required
           />
         </label>
         <label>
@@ -128,7 +138,6 @@ const EditRecipe = () => {
             name="time"
             value={recipe.time}
             onChange={handleChange}
-            required
           />
         </label>
         <label>
@@ -136,8 +145,7 @@ const EditRecipe = () => {
           <select
             name="difficulty"
             value={recipe.difficulty}
-            onChange={handleChange}
-            required>
+            onChange={handleChange}>
             <option value="Fácil">Fácil</option>
             <option value="Intermedia">Intermedia</option>
             <option value="Difícil">Difícil</option>

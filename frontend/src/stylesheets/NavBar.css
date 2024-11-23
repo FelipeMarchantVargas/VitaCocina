@@ -3,13 +3,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
-  background-color: #4caf50; /* Cambia el color según prefieras */
+  background-color: #4caf50;
 }
 
 .navbar h1 {
   margin: 0;
   color: white;
   font-size: 24px;
+  font-family: 'Lobster', cursive;
 }
 
 .navbar-links {
@@ -30,8 +31,21 @@
   border-radius: 5px;
   cursor: pointer;
   margin-left: 10px;
+  font-family: 'Roboto', sans-serif;
 }
 
 .nav-button:hover {
-  background-color: #45a049; /* Efecto hover */
+  background-color: #45a049;
+}
+
+.home-button {
+  background-color: transparent;
+  font-size: 24px;
+  font-family: 'Lobster', cursive;
+  cursor: pointer;
+}
+
+.home-button:hover {
+  background-color: transparent;
+  color: #45a049;
 }

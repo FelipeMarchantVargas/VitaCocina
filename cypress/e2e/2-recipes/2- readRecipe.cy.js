@@ -13,7 +13,7 @@ describe('Read Recipe', () => {
       cy.get('button').contains('Buscar').click();
   
       // Verify the search results
-      cy.contains('h1', 'Fideos con Salsa').should('be.visible');
-      cy.contains('p', 'Receta clasica y facil de preparar').should('be.visible');
+      cy.contains('h1', 'Fideos con salsa').should('be.visible');
+      cy.contains('p', 'Una receta sencilla y deliciosa de fideos con salsa para disfrutar en cualquier momento.').should('be.visible');
     });
   });

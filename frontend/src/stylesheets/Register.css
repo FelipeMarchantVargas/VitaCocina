@@ -1,71 +1,70 @@
 /* Estilos generales para el formulario */
 form {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #f7f7f7;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Roboto', sans-serif;
+}
+
+form div {
+  margin-bottom: 15px;
+}
+
+label {
+  font-size: 14px;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4caf50;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Lobster', cursive;
+  color: #2e7d32;
+}
+
+@media (max-width: 600px) {
+  form {
+    width: 90%;
+    padding: 15px;
   }
-  
-  form div {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-size: 14px;
-    color: #333;
-    display: block;
-    margin-bottom: 5px;
-  }
-  
-  input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    background-color: #fff;
-  }
-  
-  input:focus {
-    outline: none;
-    border-color: #4caf50;
-  }
-  
-  button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  button:hover {
-    background-color: #45a049;
-  }
-  
-  /* Agregar un pequeño estilo de transición para el botón */
-  button:active {
-    transform: scale(0.98);
-  }
-  
-  /* Para centrar el texto del título */
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Responsividad */
-  @media (max-width: 600px) {
-    form {
-      width: 90%;
-      padding: 15px;
-    }
-  }
-  
+}

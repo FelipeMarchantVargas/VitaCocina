@@ -15,10 +15,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  isAdmin: {
+    type: Boolean, 
+    default: false,
+    required: true 
   },
+  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
 });
 
-module.exports = mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;

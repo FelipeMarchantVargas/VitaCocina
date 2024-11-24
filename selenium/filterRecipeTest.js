@@ -8,11 +8,11 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.get('http://localhost:3000/');
 
     // Ingresar los filtros de búsqueda
-    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('fideos con salsa');
-    await driver.findElement(By.css('input[placeholder="Máx Calorías"]')).sendKeys('500');
+    // await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
+    await driver.findElement(By.css('input[placeholder="Máx Calorías"]')).sendKeys('200');
     await driver.findElement(By.css('input[placeholder="Mín Proteínas"]')).sendKeys('10');
-    await driver.findElement(By.css('input[placeholder="Máx Grasa"]')).sendKeys('20');
-    await driver.findElement(By.css('input[placeholder="Máx Carbohidratos"]')).sendKeys('50');
+    await driver.findElement(By.css('input[placeholder="Máx Grasa"]')).sendKeys('5');
+    await driver.findElement(By.css('input[placeholder="Máx Carbohidratos"]')).sendKeys('30');
     await driver.findElement(By.css('button.search-button')).click();
 
     // Verificar los resultados de búsqueda

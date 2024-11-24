@@ -11,11 +11,13 @@ const chrome = require("selenium-webdriver/chrome");
       password: "S4f3_p@ssw0rd",
     };
 
-    // Verificar que el usuario puede iniciar sesión después de registrarse
-    await driver.get('http://localhost:3000/login');
-    await driver.findElement(By.name('email')).sendKeys(user.email);
-    await driver.findElement(By.name('password')).sendKeys(user.password);
-    await driver.findElement(By.name('login')).click();
+    // Navegar a la página de inicio de sesión
+    await driver.get("http://localhost:3000/login");
+
+    // Ingresar el correo electrónico y la contraseña
+    await driver.findElement(By.name("email")).sendKeys(user.email);
+    await driver.findElement(By.name("password")).sendKeys(user.password);
+    await driver.findElement(By.css('button[type="submit"]')).click();
 
     // Esperar a que la alerta esté presente y aceptarla si aparece
     try {
@@ -39,10 +41,10 @@ const chrome = require("selenium-webdriver/chrome");
     await driver.get("http://localhost:3000/user");
 
     // Esperar hasta que el texto del usuario esté visible
-    // await driver.wait(until.elementLocated(By.xpath(`//h1[contains(text(), 'Bienvenido, ${user.name}')]`)), 5000);
+    await driver.wait(until.elementLocated(By.id("bienvenido")), 10000);
 
     // Verificar que el elemento esté visible
-    const userNameElement = await driver.findElement(By.id(`bienvenido`));
+    const userNameElement = await driver.findElement(By.id("bienvenido"));
     const isDisplayed = await userNameElement.isDisplayed();
     if (!isDisplayed) {
       throw new Error("El nombre del usuario no está visible");

@@ -36,7 +36,7 @@ const chrome = require('selenium-webdriver/chrome');
 
     // Navegar a la página principal y seleccionar una receta
     await driver.get('http://localhost:3000/');
-    await driver.findElement(By.linkText('Test Recipe')).click();
+    await driver.findElement(By.linkText('Updated Recipe')).click();
 
     // Hacer clic en "Eliminar Receta"
     await driver.findElement(By.css('button.delete-recipe')).click();

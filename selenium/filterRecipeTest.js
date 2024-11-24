@@ -9,15 +9,16 @@ const chrome = require('selenium-webdriver/chrome');
 
     // Ingresar los filtros de búsqueda
     // await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
-    await driver.findElement(By.css('input[placeholder="Máx Calorías"]')).sendKeys('200');
+    await driver.findElement(By.css('input[placeholder="Máx Calorías"]')).sendKeys('1335');
     await driver.findElement(By.css('input[placeholder="Mín Proteínas"]')).sendKeys('10');
-    await driver.findElement(By.css('input[placeholder="Máx Grasa"]')).sendKeys('5');
-    await driver.findElement(By.css('input[placeholder="Máx Carbohidratos"]')).sendKeys('30');
+    await driver.findElement(By.css('input[placeholder="Máx Grasa"]')).sendKeys('900');
+    await driver.findElement(By.css('input[placeholder="Máx Carbohidratos"]')).sendKeys('1900');
     await driver.findElement(By.css('button.search-button')).click();
+    await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
 
-    // Verificar los resultados de búsqueda
+    // Verificar los result0ados de búsqueda
     await driver.wait(until.elementLocated(By.css('h1')), 10000);
-    let recipeTitle = await driver.findElement(By.css('h1')).getText();
+    let recipeTitle = await driver.findElement(By.css('.recipe-card h1')).getText();
     console.log(recipeTitle);
   } finally {
     await driver.quit();

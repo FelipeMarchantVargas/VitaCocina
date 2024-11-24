@@ -35,12 +35,12 @@ const chrome = require('selenium-webdriver/chrome');
     }
 
     // Navegar a la página principal y seleccionar una receta
-    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('Test RecipeUpdated');
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('Updated Recipe');
     await driver.findElement(By.name('buscar')).click();
     await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
     // Hacer clic en "Eliminar Receta"
     await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000).click();
-    await driver.sleep(5000); // Espera 2 segundos (2000 milisegundos).
+    await driver.sleep(1000); // Espera 2 segundos (2000 milisegundos).
     await driver.findElement(By.name('botonDelete')).click();
 
 

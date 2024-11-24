@@ -23,10 +23,11 @@ const chrome = require('selenium-webdriver/chrome');
     };
 
     const user = {
-      name: 'b',
-      email: 'b@b',
-      password: 'b'
+      name: "TestUser",
+      email: "testuser@example.com",
+      password: "S4f3_p@ssw0rd",
     };
+
 
         // Verificar que el usuario puede iniciar sesión después de registrarse
     await driver.get('http://localhost:3000/login');
@@ -67,7 +68,10 @@ const chrome = require('selenium-webdriver/chrome');
     
     await driver.findElement(By.xpath(`//*[contains(text(), 'Editar Receta')]`)).click();
     await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
-    await driver.findElement(By.name('title')).sendKeys('Updated');
+    await driver.findElement(By.name('title')).clear();
+    await driver.findElement(By.name('tips')).clear();
+    await driver.sleep(750); // Espera 2 segundos (2000 milisegundos).
+    await driver.findElement(By.name('title')).sendKeys('Updated Recipe');
     await driver.findElement(By.name('tips')).sendKeys('Updated Tip 1,Updated Tip 2');
     await driver.findElement(By.css('button[type="submit"]')).click();
 

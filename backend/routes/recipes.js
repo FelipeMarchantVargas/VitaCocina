@@ -8,6 +8,8 @@ const {
   deleteRecipe,
   addComment,
   addRating,
+  deleteComment,
+  deleteRating,
 } = require("../controllers/recipeController");
 
 const { protect, admin } = require("../middleware/authMiddleware");
@@ -23,5 +25,7 @@ router.put("/:id", protect, admin, updateRecipe);
 router.delete("/:id", protect, admin, deleteRecipe);
 router.post("/:id/comments", protect, addComment);
 router.post("/:id/ratings", protect, addRating);
+router.delete("/:id/comments/:commentId", protect, admin, deleteComment);
+router.delete("/:id/ratings/:ratingId", protect, admin, deleteRating);
 
 module.exports = router;

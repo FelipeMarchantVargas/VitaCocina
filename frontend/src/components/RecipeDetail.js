@@ -73,6 +73,44 @@ const RecipeDetail = () => {
     }
   };
 
+  const handleDeleteComment = async (commentId) => {
+    const confirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar este comentario?"
+    );
+    if (confirmed) {
+      try {
+        const token = localStorage.getItem("authToken");
+        await axios.delete(`/api/recipes/${id}/comments/${commentId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert("Comentario eliminado exitosamente");
+        fetchRecipe();
+      } catch (err) {
+        console.error(err);
+        alert("Error al eliminar el comentario");
+      }
+    }
+  };
+
+  const handleDeleteRating = async (ratingId) => {
+    const confirmed = window.confirm(
+      "¿Estás seguro de que deseas eliminar esta valoración?"
+    );
+    if (confirmed) {
+      try {
+        const token = localStorage.getItem("authToken");
+        await axios.delete(`/api/recipes/${id}/ratings/${ratingId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        alert("Valoración eliminada exitosamente");
+        fetchRecipe();
+      } catch (err) {
+        console.error(err);
+        alert("Error al eliminar la valoración");
+      }
+    }
+  };
+
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -159,8 +197,13 @@ const RecipeDetail = () => {
         <h2>Comentarios</h2>
         <ul>
           {(recipe.comments || []).map((comment, index) => (
-            <li key={index}>
+            <li key={index} id={`comment${index}`}>
               {comment.user.name}: {comment.text}
+              {isAdmin && (
+                <button onClick={() => handleDeleteComment(comment._id)} name={`borrarComment${index}`}>
+                  Eliminar
+                </button>
+              )}
             </li>
           ))}
         </ul>
@@ -169,18 +212,24 @@ const RecipeDetail = () => {
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              name="comment"
               placeholder="Escribe un comentario"
               required
             />
-            <button type="submit">Enviar Comentario</button>
+            <button type="submit" name="botonComment">Enviar Comentario</button>
           </form>
         )}
 
         <h2>Valoraciones</h2>
         <ul>
           {(recipe.ratings || []).map((rating, index) => (
-            <li key={index}>
+            <li key={index} id={`rating${index}`}>
               {rating.user.name}: {rating.value} estrellas
+              {isAdmin && (
+                <button onClick={() => handleDeleteRating(rating._id)} name={`borrarRating${index}`}>
+                  Eliminar
+                </button>
+              )}
             </li>
           ))}
         </ul>
@@ -189,6 +238,7 @@ const RecipeDetail = () => {
             <select
               value={rating}
               onChange={(e) => setRating(e.target.value)}
+              name="rating"
               required>
               <option value="">Selecciona una valoración</option>
               {[1, 2, 3, 4, 5].map((value) => (
@@ -197,7 +247,7 @@ const RecipeDetail = () => {
                 </option>
               ))}
             </select>
-            <button type="submit">Enviar Valoración</button>
+            <button type="submit"  name="botonRating">Enviar Valoración</button>
           </form>
         )}
         {isAuthenticated && isAdmin && (

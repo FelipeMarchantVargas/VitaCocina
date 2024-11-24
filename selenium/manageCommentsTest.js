@@ -4,13 +4,31 @@ const chrome = require('selenium-webdriver/chrome');
 (async function manageCommentsTest() {
   let driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
   try {
+    const recipe = {
+      title: "Test Recipe",
+      description: "This is a test recipe",
+      ingredients: ["Ingredient 1", "Ingredient 2"],
+      instructions: ["Step 1", "Step 2"],
+      image: "https://example.com/image.jpg",
+      nutrition: {
+        calories: 200,
+        protein: 10,
+        fat: 5,
+        carbs: 30,
+      },
+      category: "Dessert",
+      time: 30,
+      difficulty: "Fácil",
+      tips: ["Hola!", "este es un ejemplo"],
+    };
+
     const user = {
       name: "TestUser",
       email: "testuser@example.com",
       password: "S4f3_p@ssw0rd",
     };
 
-        // Verificar que el usuario puede iniciar sesión después de registrarse
+    // Verificar que el usuario puede iniciar sesión después de registrarse
     await driver.get('http://localhost:3000/login');
     await driver.findElement(By.name('email')).sendKeys(user.email);
     await driver.findElement(By.name('password')).sendKeys(user.password);
@@ -34,26 +52,39 @@ const chrome = require('selenium-webdriver/chrome');
       throw new Error("Token not found in localStorage");
     }
 
-    // Navegar a la página principal
-    await driver.get('http://localhost:3000/');
+    // Navegar a la página principal y buscar la receta
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
+    await driver.findElement(By.name('buscar')).click();
+    await driver.sleep(1000); // Espera para asegurar que la búsqueda se complete
 
-    // Seleccionar una receta
-    await driver.wait(until.elementLocated(By.linkText('Test Recipe')), 10000);
-    await driver.findElement(By.linkText('Test Recipe')).click();
+    // Seleccionar la receta desde los resultados de búsqueda
+    await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000).click();
+    await driver.sleep(2000); // Espera para asegurar que la página de la receta se cargue
 
     // Agregar un comentario
     await driver.wait(until.elementLocated(By.name('comment')), 10000);
     await driver.findElement(By.name('comment')).sendKeys('Este es un comentario de prueba');
-    await driver.findElement(By.css('button.add-comment')).click();
+    await driver.findElement(By.name('botonComment')).click();
+    await driver.sleep(1000);
 
     // Verificar que el comentario se ha agregado correctamente
-    await driver.wait(until.elementLocated(By.xpath("//*[contains(text(), 'Este es un comentario de prueba')]")), 10000);
+    await driver.wait(until.elementLocated(By.id("comment0"), 10000));
 
     // Eliminar el comentario
-    await driver.findElement(By.xpath("//*[contains(text(), 'Eliminar Comentario')]")).click();
+    await driver.findElement(By.name("borrarComment0")).click();
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    // Confirmar la eliminación
+    await driver.wait(until.alertIsPresent(), 10000);
+    alert = await driver.switchTo().alert();
+    console.log(await alert.getText());
+    await alert.accept();
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    await alert.accept();
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+
 
     // Verificar que el comentario se ha eliminado correctamente
-    let isCommentPresent = await driver.findElements(By.xpath("//*[contains(text(), 'Este es un comentario de prueba')]")).then(elements => elements.length > 0);
+    let isCommentPresent = await driver.findElements(By.name("comment0")).then(elements => elements.length > 0);
     if (isCommentPresent) {
       throw new Error('Comment is still present');
     }

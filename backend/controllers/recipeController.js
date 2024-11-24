@@ -119,3 +119,47 @@ exports.addRating = async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 };
+
+// Eliminar un comentario de una receta
+exports.deleteComment = async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    const commentIndex = recipe.comments.findIndex(comment => comment._id.toString() === req.params.commentId);
+    if (commentIndex === -1) {
+      return res.status(404).json({ message: "Comment not found" });
+    }
+
+    recipe.comments.splice(commentIndex, 1);
+    await recipe.save();
+
+    res.json({ message: "Comment deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Eliminar una valoración de una receta
+exports.deleteRating = async (req, res) => {
+  try {
+    const recipe = await Recipe.findById(req.params.id);
+    if (!recipe) {
+      return res.status(404).json({ message: "Recipe not found" });
+    }
+
+    const ratingIndex = recipe.ratings.findIndex(rating => rating._id.toString() === req.params.ratingId);
+    if (ratingIndex === -1) {
+      return res.status(404).json({ message: "Rating not found" });
+    }
+
+    recipe.ratings.splice(ratingIndex, 1);
+    await recipe.save();
+
+    res.json({ message: "Rating deleted" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

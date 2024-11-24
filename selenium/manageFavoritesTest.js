@@ -4,6 +4,24 @@ const chrome = require('selenium-webdriver/chrome');
 (async function manageFavoritesTest() {
   let driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
   try {
+    const recipe = {
+      title: "Test Recipe",
+      description: "This is a test recipe",
+      ingredients: ["Ingredient 1", "Ingredient 2"],
+      instructions: ["Step 1", "Step 2"],
+      image: "https://example.com/image.jpg",
+      nutrition: {
+        calories: 200,
+        protein: 10,
+        fat: 5,
+        carbs: 30,
+      },
+      category: "Dessert",
+      time: 30,
+      difficulty: "Fácil",
+      tips: ["Hola!", "este es un ejemplo"],
+    };
+    
     const user = {
       name: "TestUser",
       email: "testuser@example.com",
@@ -35,8 +53,14 @@ const chrome = require('selenium-webdriver/chrome');
     }
 
     // Navegar a la página principal y seleccionar una receta
-    await driver.get('http://localhost:3000/');
-    await driver.findElement(By.linkText('Test Recipe')).click();
+    // await driver.get('http://localhost:3000/');
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    await driver.findElement(By.name('buscar')).click();
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+
+    await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000);
+    await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
 
     // Agregar a Favoritos
     await driver.findElement(By.css('button.add-to-favorites')).click();

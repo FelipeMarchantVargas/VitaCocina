@@ -54,7 +54,7 @@ const chrome = require('selenium-webdriver/chrome');
     }
 
     // Actualizar la receta
-    await driver.get('http://localhost:3000/');
+    // await driver.get('http://localhost:3000/');
     console.log(recipe.title);
     // Ingresar el título de la receta en la barra de búsqueda
     await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');

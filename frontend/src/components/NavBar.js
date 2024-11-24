@@ -27,7 +27,7 @@ const NavBar = () => {
     setIsAuthenticated(false);
     setUserName("");
     setIsAdmin(false);
-    navigate("/login");
+    navigate("/");
   };
 
   const navigateToRegister = () => {

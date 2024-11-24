@@ -1,12 +1,35 @@
 /// <reference types="cypress" />
 
 describe("Create Recipe", () => {
+  // const recipe = {
+  //   title: "Test Recipe",
+  //   description: "This is a test recipe",
+  //   ingredients: ["Ingredient 1", "Ingredient 2"],
+  //   instructions: ["Step 1", "Step 2"],
+  //   image: "https://example.com/image.jpg",
+  //   nutrition: {
+  //     calories: 200,
+  //     protein: 10,
+  //     fat: 5,
+  //     carbs: 30,
+  //   },
+  //   category: "Dessert",
+  //   time: 30,
+  //   difficulty: "Fácil",
+  //   tips: ["Hola!", "este es un ejemplo"],
+  // };
+
+  // const user = {
+  //   name: "b",
+  //   email: "b@b",
+  //   password: "b",
+  // };
   const recipe = {
     title: "Test Recipe",
     description: "This is a test recipe",
     ingredients: ["Ingredient 1", "Ingredient 2"],
     instructions: ["Step 1", "Step 2"],
-    image: "https://example.com/image.jpg",
+    image: "https://i.redd.it/97yd9pkvfnlb1.jpg",
     nutrition: {
       calories: 200,
       protein: 10,
@@ -20,9 +43,9 @@ describe("Create Recipe", () => {
   };
 
   const user = {
-    name: "b",
-    email: "b@b",
-    password: "b",
+    name: "TestUser",
+    email: "testuser@example.com",
+    password: "S4f3_p@ssw0rd",
   };
 
   before(() => {
@@ -31,9 +54,6 @@ describe("Create Recipe", () => {
     cy.get('input[name="email"]').type(user.email);
     cy.get('input[name="password"]').type(user.password);
     cy.get('button[type="submit"]').click();
-    // cy.on("window:alert", (str) => {
-    //   expect(str).to.equal("Logged in successfully");
-    // });
     cy.window().then((win) => {
       cy.request({
         method: "POST",
@@ -58,13 +78,15 @@ describe("Create Recipe", () => {
       if (index > 0) {
         cy.get("button").contains("Agregar ingrediente").click();
       }
-      cy.get(`input[name="ingredient"]`).eq(index).type(ingredient);
+      // cy.get(`input[name="ingredient${index}"]`).eq(index).type(ingredient);
+      cy.get(`input[name="ingredient${index}"]`).type(ingredient);
     });
     recipe.instructions.forEach((instruction, index) => {
       if (index > 0) {
         cy.get("button").contains("Agregar instrucción").click();
       }
-      cy.get(`input[name="instructions"]`).eq(index).type(instruction);
+      // cy.get(`input[name="instructions${index}"]`).eq(index).type(instruction);
+      cy.get(`input[name="instructions${index}"]`).type(instruction);
     });
     cy.get('input[name="image"]').type(recipe.image);
     cy.get('input[name="calories"]').type(recipe.nutrition.calories.toString());
@@ -78,7 +100,8 @@ describe("Create Recipe", () => {
       if (index > 0) {
         cy.get("button").contains("Agregar consejo").click();
       }
-      cy.get(`input[name="tips"]`).eq(index).type(tip);
+      // cy.get(`input[name="tips${index}"]`).eq(index).type(tip);
+      cy.get(`input[name="tips${index}"]`).type(tip);
     });
     cy.get('button[type="submit"]').click();
     cy.on("window:alert", (str) => {

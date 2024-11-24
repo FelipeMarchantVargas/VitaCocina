@@ -20,9 +20,9 @@ describe("Delete Recipe", () => {
   };
 
   const user = {
-    name: "b",
-    email: "b@b",
-    password: "b",
+    name: "TestUser",
+    email: "testuser@example.com",
+    password: "S4f3_p@ssw0rd",
   };
 
   before(() => {
@@ -54,6 +54,7 @@ describe("Delete Recipe", () => {
   it("should delete the recipe", () => {
     cy.visit("/");
     cy.contains(recipe.title).click();
+    cy.wait(1000); // Espera para asegurar que la alerta sea manejada
     cy.contains("Eliminar Receta").click();
     cy.on("window:confirm", () => true); // Confirm the deletion
     cy.wait(1000); // Espera para asegurar que la alerta sea manejada

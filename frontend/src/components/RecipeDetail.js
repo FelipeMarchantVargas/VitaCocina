@@ -12,6 +12,7 @@ const RecipeDetail = () => {
   const [rating, setRating] = useState(0);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const fetchRecipe = useCallback(async () => {
     try {
@@ -26,9 +27,11 @@ const RecipeDetail = () => {
     const checkAuth = () => {
       const token = localStorage.getItem("authToken");
       const user = localStorage.getItem("userName");
+      const admin = localStorage.getItem("isAdmin") === "true";
       if (token && user) {
         setIsAuthenticated(true);
         setUserName(user);
+        setIsAdmin(admin);
       }
     };
 
@@ -39,8 +42,10 @@ const RecipeDetail = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken"); // Elimina el token al cerrar sesión
     localStorage.removeItem("userName"); // Elimina el nombre del usuario
+    localStorage.removeItem("isAdmin"); // Elimina el estado de administrador
     setIsAuthenticated(false); // Actualiza el estado
     setUserName(""); // Limpia el nombre del usuario
+    setIsAdmin(false); // Limpia el estado de administrador
     alert("Has cerrado sesión");
   };
 
@@ -195,10 +200,10 @@ const RecipeDetail = () => {
             <button type="submit">Enviar Valoración</button>
           </form>
         )}
-        {isAuthenticated && (
+        {isAuthenticated && isAdmin && (
           <div className="update-delete">
             <button onClick={handleEdit}>Editar Receta</button>
-            <button onClick={handleDelete} name = "botonDelete">Eliminar Receta</button>
+            <button onClick={handleDelete} name="botonDelete">Eliminar Receta</button>
           </div>
         )}
       </div>

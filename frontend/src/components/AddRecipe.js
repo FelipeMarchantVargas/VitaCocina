@@ -160,6 +160,7 @@ const AddRecipe = () => {
       <label>
         Descripción:
         <input
+        id="description"
           type="text"
           name="description"
           value={recipeData.description}
@@ -173,13 +174,13 @@ const AddRecipe = () => {
         <input
           key={index}
           type="text"
-          name="ingredient"
+          name={`ingredient${index}`}
           value={ingredient}
           onChange={(e) => handleArrayChange(e, index, "ingredients")}
           required
         />
       ))}
-      <button type="button" onClick={addIngredient}>
+      <button type="button" name="boton1" onClick={addIngredient}>
         Agregar ingrediente
       </button>
 
@@ -188,13 +189,13 @@ const AddRecipe = () => {
         <input
           key={index}
           type="text"
-          name="instructions"
+          name={`instructions${index}`}
           value={instruction}
           onChange={(e) => handleArrayChange(e, index, "instructions")}
           required
         />
       ))}
-      <button type="button" onClick={addInstruction}>
+      <button type="button" name="boton2" onClick={addInstruction}>
         Agregar instrucción
       </button>
 
@@ -281,17 +282,17 @@ const AddRecipe = () => {
         <input
           key={index}
           type="text"
-          name="tips"
+          name={`tips${index}`}
           value={tip}
           onChange={(e) => handleArrayChange(e, index, "tips")}
           required
         />
       ))}
-      <button type="button" onClick={addTip}>
+      <button type="button" name="boton3" onClick={addTip}>
         Agregar consejo
       </button>
 
-      <button type="submit">Agregar receta</button>
+      <button type="submit" name="aceptar">Agregar receta</button>
     </form>
     </>
   );

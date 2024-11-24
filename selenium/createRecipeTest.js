@@ -9,7 +9,7 @@ const chrome = require('selenium-webdriver/chrome');
       description: "This is a test recipe",
       ingredients: ["Ingredient 1", "Ingredient 2"],
       instructions: ["Step 1", "Step 2"],
-      image: "https://example.com/image.jpg",
+      image: "https://i.redd.it/97yd9pkvfnlb1.jpg",
       nutrition: {
         calories: 200,
         protein: 10,
@@ -51,39 +51,43 @@ const chrome = require('selenium-webdriver/chrome');
     if (!token) {
       throw new Error("Token not found in localStorage");
     }
-
+ 
 
     // Crear una nueva receta
     await driver.get('http://localhost:3000/addRecipe');
     await driver.findElement(By.name('title')).sendKeys(recipe.title);
-    await driver.findElement(By.name('description')).sendKeys(recipe.description);
+    await driver.findElement(By.id('description')).sendKeys(recipe.description);
+
     for (let i = 0; i < recipe.ingredients.length; i++) {
       if (i > 0) {
-        await driver.findElement(By.css("button:contains('Agregar ingrediente')")).click();
+        await driver.findElement(By.name("boton1")).click();
       }
-      await driver.findElement(By.name('ingredient')).sendKeys(recipe.ingredients[i]);
+      console.log(recipe.ingredients[i]);
+      await driver.findElement(By.name('ingredient'+(i))).sendKeys(recipe.ingredients[i]);
     }
+    
     for (let i = 0; i < recipe.instructions.length; i++) {
       if (i > 0) {
-        await driver.findElement(By.css("button:contains('Agregar instrucción')")).click();
+        await driver.findElement(By.name("boton2")).click();
       }
-      await driver.findElement(By.name('instructions')).sendKeys(recipe.instructions[i]);
+      await driver.findElement(By.name('instructions'+(i))).sendKeys(recipe.instructions[i]);
     }
     await driver.findElement(By.name('image')).sendKeys(recipe.image);
-    await driver.findElement(By.name('nutrition.calories')).sendKeys(recipe.nutrition.calories.toString());
-    await driver.findElement(By.name('nutrition.protein')).sendKeys(recipe.nutrition.protein.toString());
-    await driver.findElement(By.name('nutrition.fat')).sendKeys(recipe.nutrition.fat.toString());
-    await driver.findElement(By.name('nutrition.carbs')).sendKeys(recipe.nutrition.carbs.toString());
+
+    await driver.findElement(By.name('calories')).sendKeys(recipe.nutrition.calories.toString());
+    await driver.findElement(By.name('protein')).sendKeys(recipe.nutrition.protein.toString());
+    await driver.findElement(By.name('fat')).sendKeys(recipe.nutrition.fat.toString());
+    await driver.findElement(By.name('carbs')).sendKeys(recipe.nutrition.carbs.toString());
     await driver.findElement(By.name('category')).sendKeys(recipe.category);
     await driver.findElement(By.name('time')).sendKeys(recipe.time.toString());
     await driver.findElement(By.name('difficulty')).sendKeys(recipe.difficulty);
     for (let i = 0; i < recipe.tips.length; i++) {
       if (i > 0) {
-        await driver.findElement(By.css("button:contains('Agregar consejo')")).click();
+        await driver.findElement(By.name("boton3")).click();
       }
-      await driver.findElement(By.name('tips')).sendKeys(recipe.tips[i]);
+      await driver.findElement(By.name('tips'+i)).sendKeys(recipe.tips[i]);
     }
-    await driver.findElement(By.css('button[type="submit"]')).click();
+    await driver.findElement(By.name('aceptar')).click();
 
     // Esperar a que aparezca el mensaje de éxito
     await driver.wait(until.alertIsPresent(), 10000);

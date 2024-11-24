@@ -98,7 +98,7 @@ const UserProfile = () => {
         handleLogout={handleLogout}
       />
       <div>
-        <h1>Bienvenido, {user.name}</h1> {/* Verificar que el nombre aparece aquí */}
+        <h1 id="bienvenido">Bienvenido, {user.name}</h1> {/* Verificar que el nombre aparece aquí */}
       </div>
       <div className="profile-container">
         <h1>Perfil de Usuario</h1>

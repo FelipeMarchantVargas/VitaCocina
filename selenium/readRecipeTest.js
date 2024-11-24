@@ -8,12 +8,12 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.get('http://localhost:3000/');
 
     // Ingresar el título de la receta en la barra de búsqueda
-    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('fideos con salsa');
-    await driver.findElement(By.css('button')).click();
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
+    await driver.findElement(By.css('button.search-button')).click();
 
     // Verificar los resultados de búsqueda
-    await driver.wait(until.elementLocated(By.css('h1')), 10000);
-    let recipeTitle = await driver.findElement(By.css('h1')).getText();
+    await driver.wait(until.elementLocated(By.css('.recipe-card h1')), 10000);
+    let recipeTitle = await driver.findElement(By.css('.recipe-card h1')).getText();
     console.log(recipeTitle);
   } finally {
     await driver.quit();

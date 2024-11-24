@@ -28,13 +28,11 @@ const chrome = require('selenium-webdriver/chrome');
       password: "S4f3_p@ssw0rd",
     };
 
-    // Navegar a la página de inicio de sesión
-    await driver.get("http://localhost:3000/login");
-
-    // Ingresar el correo electrónico y la contraseña
-    await driver.findElement(By.name("email")).sendKeys(user.email);
-    await driver.findElement(By.name("password")).sendKeys(user.password);
-    await driver.findElement(By.css('button[type="submit"]')).click();
+        // Verificar que el usuario puede iniciar sesión después de registrarse
+    await driver.get('http://localhost:3000/login');
+    await driver.findElement(By.name('email')).sendKeys(user.email);
+    await driver.findElement(By.name('password')).sendKeys(user.password);
+    await driver.findElement(By.name('login')).click();
 
     // Esperar a que la alerta esté presente y aceptarla si aparece
     try {

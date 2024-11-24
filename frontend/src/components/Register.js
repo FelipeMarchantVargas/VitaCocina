@@ -78,7 +78,7 @@ const Register = () => {
           Administrador
         </label>
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" name="register">Register</button>
     </form>
   );
 };

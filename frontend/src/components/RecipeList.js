@@ -155,7 +155,7 @@ const RecipeList = () => {
           onChange={(e) => setCarbohydrates(e.target.value)}
           className="search-input"
         />
-        <button onClick={handleSearch} className="search-button">Buscar</button>
+        <button onClick={handleSearch} name="buscar" className="search-button">Buscar</button>
       </div>
 
       {isAuthenticated && (
@@ -179,6 +179,7 @@ const RecipeList = () => {
           <div
             key={recipe._id}
             className="recipe-card"
+            id = {recipe.title}
             onClick={() => handleRecipeClick(recipe._id)}
           >
             <h1>{recipe.title}</h1>

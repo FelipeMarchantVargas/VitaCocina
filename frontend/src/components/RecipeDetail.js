@@ -198,7 +198,7 @@ const RecipeDetail = () => {
         {isAuthenticated && (
           <div className="update-delete">
             <button onClick={handleEdit}>Editar Receta</button>
-            <button onClick={handleDelete}>Eliminar Receta</button>
+            <button onClick={handleDelete} name = "botonDelete">Eliminar Receta</button>
           </div>
         )}
       </div>

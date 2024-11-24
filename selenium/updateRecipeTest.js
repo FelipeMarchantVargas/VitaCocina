@@ -54,10 +54,21 @@ const chrome = require('selenium-webdriver/chrome');
 
     // Actualizar la receta
     await driver.get('http://localhost:3000/');
-    await driver.findElement(By.xpath(`//*[contains(text(), '${recipe.title}')]`)).click();
+    console.log(recipe.title);
+    // Ingresar el título de la receta en la barra de búsqueda
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    await driver.findElement(By.name('buscar')).click();
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+
+    await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000).click();
+    await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
+
+    
     await driver.findElement(By.xpath(`//*[contains(text(), 'Editar Receta')]`)).click();
-    await driver.findElement(By.name('title')).clear().sendKeys('Updated Recipe');
-    await driver.findElement(By.name('tips')).clear().sendKeys('Updated Tip 1,Updated Tip 2');
+    await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
+    await driver.findElement(By.name('title')).sendKeys('Updated');
+    await driver.findElement(By.name('tips')).sendKeys('Updated Tip 1,Updated Tip 2');
     await driver.findElement(By.css('button[type="submit"]')).click();
 
     // Esperar a que aparezca el mensaje de éxito

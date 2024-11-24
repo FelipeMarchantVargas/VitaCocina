@@ -9,7 +9,8 @@ const chrome = require('selenium-webdriver/chrome');
 
     // Ingresar el título de la receta en la barra de búsqueda
     await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
-    await driver.findElement(By.css('button.search-button')).click();
+    await driver.findElement(By.name('buscar')).click();
+    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
 
     // Verificar los resultados de búsqueda
     await driver.wait(until.elementLocated(By.css('.recipe-card h1')), 10000);

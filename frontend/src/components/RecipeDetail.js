@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../stylesheets/RecipeDetail.css";
 import NavBar from "./NavBar"; // Importamos el NavBar
@@ -196,20 +196,22 @@ const RecipeDetail = () => {
 
         <h2>Comentarios</h2>
         <ul>
-          {(recipe.comments || []).map((comment, index) => (
-            <li key={index} id={`comment${index}`} className="comment-item">
-              <span>{comment.user.name}: {comment.text}</span>
-              {isAdmin && (
-                <button
-                  className="right-align-button"
-                  onClick={() => handleDeleteComment(comment._id)}
-                  name={`borrarComment${index}`}
-                >
-                  Eliminar
-                </button>
-              )}
-            </li>
-          ))}
+          {console.log(recipe)}
+          {(recipe.comments || [])
+            .filter((comment) => comment?.user?.name)
+            .map((comment, index) => (
+              <li key={index} id={`comment${index}`} className="comment-item">
+                <span>{`${comment.user.name}: ${comment.text}`}</span>
+                {isAdmin && (
+                  <button
+                    className="right-align-button"
+                    onClick={() => handleDeleteComment(comment._id)}
+                    name={`borrarComment${index}`}>
+                    Eliminar
+                  </button>
+                )}
+              </li>
+            ))}
         </ul>
         {isAuthenticated && (
           <form onSubmit={handleCommentSubmit}>
@@ -220,26 +222,29 @@ const RecipeDetail = () => {
               placeholder="Escribe un comentario"
               required
             />
-            <button type="submit" name="botonComment">Enviar Comentario</button>
+            <button type="submit" name="botonComment">
+              Enviar Comentario
+            </button>
           </form>
         )}
 
         <h2>Valoraciones</h2>
         <ul>
-          {(recipe.ratings || []).map((rating, index) => (
-            <li key={index} id={`rating${index}`} className="rating-item">
-              <span>{rating.user.name}: {rating.value} estrellas</span>
-              {isAdmin && (
-                <button
-                  className="right-align-button"
-                  onClick={() => handleDeleteRating(rating._id)}
-                  name={`borrarRating${index}`}
-                >
-                  Eliminar
-                </button>
-              )}
-            </li>
-          ))}
+          {(recipe.ratings || [])
+            .filter((rating) => rating?.user?.name)
+            .map((rating, index) => (
+              <li key={index} id={`rating${index}`} className="rating-item">
+                <span>{`${rating.user.name}: ${rating.value} estrellas`}</span>
+                {isAdmin && (
+                  <button
+                    className="right-align-button"
+                    onClick={() => handleDeleteRating(rating._id)}
+                    name={`borrarRating${index}`}>
+                    Eliminar
+                  </button>
+                )}
+              </li>
+            ))}
         </ul>
         {isAuthenticated && (
           <form onSubmit={handleRatingSubmit}>
@@ -247,8 +252,7 @@ const RecipeDetail = () => {
               value={rating}
               onChange={(e) => setRating(e.target.value)}
               name="rating"
-              required
-            >
+              required>
               <option value="">Selecciona una valoración</option>
               {[1, 2, 3, 4, 5].map((value) => (
                 <option key={value} value={value}>
@@ -256,14 +260,18 @@ const RecipeDetail = () => {
                 </option>
               ))}
             </select>
-            <button type="submit" name="botonRating">Enviar Valoración</button>
+            <button type="submit" name="botonRating">
+              Enviar Valoración
+            </button>
           </form>
         )}
 
         {isAuthenticated && isAdmin && (
           <div className="update-delete">
             <button onClick={handleEdit}>Editar Receta</button>
-            <button onClick={handleDelete} name="botonDelete">Eliminar Receta</button>
+            <button onClick={handleDelete} name="botonDelete">
+              Eliminar Receta
+            </button>
           </div>
         )}
       </div>

@@ -76,6 +76,20 @@ pipeline {
             }
         }
 
+        stage('Run Cypress Tests') {
+            steps {
+                echo 'Running Cypress tests...'
+                sh 'npx cypress run --config-file cypress.config.js --headless --browser electron'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                // Aquí puedes agregar los comandos necesarios para desplegar tu aplicación
+            }
+        }
+
         stage('Run Selenium Tests') {
             steps {
                 dir('selenium') {
@@ -85,13 +99,6 @@ pipeline {
                     // Ejecuta los tests asegurándote de que se use el entorno configurado
                     sh 'node runner.js'
                 }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-                // Aquí puedes agregar los comandos necesarios para desplegar tu aplicación
             }
         }
     }

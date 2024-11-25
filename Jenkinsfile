@@ -74,13 +74,16 @@ pipeline {
         }
 
         stage('Run Selenium Tests') {
-            steps {
-                dir('selenium') {
-                    echo 'Running Selenium tests...'
-                    sh 'node runner.js'
+            agent {
+                docker {
+                    image 'selenium/standalone-chrome'
                 }
             }
+            steps {
+                sh 'node selenium/runner.js'
+            }
         }
+
 
         stage('Deploy') {
             steps {

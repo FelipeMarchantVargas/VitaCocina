@@ -53,6 +53,10 @@ describe("Delete Recipe", () => {
 
   it("should delete the recipe", () => {
     cy.visit("/");
+    cy.get('input[placeholder="Buscar por título..."]').type(recipe.title);
+    // Click the search button
+    cy.get('button').contains('Buscar').click();
+    cy.wait(1000); // Espera para asegurar que la alerta sea manejada
     cy.contains(recipe.title).click();
     cy.wait(1000); // Espera para asegurar que la alerta sea manejada
     cy.contains("Eliminar Receta").click();

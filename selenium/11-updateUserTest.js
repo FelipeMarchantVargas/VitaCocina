@@ -33,19 +33,23 @@ const chrome = require('selenium-webdriver/chrome');
     if (!token) {
       throw new Error("Token not found in localStorage");
     }
-
+    
     // Navegar a la página de perfil de usuario
     await driver.get('http://localhost:3000/user');
+    await driver.sleep(1000); // Esperar un momento para asegurarse de que el token se almacene
 
     // Modificar el nombre del usuario
     await driver.findElement(By.name('name')).clear();
     await driver.findElement(By.name('name')).sendKeys('UpdatedUser');
+    await driver.findElement(By.name('password')).sendKeys(user.password);
+    await driver.sleep(500); // Esperar un momento para asegurarse de que el token se almacene
     await driver.findElement(By.css('button[type="submit"]')).click();
 
     // Esperar a que aparezca el mensaje de éxito
     await driver.wait(until.alertIsPresent(), 10000);
     alert = await driver.switchTo().alert();
     console.log(await alert.getText());
+    await driver.sleep(15000); // Esperar un momento para asegurarse de que el token se almacene
     await alert.accept();
   } finally {
     await driver.quit();

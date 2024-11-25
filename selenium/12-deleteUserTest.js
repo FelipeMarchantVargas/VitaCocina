@@ -5,7 +5,8 @@ const chrome = require('selenium-webdriver/chrome');
   let driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
   try {
     const user = {
-      name: "TestUser",
+      // name: "TestUser",
+      name: "UpdatedUser",
       email: "testuser@example.com",
       password: "S4f3_p@ssw0rd",
     };

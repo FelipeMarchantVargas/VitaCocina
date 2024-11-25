@@ -52,10 +52,11 @@ const UserProfile = () => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("authToken");
-      await axios.put(`/api/users/${user.name}`, user, {
+      await axios.put(`/api/users/${localStorage.getItem("userName")}`, user, {
         headers: { Authorization: `Bearer ${token}` },
       });
       alert("Perfil actualizado con éxito");
+      localStorage.setItem("userName", user.name);
     } catch (err) {
       console.error(err);
       alert("Error al actualizar el perfil");

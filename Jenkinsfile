@@ -69,6 +69,15 @@ pipeline {
             }
         }
 
+        stage('Run Selenium Tests') {
+            steps {
+                dir('selenium') {
+                    echo 'Running Selenium tests...'
+                    sh 'node runner.js'
+                }
+            }
+        }
+
         stage('Deploy') {
             steps {
                 echo 'Deploying application...'

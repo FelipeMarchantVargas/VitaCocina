@@ -29,27 +29,24 @@ pipeline {
             }
         }
 
-        stage('Install unzip') {
-            steps {
-                echo 'Installing unzip utility...'
-                sh '''
-                    if ! command -v unzip &> /dev/null; then
-                        apt-get update
-                        apt-get install -y unzip
-                    fi
-                '''
-            }
-        }
-
         stage('Install ChromeDriver') {
             steps {
                 echo 'Installing ChromeDriver...'
                 sh '''
+                    # Descargar el archivo zip de ChromeDriver
                     CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
                     wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-                    unzip chromedriver_linux64.zip -d /usr/local/bin/
+
+                    # Descargar un binario de unzip y extraerlo localmente
+                    curl -Lo unzip.zip https://github.com/nbari/unzip/releases/download/v1.0.0/unzip-linux-amd64.tar.gz
+                    tar -xvzf unzip.zip
+                    mv unzip /usr/local/bin/unzip
+
+                    # Extraer el ChromeDriver usando unzip
+                    ./unzip chromedriver_linux64.zip -d /usr/local/bin/
                     chmod +x /usr/local/bin/chromedriver
                     rm chromedriver_linux64.zip
+                    rm unzip.zip
                 '''
                 echo 'ChromeDriver installed successfully.'
             }

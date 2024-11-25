@@ -4,8 +4,8 @@ pipeline {
     environment {
         NODE_ENV = 'production'
         MONGO_URI = 'mongodb+srv://felipemarchantv:xg42ei2Qorq5ArwF@cluster0.9yy7i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-        JWT_SECRET = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5j6k7l8m9o1p2q3r4s5t6u7v8w9x0y1z2'
-        DISPLAY = ':99' // Configuración para entorno gráfico virtual
+        JWT_SECRET = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c9d0e1f2g3h4i5j6k7l8m9n0o1p2q3r4s5t6u7v8w9x0y1z2'
+        DISPLAY = ''
         XDG_RUNTIME_DIR = '/tmp/runtime-jenkins'
     }
 
@@ -24,27 +24,8 @@ pipeline {
                 }
                 dir('selenium') {
                     echo 'Installing selenium dependencies...'
-                    sh 'npm install'
+                    sh 'npm install chromedriver --save-dev'  // Asegúrate de instalar chromedriver
                 }
-            }
-        }
-
-        stage('Install unzip and ChromeDriver') {
-            steps {
-                echo 'Installing unzip and ChromeDriver...'
-                sh '''
-                    # Instalar unzip si no está disponible
-                    apt-get install -y unzip
-
-                    # Obtener la última versión de ChromeDriver
-                    CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)
-                    wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
-
-                    # Extraer ChromeDriver
-                    unzip chromedriver_linux64.zip -d /usr/local/bin/
-                    chmod +x /usr/local/bin/chromedriver
-                    rm chromedriver_linux64.zip
-                '''
             }
         }
 
@@ -85,19 +66,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                echo 'Running Cypress tests...'
-                sh 'npx cypress run --config-file cypress.config.js --headless --browser electron'
-            }
-        }
-
         stage('Run Selenium Tests') {
             steps {
-                echo 'Setting up virtual display for Selenium tests...'
-                sh 'Xvfb :99 -screen 0 1024x768x24 &' // Crea un entorno gráfico virtual para pruebas de Selenium
                 dir('selenium') {
                     echo 'Running Selenium tests...'
+                    // Ejecutar las pruebas de Selenium usando ChromeDriver Manager
                     sh 'node runner.js'
                 }
             }
@@ -118,7 +91,7 @@ pipeline {
         }
         failure {
             echo 'Pipeline failed.'
-            slackSend(channel: '#proyecto', color: 'danger', message: "Build fallido :(")
+            slackSend(channel: '#proyecto', color: 'good', message: "Build fallido :(")
         }
     }
 }

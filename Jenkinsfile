@@ -34,8 +34,8 @@ pipeline {
                 echo 'Installing unzip and ChromeDriver...'
                 sh '''
                     # Instalar unzip si no está disponible
-                    sudo apt-get update
-                    sudo apt-get install -y unzip
+                    apt-get update
+                    apt-get install -y unzip
 
                     # Obtener la última versión de ChromeDriver
                     CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE)

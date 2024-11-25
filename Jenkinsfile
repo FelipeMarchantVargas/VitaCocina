@@ -33,8 +33,9 @@ pipeline {
                 dir('selenium') {
                     echo 'Installing selenium dependencies...'
                     // Asegúrate de instalar selenium-webdriver globalmente para Jenkins
-                    sh 'npm install selenium-webdriver --save-dev'
-                    sh 'npm install chromedriver --save-dev'
+                    // sh 'npm install selenium-webdriver --save-dev'
+                    // sh 'npm install chromedriver --save-dev'
+                    sh 'npm install'
                 }
             }
         }

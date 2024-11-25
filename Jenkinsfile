@@ -22,6 +22,10 @@ pipeline {
                     echo 'Installing frontend dependencies...'
                     sh 'npm install'
                 }
+                dir('selenium') {
+                    echo 'Installing selenium dependencies...'
+                    sh 'npm install'
+                }
             }
         }
 

@@ -196,7 +196,6 @@ const RecipeDetail = () => {
 
         <h2>Comentarios</h2>
         <ul>
-          {console.log(recipe)}
           {(recipe.comments || [])
             .filter((comment) => comment?.user?.name)
             .map((comment, index) => (

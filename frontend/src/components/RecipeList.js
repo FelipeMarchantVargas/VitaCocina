@@ -39,13 +39,14 @@ const RecipeList = () => {
     const fetchFavorites = async () => {
       try {
         const token = localStorage.getItem("authToken");
+        console.log("Token:", token); // Debugging
         const res = await axios.get("/api/users/favorites", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFavorites(res.data.map(favorite => favorite._id));
-        console.log(res.data);
+        console.log("Favorites:", res.data); // Debugging
       } catch (err) {
-        console.error(err);
+        console.error("Error fetching favorites:", err);
       }
     };
 
@@ -90,22 +91,26 @@ const RecipeList = () => {
     }
   };
 
-  const handleFavorite = async (recipeId) => {
+  const handleFavorite = async (e, recipeId) => {
+    e.stopPropagation(); // Detener la propagación del evento de clic
     try {
       const token = localStorage.getItem("authToken");
+      console.log("Token:", token); // Debugging
       if (favorites.includes(recipeId)) {
+        console.log("Removing from favorites:", recipeId); // Debugging
         await axios.delete(`/api/users/favorites/${recipeId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFavorites(favorites.filter((id) => id !== recipeId));
       } else {
+        console.log("Adding to favorites:", recipeId); // Debugging
         await axios.post(`/api/users/favorites/${recipeId}`, {}, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setFavorites([...favorites, recipeId]);
       }
     } catch (err) {
-      console.error(err);
+      console.error("Error updating favorites:", err);
     }
   };
 
@@ -201,7 +206,13 @@ const RecipeList = () => {
               ))}
             </ol>
             {isAuthenticated && (
-              <button onClick={() => handleFavorite(recipe._id)}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation(); // Detener la propagación del clic al contenedor padre
+                  handleFavorite(e, recipe._id);
+                }}
+                name="favorite"
+              >
                 {favorites.includes(recipe._id) ? "Quitar de favoritos" : "Agregar a favoritos"}
               </button>
             )}

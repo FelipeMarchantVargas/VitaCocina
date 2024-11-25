@@ -41,11 +41,15 @@ const Cart = () => {
       <NavBar isAuthenticated={isAuthenticated} userName={userName} />
       <div className="cart">
         <h2>Carrito de Ingredientes</h2>
-        <ul>
-          {ingredients.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
-          ))}
-        </ul>
+        {ingredients.length === 0 ? (
+          <p>No tienes recetas favoritas</p>
+        ) : (
+          <ul>
+            {ingredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

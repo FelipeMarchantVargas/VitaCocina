@@ -21,14 +21,14 @@ const chrome = require('selenium-webdriver/chrome');
       difficulty: "Fácil",
       tips: ["Hola!", "este es un ejemplo"],
     };
-    
+
     const user = {
       name: "TestUser",
       email: "testuser@example.com",
       password: "S4f3_p@ssw0rd",
     };
 
-        // Verificar que el usuario puede iniciar sesión después de registrarse
+    // Iniciar sesión
     await driver.get('http://localhost:3000/login');
     await driver.findElement(By.name('email')).sendKeys(user.email);
     await driver.findElement(By.name('password')).sendKeys(user.password);
@@ -52,32 +52,53 @@ const chrome = require('selenium-webdriver/chrome');
       throw new Error("Token not found in localStorage");
     }
 
-    // Navegar a la página principal y seleccionar una receta
-    // await driver.get('http://localhost:3000/');
-    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
-    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    // Navegar a la página principal y buscar la receta
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys(recipe.title);
+    await driver.sleep(500); // Espera para asegurar que la búsqueda se complete
     await driver.findElement(By.name('buscar')).click();
-    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    await driver.sleep(500); // Espera para asegurar que los resultados se carguen
 
+    // Seleccionar la receta desde los resultados de búsqueda
     await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000);
-    await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
+    await driver.sleep(2000); // Espera para asegurar que la página de la receta se cargue
 
     // Agregar a Favoritos
-    await driver.findElement(By.css('button.add-to-favorites')).click();
+    await driver.findElement(By.name('favorite')).click();
+    await driver.sleep(1000); // Espera para asegurar que la acción se complete
 
-    // Verificar que la receta se ha agregado a la lista de favoritos
-    await driver.get('http://localhost:3000/user/favorites');
-    await driver.wait(until.elementLocated(By.linkText('Test Recipe')), 10000);
+    // Navegar a la página del carrito
+    await driver.get('http://localhost:3000/cart');
+    await driver.sleep(1000); // Espera para asegurar que la página se cargue
 
-    // Eliminar de Favoritos
-    await driver.findElement(By.linkText('Test Recipe')).click();
-    await driver.findElement(By.css('button.remove-from-favorites')).click();
+    // Verificar que hay elementos en el carrito
+    let ingredients = await driver.findElements(By.css('.cart ul li'));
+    if (ingredients.length === 0) {
+      throw new Error('No ingredients found in cart');
+    }
 
-    // Verificar que la receta se ha eliminado de la lista de favoritos
-    await driver.get('http://localhost:3000/user/favorites');
-    let isRecipePresent = await driver.findElements(By.linkText('Test Recipe')).then(elements => elements.length > 0);
-    if (isRecipePresent) {
-      throw new Error('Recipe is still present in favorites');
+    // Volver a la página principal y buscar la receta nuevamente
+    await driver.get('http://localhost:3000/');
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys(recipe.title);
+    await driver.sleep(500); // Espera para asegurar que la búsqueda se complete
+    await driver.findElement(By.name('buscar')).click();
+    await driver.sleep(500); // Espera para asegurar que los resultados se carguen
+
+    // Seleccionar la receta desde los resultados de búsqueda
+    await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000);
+    await driver.sleep(2000); // Espera para asegurar que la página de la receta se cargue
+
+    // Quitar de Favoritos
+    await driver.findElement(By.name('favorite')).click();
+    await driver.sleep(1000); // Espera para asegurar que la acción se complete
+
+    // Navegar a la página del carrito nuevamente
+    await driver.get('http://localhost:3000/cart');
+    await driver.sleep(1000); // Espera para asegurar que la página se cargue
+
+    // Verificar que el carrito está vacío
+    ingredients = await driver.findElements(By.css('.cart ul li'));
+    if (ingredients.length > 0) {
+      throw new Error('Ingredients still found in cart');
     }
 
   } finally {

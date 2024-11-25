@@ -2,7 +2,8 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
 (async function manageFavoritesTest() {
-  let driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
+  let driver = await new
+   Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
   try {
     const recipe = {
       title: "Test Recipe",
@@ -76,6 +77,16 @@ const chrome = require('selenium-webdriver/chrome');
       throw new Error('No ingredients found in cart');
     }
 
+    // Navegar a la página de favoritos
+    await driver.get('http://localhost:3000/favorites');
+    await driver.sleep(1000); // Espera para asegurar que la página se cargue
+
+    // Verificar que hay recetas en la página de favoritos
+    let favoriteRecipes = await driver.findElements(By.css('.recipe-card'));
+    if (favoriteRecipes.length === 0) {
+      throw new Error('No favorite recipes found');
+    }
+
     // Volver a la página principal y buscar la receta nuevamente
     await driver.get('http://localhost:3000/');
     await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys(recipe.title);
@@ -91,14 +102,14 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.findElement(By.name('favorite')).click();
     await driver.sleep(1000); // Espera para asegurar que la acción se complete
 
-    // Navegar a la página del carrito nuevamente
-    await driver.get('http://localhost:3000/cart');
+    // Navegar a la página de favoritos nuevamente
+    await driver.get('http://localhost:3000/favorites');
     await driver.sleep(1000); // Espera para asegurar que la página se cargue
 
-    // Verificar que el carrito está vacío
-    ingredients = await driver.findElements(By.css('.cart ul li'));
-    if (ingredients.length > 0) {
-      throw new Error('Ingredients still found in cart');
+    // Verificar que no hay recetas en la página de favoritos
+    favoriteRecipes = await driver.findElements(By.css('.recipe-card'));
+    if (favoriteRecipes.length > 0) {
+      throw new Error('Favorite recipes still found');
     }
 
   } finally {

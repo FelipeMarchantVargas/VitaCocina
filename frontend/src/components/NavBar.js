@@ -53,6 +53,9 @@ const NavBar = () => {
   const navigateToCart = () => {
     navigate("/cart");
   };
+  const navigateToFavorites = () => {
+    navigate("/favorites");
+  };
   
   return (
     <nav className="navbar">
@@ -70,6 +73,9 @@ const NavBar = () => {
                 Admin Dashboard
               </button>
             )}
+            <button onClick={navigateToFavorites} className="nav-button">
+              Favoritos
+            </button>
             <button onClick={navigateToTips} className="nav-button">
               Tips
             </button>

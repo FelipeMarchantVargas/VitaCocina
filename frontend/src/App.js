@@ -12,6 +12,7 @@ import TipList from "./components/TipList";
 import TipDetail from "./components/TipDetail";
 import AdminDashboard from "./components/AdminDashboard";
 import Cart from "./components/Cart";
+import Favorites from "./components/Favorites"; // Importa el nuevo componente
 
 const PrivateRoute = ({ element: Component, ...rest }) => {
   const isAuthenticated = localStorage.getItem("authToken");
@@ -34,6 +35,7 @@ function App() {
         <Route path="/tips/:id" element={<TipDetail />} />
         <Route path="/admin" element={<PrivateRoute element={AdminDashboard} />} /> {/* Ruta protegida */}
         <Route path="/cart" element={<Cart />} />
+        <Route path="/favorites" element={<Favorites />} /> {/* Nueva ruta */}
       </Routes>
     </Router>
   );

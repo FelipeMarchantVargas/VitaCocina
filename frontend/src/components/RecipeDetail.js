@@ -197,10 +197,14 @@ const RecipeDetail = () => {
         <h2>Comentarios</h2>
         <ul>
           {(recipe.comments || []).map((comment, index) => (
-            <li key={index} id={`comment${index}`}>
-              {comment.user.name}: {comment.text}
+            <li key={index} id={`comment${index}`} className="comment-item">
+              <span>{comment.user.name}: {comment.text}</span>
               {isAdmin && (
-                <button onClick={() => handleDeleteComment(comment._id)} name={`borrarComment${index}`}>
+                <button
+                  className="right-align-button"
+                  onClick={() => handleDeleteComment(comment._id)}
+                  name={`borrarComment${index}`}
+                >
                   Eliminar
                 </button>
               )}
@@ -223,10 +227,14 @@ const RecipeDetail = () => {
         <h2>Valoraciones</h2>
         <ul>
           {(recipe.ratings || []).map((rating, index) => (
-            <li key={index} id={`rating${index}`}>
-              {rating.user.name}: {rating.value} estrellas
+            <li key={index} id={`rating${index}`} className="rating-item">
+              <span>{rating.user.name}: {rating.value} estrellas</span>
               {isAdmin && (
-                <button onClick={() => handleDeleteRating(rating._id)} name={`borrarRating${index}`}>
+                <button
+                  className="right-align-button"
+                  onClick={() => handleDeleteRating(rating._id)}
+                  name={`borrarRating${index}`}
+                >
                   Eliminar
                 </button>
               )}
@@ -239,7 +247,8 @@ const RecipeDetail = () => {
               value={rating}
               onChange={(e) => setRating(e.target.value)}
               name="rating"
-              required>
+              required
+            >
               <option value="">Selecciona una valoración</option>
               {[1, 2, 3, 4, 5].map((value) => (
                 <option key={value} value={value}>
@@ -247,9 +256,10 @@ const RecipeDetail = () => {
                 </option>
               ))}
             </select>
-            <button type="submit"  name="botonRating">Enviar Valoración</button>
+            <button type="submit" name="botonRating">Enviar Valoración</button>
           </form>
         )}
+
         {isAuthenticated && isAdmin && (
           <div className="update-delete">
             <button onClick={handleEdit}>Editar Receta</button>

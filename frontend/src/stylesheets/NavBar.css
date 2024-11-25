@@ -1,7 +1,7 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: center; /* Centra verticalmente todos los elementos */
   padding: 1rem;
   background-color: #4caf50;
 }
@@ -11,16 +11,21 @@
   color: white;
   font-size: 24px;
   font-family: 'Lobster', cursive;
+  display: flex;
+  align-items: center; /* Centra el título verticalmente */
 }
 
 .navbar-links {
   display: flex;
-  align-items: center;
+  align-items: center; /* Centra verticalmente los botones y el texto */
 }
 
 .navbar-links p {
   color: white;
   margin-right: 20px;
+  font-size: 16px;
+  display: flex;
+  align-items: center; /* Centra el texto dentro de su contenedor */
 }
 
 .nav-button {
@@ -32,6 +37,9 @@
   cursor: pointer;
   margin-left: 10px;
   font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center; /* Centra el texto en el botón */
+  justify-content: center; /* Opcional: asegura el texto centrado horizontalmente */
 }
 
 .nav-button:hover {
@@ -43,6 +51,8 @@
   font-size: 24px;
   font-family: 'Lobster', cursive;
   cursor: pointer;
+  display: flex;
+  align-items: center; /* Centra el botón verticalmente */
 }
 
 .home-button:hover {

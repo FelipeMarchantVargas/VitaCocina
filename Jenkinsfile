@@ -14,7 +14,8 @@ pipeline {
         stage('Setup Xvfb') {
             steps {
                 echo 'Setting up Xvfb...'
-                sh 'Xvfb :99 -ac &'
+                // sh 'Xvfb :99 -ac &'
+                sh 'Xvfb :99 -screen 0 1024x768x24 & export DISPLAY=:99'
             }
         }
 

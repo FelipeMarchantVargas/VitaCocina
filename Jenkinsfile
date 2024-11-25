@@ -34,8 +34,8 @@ pipeline {
                 echo 'Installing unzip utility...'
                 sh '''
                     if ! command -v unzip &> /dev/null; then
-                        sudo apt-get update
-                        sudo apt-get install -y unzip
+                        apt-get update
+                        apt-get install -y unzip
                     fi
                 '''
             }

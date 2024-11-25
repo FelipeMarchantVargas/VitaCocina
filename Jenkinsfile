@@ -34,7 +34,6 @@ pipeline {
                 echo 'Installing unzip and ChromeDriver...'
                 sh '''
                     # Instalar unzip si no está disponible
-                    apt-get update
                     apt-get install -y unzip
 
                     # Obtener la última versión de ChromeDriver

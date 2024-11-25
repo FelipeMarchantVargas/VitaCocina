@@ -15,24 +15,19 @@ const scripts = [
   "12-deleteUserTest.js",
 ];
 
-const CHROMEDRIVER_PATH = "/usr/local/bin/chromedriver";
-
 (async () => {
   for (const script of scripts) {
     console.log(`Ejecutando: ${script}`);
     await new Promise((resolve, reject) => {
-      exec(
-        `PATH=${CHROMEDRIVER_PATH}:$PATH node ${script}`,
-        (error, stdout, stderr) => {
-          if (error) {
-            console.error(`Error ejecutando ${script}:`, stderr);
-            reject(error);
-          } else {
-            console.log(stdout);
-            resolve();
-          }
+      exec(`node ${script}`, (error, stdout, stderr) => {
+        if (error) {
+          console.error(`Error ejecutando ${script}:`, stderr);
+          reject(error);
+        } else {
+          console.log(stdout);
+          resolve();
         }
-      );
+      });
     });
   }
   console.log("Todos los scripts ejecutados.");

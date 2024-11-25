@@ -13,9 +13,8 @@ pipeline {
     stages {
         stage('Setup Xvfb') {
             steps {
-                echo 'Starting Xvfb...'
-                sh 'Xvfb :99 -screen 0 1024x768x24 &'
-                sh 'echo $DISPLAY'
+                echo 'Setting up Xvfb...'
+                sh 'Xvfb :99 -ac &'
             }
         }
 
@@ -33,8 +32,9 @@ pipeline {
                 }
                 dir('selenium') {
                     echo 'Installing selenium dependencies...'
-                    // Instala selenium-webdriver y chromedriver
-                    sh 'npm install selenium-webdriver chromedriver --save-dev'
+                    // Asegúrate de instalar selenium-webdriver globalmente para Jenkins
+                    sh 'npm install selenium-webdriver --save-dev'
+                    sh 'npm install chromedriver --save-dev'
                 }
             }
         }
@@ -80,7 +80,9 @@ pipeline {
             steps {
                 dir('selenium') {
                     echo 'Running Selenium tests...'
-                    // Ejecuta los tests de Selenium con ChromeDriver configurado
+                    // Limpia el caché de npm por seguridad
+                    sh 'npm cache clean --force'
+                    // Ejecuta los tests asegurándote de que se use el entorno configurado
                     sh 'node runner.js'
                 }
             }

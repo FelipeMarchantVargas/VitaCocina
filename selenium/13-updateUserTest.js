@@ -43,7 +43,11 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.findElement(By.name('name')).sendKeys('UpdatedUser');
     await driver.findElement(By.name('password')).sendKeys(user.password);
     await driver.sleep(500); // Esperar un momento para asegurarse de que el token se almacene
-    await driver.findElement(By.css('button[type="submit"]')).click();
+    const botonEdit = await driver.findElement(By.css('button[type="submit"]'))
+    await driver.executeScript("arguments[0].scrollIntoView(true);", botonEdit);
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
+    await botonEdit.click();
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
 
     // Esperar a que aparezca el mensaje de éxito
     await driver.wait(until.alertIsPresent(), 10000);

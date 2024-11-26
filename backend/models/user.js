@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
     required: true 
   },
   favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "recipes" }],
+  favoriteTips: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tip' }],
 });
 
 const User = mongoose.model("User", userSchema);

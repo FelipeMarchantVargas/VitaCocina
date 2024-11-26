@@ -104,3 +104,29 @@ exports.getFavorites = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.addFavoriteTip = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user.favoriteTips.includes(req.params.tipId)) {
+      user.favoriteTips.push(req.params.tipId);
+      await user.save();
+    }
+    res.status(200).json(user.favoriteTips);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.removeFavoriteTip = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    user.favoriteTips = user.favoriteTips.filter(
+      (tipId) => tipId.toString() !== req.params.tipId
+    );
+    await user.save();
+    res.status(200).json(user.favoriteTips);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

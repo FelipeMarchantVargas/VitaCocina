@@ -64,24 +64,30 @@ const chrome = require('selenium-webdriver/chrome');
     // Agregar un comentario
     await driver.wait(until.elementLocated(By.name('comment')), 10000);
     await driver.findElement(By.name('comment')).sendKeys('Este es un comentario de prueba');
-    await driver.findElement(By.name('botonComment')).click();
+    const commentButton = await driver.findElement(By.name('botonComment'));
+    await driver.executeScript("arguments[0].scrollIntoView(true);", commentButton);
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
+    await commentButton.click();
     await driver.sleep(1000);
 
     // Verificar que el comentario se ha agregado correctamente
     await driver.wait(until.elementLocated(By.id("comment0"), 10000));
 
-    // Eliminar el comentario
-    await driver.findElement(By.name("borrarComment0")).click();
+    // Desplazarse hasta el botón de eliminar comentario y hacer clic
+    const deleteCommentButton = await driver.findElement(By.name("borrarComment0"));
+    await driver.executeScript("arguments[0].scrollIntoView(true);", deleteCommentButton);
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
+    await deleteCommentButton.click();
     await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    
     // Confirmar la eliminación
     await driver.wait(until.alertIsPresent(), 10000);
     alert = await driver.switchTo().alert();
     console.log(await alert.getText());
-    await alert.accept();
     await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
     await alert.accept();
     await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
-
+    await alert.accept();
 
     // Verificar que el comentario se ha eliminado correctamente
     let isCommentPresent = await driver.findElements(By.name("comment0")).then(elements => elements.length > 0);

@@ -41,14 +41,16 @@ const chrome = require('selenium-webdriver/chrome');
     // Hacer clic en "Eliminar Receta"
     await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000).click();
     await driver.sleep(1000); // Espera 2 segundos (2000 milisegundos).
-    await driver.findElement(By.name('botonDelete')).click();
-
-
-    await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
+    const deleteButton = await driver.findElement(By.name('botonDelete'))
+    await driver.executeScript("arguments[0].scrollIntoView(true);", deleteButton);
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
+    await deleteButton.click();
+    await driver.sleep(3000); // Espera 2 segundos (2000 milisegundos).
     // Confirmar la eliminación
     await driver.wait(until.alertIsPresent(), 10000);
     alert = await driver.switchTo().alert();
     console.log(await alert.getText());
+    await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
     await alert.accept();
     await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
   } finally {

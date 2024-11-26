@@ -1,35 +1,46 @@
 .navbar {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Centra verticalmente todos los elementos */
-  padding: 1rem;
+  align-items: center;
+  padding: 0.7rem;
   background-color: #4caf50;
+}
+
+.navbar a {
+  color: white !important;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .navbar h1 {
   margin: 0;
   color: white;
-  font-size: 24px;
   font-family: 'Lobster', cursive;
   display: flex;
-  align-items: center; /* Centra el título verticalmente */
+  align-items: center;
+}
+
+.navbar-links-left {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: row;
+  margin-right: 100px;
 }
 
 .navbar-links {
   display: flex;
-  align-items: center; /* Centra verticalmente los botones y el texto */
-}
-
-.navbar-links p {
-  color: white;
-  margin-right: 20px;
-  font-size: 16px;
-  display: flex;
-  align-items: center; /* Centra el texto dentro de su contenedor */
+  align-items: center;
+  justify-content: space-around;
 }
 
 .nav-button {
-  padding: 10px 15px;
   background-color: #4caf50;
   color: white;
   border: none;
@@ -38,24 +49,40 @@
   margin-left: 10px;
   font-family: 'Roboto', sans-serif;
   display: flex;
-  align-items: center; /* Centra el texto en el botón */
-  justify-content: center; /* Opcional: asegura el texto centrado horizontalmente */
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-button:hover {
+  color: white;
   background-color: #45a049;
 }
 
 .home-button {
   background-color: transparent;
-  font-size: 24px;
+  font-size: 32px;
   font-family: 'Lobster', cursive;
   cursor: pointer;
   display: flex;
-  align-items: center; /* Centra el botón verticalmente */
+  align-items: center;
 }
 
 .home-button:hover {
   background-color: transparent;
   color: #45a049;
+}
+
+.dropdown-menu {
+  background-color: #4caf50;
+  border: none;
+}
+
+.dropdown-item {
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+.dropdown-item:hover {
+  color: white;
+  background-color: #45a049;
 }

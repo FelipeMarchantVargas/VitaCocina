@@ -49,7 +49,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.wait(until.alertIsPresent(), 10000);
     alert = await driver.switchTo().alert();
     console.log(await alert.getText());
-    await driver.sleep(15000); // Esperar un momento para asegurarse de que el token se almacene
+    await driver.sleep(2500); // Esperar un momento para asegurarse de que el token se almacene
     await alert.accept();
   } finally {
     await driver.quit();

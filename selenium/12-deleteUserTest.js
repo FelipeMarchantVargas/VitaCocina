@@ -35,6 +35,8 @@ const chrome = require('selenium-webdriver/chrome');
       throw new Error("Token not found in localStorage");
     }
 
+    await driver.sleep(2000)
+
     // Navegar a la página de perfil de usuario
     await driver.get('http://localhost:3000/user');
 
@@ -42,13 +44,19 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.wait(until.elementLocated(By.css('button.delete-button')), 10000);
 
     // Hacer clic en el botón de eliminar cuenta
-    await driver.findElement(By.css('button.delete-button')).click();
-
+    const deleteUserButton = await driver.findElement(By.css('button.delete-button'))
+    await driver.executeScript("arguments[0].scrollIntoView(true);", deleteUserButton);
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
+    await deleteUserButton.click();
+    await driver.sleep(3000); // Espera 2 segundos (2000 milisegundos).
+    
     // Esperar a que aparezca el mensaje de confirmación
     await driver.wait(until.alertIsPresent(), 10000);
     const alert = await driver.switchTo().alert();
     console.log(await alert.getText());
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
     await alert.accept();
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
   } finally {
     await driver.quit();
   }

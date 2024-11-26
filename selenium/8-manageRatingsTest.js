@@ -53,39 +53,54 @@ const chrome = require('selenium-webdriver/chrome');
     }
 
     // Navegar a la página principal y buscar la receta
-    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys('test recipe');
+    await driver.findElement(By.css('input[placeholder="Buscar por título..."]')).sendKeys(recipe.title);
     await driver.findElement(By.name('buscar')).click();
     await driver.sleep(1000); // Espera para asegurar que la búsqueda se complete
+    console.log("Buscando receta:", recipe.title);
 
     // Seleccionar la receta desde los resultados de búsqueda
     await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000).click();
     await driver.sleep(2000); // Espera para asegurar que la página de la receta se cargue
+    console.log("Seleccionando receta:", recipe.title);
 
     // Esperar a que el campo de valoración esté presente
     await driver.wait(until.elementLocated(By.name('rating')), 10000);
+    console.log("Agregando valoración a la receta:", recipe.title);
 
     // Agregar una valoración
     await driver.findElement(By.name('rating')).sendKeys('5');
-    await driver.findElement(By.name('botonRating')).click();
+    const ratingButton = await driver.findElement(By.name('botonRating'));
+    console.log("Valoración:", '5');
+    await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
+    await driver.executeScript("arguments[0].scrollIntoView(true);", ratingButton);
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
+    await ratingButton.click();
+    console.log("Agregando valoración...");
     await driver.sleep(1000);
 
     // Verificar que la valoración se ha agregado correctamente
     await driver.wait(until.elementLocated(By.id("rating0"), 10000));
 
-    // Eliminar la valoración
-    await driver.findElement(By.name("borrarRating0")).click();
-    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    // Desplazarse hasta el botón de eliminar valoración y hacer clic
+    const deleteRatingButton = await driver.findElement(By.name("borrarRating0"));
+    await driver.executeScript("arguments[0].scrollIntoView(true);", deleteRatingButton);
+    await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
+    await deleteRatingButton.click();
+    console.log("Eliminando valoración...");
+    await driver.sleep(1000); // Espera 2 segundos (2000 milisegundos).
+    
     // Confirmar la eliminación
     await driver.wait(until.alertIsPresent(), 10000);
     alert = await driver.switchTo().alert();
     console.log(await alert.getText());
+    await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
     await alert.accept();
-    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
     await alert.accept();
-    await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
+    await driver.sleep(1500); // Espera 2 segundos (2000 milisegundos).
 
     // Verificar que la valoración se ha eliminado correctamente
-    let isRatingPresent = await driver.findElements(By.name("rating0")).then(elements => elements.length > 0);
+    let isRatingPresent = await driver.findElements(By.id("rating0")).then(elements => elements.length > 0);
     if (isRatingPresent) {
       throw new Error('Rating is still present');
     }

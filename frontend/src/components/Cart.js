@@ -39,8 +39,8 @@ const Cart = () => {
   return (
     <div>
       <NavBar isAuthenticated={isAuthenticated} userName={userName} />
+      <h1>Carrito de Ingredientes</h1>
       <div className="cart">
-        <h2>Carrito de Ingredientes</h2>
         {ingredients.length === 0 ? (
           <p>No tienes recetas favoritas</p>
         ) : (

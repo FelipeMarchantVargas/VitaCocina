@@ -60,6 +60,7 @@ const chrome = require('selenium-webdriver/chrome');
 
     for (let i = 0; i < recipe.ingredients.length; i++) {
       if (i > 0) {
+        await driver.sleep(1000);
         await driver.findElement(By.name("boton1")).click();
       }
       console.log(recipe.ingredients[i]);
@@ -68,6 +69,7 @@ const chrome = require('selenium-webdriver/chrome');
     
     for (let i = 0; i < recipe.instructions.length; i++) {
       if (i > 0) {
+        await driver.sleep(1000);
         await driver.findElement(By.name("boton2")).click();
       }
       await driver.findElement(By.name('instructions'+(i))).sendKeys(recipe.instructions[i]);
@@ -83,6 +85,7 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.findElement(By.name('difficulty')).sendKeys(recipe.difficulty);
     for (let i = 0; i < recipe.tips.length; i++) {
       if (i > 0) {
+        await driver.sleep(1000);
         await driver.findElement(By.name("boton3")).click();
       }
       await driver.findElement(By.name('tips'+i)).sendKeys(recipe.tips[i]);

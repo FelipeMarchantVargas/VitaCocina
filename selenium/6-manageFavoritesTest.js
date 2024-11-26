@@ -2,8 +2,7 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 
 (async function manageFavoritesTest() {
-  let driver = await new
-   Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
+  let driver = await new Builder().forBrowser('chrome').setChromeOptions(new chrome.Options()).build();
   try {
     const recipe = {
       title: "Test Recipe",
@@ -58,13 +57,17 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(500); // Espera para asegurar que la búsqueda se complete
     await driver.findElement(By.name('buscar')).click();
     await driver.sleep(500); // Espera para asegurar que los resultados se carguen
+    console.log("Buscando receta:", recipe.title);
 
     // Seleccionar la receta desde los resultados de búsqueda
     await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000);
-    await driver.sleep(2000); // Espera para asegurar que la página de la receta se cargue
-
-    // Agregar a Favoritos
-    await driver.findElement(By.name('favorite')).click();
+    await driver.sleep(3000); // Espera para asegurar que la página de la receta se cargue
+    
+    // Desplazarse hasta el botón de favoritos y hacer clic
+    const favoriteButton = await driver.findElement(By.name('favorite'));
+    await driver.executeScript("arguments[0].scrollIntoView(true);", favoriteButton);
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
+    await favoriteButton.click();
     await driver.sleep(1000); // Espera para asegurar que la acción se complete
 
     // Navegar a la página del carrito
@@ -96,10 +99,13 @@ const chrome = require('selenium-webdriver/chrome');
 
     // Seleccionar la receta desde los resultados de búsqueda
     await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000);
-    await driver.sleep(2000); // Espera para asegurar que la página de la receta se cargue
+    await driver.sleep(3000); // Espera para asegurar que la página de la receta se cargue
 
-    // Quitar de Favoritos
-    await driver.findElement(By.name('favorite')).click();
+    // Desplazarse hasta el botón de favoritos y hacer clic para quitar de favoritos
+    const unfavoriteButton = await driver.findElement(By.name('favorite'));
+    await driver.executeScript("arguments[0].scrollIntoView(true);", unfavoriteButton);
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
+    await unfavoriteButton.click();
     await driver.sleep(1000); // Espera para asegurar que la acción se complete
 
     // Navegar a la página de favoritos nuevamente

@@ -28,8 +28,7 @@ const chrome = require('selenium-webdriver/chrome');
       password: "S4f3_p@ssw0rd",
     };
 
-
-        // Verificar que el usuario puede iniciar sesión después de registrarse
+    // Verificar que el usuario puede iniciar sesión después de registrarse
     await driver.get('http://localhost:3000/login');
     await driver.findElement(By.name('email')).sendKeys(user.email);
     await driver.findElement(By.name('password')).sendKeys(user.password);
@@ -63,23 +62,31 @@ const chrome = require('selenium-webdriver/chrome');
     await driver.sleep(500); // Espera 2 segundos (2000 milisegundos).
 
     await driver.wait(until.elementLocated(By.css('.recipe-card')), 10000).click();
-    await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
+    await driver.sleep(5000); // Espera 2 segundos (2000 milisegundos).
 
-    
-    await driver.findElement(By.xpath(`//*[contains(text(), 'Editar Receta')]`)).click();
+    const editButton = await driver.findElement(By.xpath(`//*[contains(text(), 'Editar Receta')]`))
+    await driver.executeScript("arguments[0].scrollIntoView(true);", editButton);
+    await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
+    await editButton.click();
     await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
     await driver.findElement(By.name('title')).clear();
     await driver.findElement(By.name('tips')).clear();
-    await driver.sleep(750); // Espera 2 segundos (2000 milisegundos).
+    await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
     await driver.findElement(By.name('title')).sendKeys('Updated Recipe');
     await driver.findElement(By.name('tips')).sendKeys('Updated Tip 1,Updated Tip 2');
-    await driver.findElement(By.css('button[type="submit"]')).click();
+    
+    // Desplazarse hasta el botón de submit y hacer clic
+    const submitButton = await driver.findElement(By.css('button[type="submit"]'));
+    await driver.executeScript("arguments[0].scrollIntoView(true);", submitButton);
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
+    await submitButton.click();
 
     // Esperar a que aparezca el mensaje de éxito
     await driver.wait(until.alertIsPresent(), 10000);
-    alert = await driver.switchTo().alert();
-    alertText = await alert.getText();
+    const alert = await driver.switchTo().alert();
+    const alertText = await alert.getText();
     console.log(alertText);
+    await driver.sleep(2000); // Espera 2 segundos (2000 milisegundos).
     await alert.accept();
 
   } finally {

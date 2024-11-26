@@ -123,44 +123,45 @@ const RecipeList = () => {
       />
 
       <h1>Recetas Saludables</h1>
-
-      <div className="search-bar-container">
-        <input
-          type="text"
-          placeholder="Buscar por título..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-input"
-        />
-        <input
-          type="number"
-          placeholder="Máx Calorías"
-          value={calories}
-          onChange={(e) => setCalories(e.target.value)}
-          className="search-input"
-        />
-        <input
-          type="number"
-          placeholder="Mín Proteínas"
-          value={proteins}
-          onChange={(e) => setProteins(e.target.value)}
-          className="search-input"
-        />
-        <input
-          type="number"
-          placeholder="Máx Grasa"
-          value={fat}
-          onChange={(e) => setFat(e.target.value)}
-          className="search-input"
-        />
-        <input
-          type="number"
-          placeholder="Máx Carbohidratos"
-          value={carbohydrates}
-          onChange={(e) => setCarbohydrates(e.target.value)}
-          className="search-input"
-        />
-        <button onClick={handleSearch} name="buscar" className="search-button">Buscar</button>
+      <div className="container align-items-center">
+        <div className="search-bar-container">
+          <input
+            type="text"
+            placeholder="Buscar por título..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="search-input"
+          />
+          <input
+            type="number"
+            placeholder="Máx Calorías"
+            value={calories}
+            onChange={(e) => setCalories(e.target.value)}
+            className="search-input"
+          />
+          <input
+            type="number"
+            placeholder="Mín Proteínas"
+            value={proteins}
+            onChange={(e) => setProteins(e.target.value)}
+            className="search-input"
+          />
+          <input
+            type="number"
+            placeholder="Máx Grasa"
+            value={fat}
+            onChange={(e) => setFat(e.target.value)}
+            className="search-input"
+          />
+          <input
+            type="number"
+            placeholder="Máx Carbohidratos"
+            value={carbohydrates}
+            onChange={(e) => setCarbohydrates(e.target.value)}
+            className="search-input"
+          />
+          <button onClick={handleSearch} name="buscar" className="search-button">Buscar</button>
+        </div>
       </div>
 
       {isAuthenticated && (

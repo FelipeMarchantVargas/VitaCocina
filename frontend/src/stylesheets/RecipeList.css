@@ -162,30 +162,32 @@ button {
 .search-bar-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  gap: 10px; /* Espaciado entre elementos */
+  flex-direction: row;
 }
 
 .search-input {
-  flex: 1;
+  flex: 1; /* Asegura que todos los inputs tengan el mismo tamaño */
+  margin-right: 10px; /* Espaciado uniforme */
+  min-width: 120px; /* Asegura que no sean demasiado pequeños */
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-right: 10px;
 }
 
 .search-button {
+  flex: 0; /* Mantiene el botón con tamaño automático */
+  padding: 10px;
   background-color: #4CAF50;
   color: white;
-  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  cursor: pointer;
   transition: background-color 0.3s ease;
+  margin: 0;
 }
 
 .search-button:hover {
   background-color: #45a049;
 }
+
 
 /* frontend/src/stylesheets/RecipeList.css */
 .centered-message {

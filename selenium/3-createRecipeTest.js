@@ -61,7 +61,11 @@ const chrome = require('selenium-webdriver/chrome');
     for (let i = 0; i < recipe.ingredients.length; i++) {
       if (i > 0) {
         await driver.sleep(1000);
-        await driver.findElement(By.name("boton1")).click();
+        const boton1 = await driver.findElement(By.name("boton1"));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", boton1);
+        await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
+        await boton1.click();
+        await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
       }
       console.log(recipe.ingredients[i]);
       await driver.findElement(By.name('ingredient'+(i))).sendKeys(recipe.ingredients[i]);
@@ -70,7 +74,11 @@ const chrome = require('selenium-webdriver/chrome');
     for (let i = 0; i < recipe.instructions.length; i++) {
       if (i > 0) {
         await driver.sleep(1000);
-        await driver.findElement(By.name("boton2")).click();
+        const boton2 = await driver.findElement(By.name("boton2"));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", boton2);
+        await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
+        await boton2.click();
+        await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
       }
       await driver.findElement(By.name('instructions'+(i))).sendKeys(recipe.instructions[i]);
     }
@@ -86,18 +94,29 @@ const chrome = require('selenium-webdriver/chrome');
     for (let i = 0; i < recipe.tips.length; i++) {
       if (i > 0) {
         await driver.sleep(1000);
-        await driver.findElement(By.name("boton3")).click();
+        const boton3 = await driver.findElement(By.name("boton3"));
+        await driver.executeScript("arguments[0].scrollIntoView(true);", boton3);
+        await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
+        await boton3.click();
+        await driver.sleep(1000); // Espera para asegurar que el desplazamiento se complete
       }
       await driver.findElement(By.name('tips'+i)).sendKeys(recipe.tips[i]);
     }
-    await driver.findElement(By.name('aceptar')).click();
+    await driver.sleep(1000);
+    const aceptar = await driver.findElement(By.name("aceptar"));
+    await driver.executeScript("arguments[0].scrollIntoView(true);", aceptar);
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
+    await aceptar.click();
+    await driver.sleep(500); // Espera para asegurar que el desplazamiento se complete
 
     // Esperar a que aparezca el mensaje de éxito
     await driver.wait(until.alertIsPresent(), 10000);
     alert = await driver.switchTo().alert();
     alertText = await alert.getText();
     console.log(alertText);
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
     await alert.accept();
+    await driver.sleep(2000); // Espera para asegurar que el desplazamiento se complete
 
   } finally {
     await driver.quit();

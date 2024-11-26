@@ -6,7 +6,7 @@ import "../stylesheets/RecipeList.css";
 import NavBar from "./NavBar";
 
 const Favorites = () => {
-  const [favorites, setFavorites] = useState([]);
+  const [favoriteRecipes, setFavoriteRecipes] = useState([]);
   const [favoriteTips, setFavoriteTips] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
@@ -22,21 +22,33 @@ const Favorites = () => {
       }
     };
 
-    const fetchFavorites = async () => {
+    const fetchFavoriteRecipes = async () => {
       try {
         const token = localStorage.getItem("authToken");
         const res = await axios.get("/api/users/favorites", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setFavorites(res.data.favoriteRecipes);
-        setFavoriteTips(res.data.favoriteTips);
+        setFavoriteRecipes(res.data || []);
       } catch (err) {
-        console.error("Error fetching favorites:", err);
+        console.error("Error fetching favorite recipes:", err);
+      }
+    };
+
+    const fetchFavoriteTips = async () => {
+      try {
+        const token = localStorage.getItem("authToken");
+        const res = await axios.get("/api/users/favorites/tips", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFavoriteTips(res.data || []);
+      } catch (err) {
+        console.error("Error fetching favorite tips:", err);
       }
     };
 
     checkAuth();
-    fetchFavorites();
+    fetchFavoriteRecipes();
+    fetchFavoriteTips();
   }, []);
 
   const handleRecipeClick = (id) => {
@@ -48,10 +60,10 @@ const Favorites = () => {
       <NavBar isAuthenticated={isAuthenticated} userName={userName} />
       <h1>Recetas Favoritas</h1>
       <div className="recipe-list">
-        {favorites.length === 0 ? (
+        {favoriteRecipes.length === 0 ? (
           <p>No tienes recetas favoritas</p>
         ) : (
-          favorites.map((recipe) => (
+          favoriteRecipes.map((recipe) => (
             <div
               key={recipe._id}
               className="recipe-card"

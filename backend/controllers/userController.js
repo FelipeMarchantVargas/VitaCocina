@@ -2,6 +2,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const Recipe = require("../models/recipes");
+const Tip = require('../models/Tip');
 
 exports.getUserByName = async (req, res) => {
     try {
@@ -126,6 +127,24 @@ exports.removeFavoriteTip = async (req, res) => {
     );
     await user.save();
     res.status(200).json(user.favoriteTips);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getFavoriteTips = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate('favoriteTips');
+    res.status(200).json(user.favoriteTips);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getFavoriteRecipes = async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).populate('favoriteRecipes');
+    res.status(200).json(user.favoriteRecipes);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

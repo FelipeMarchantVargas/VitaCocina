@@ -9,10 +9,12 @@ const scripts = [
   "6-manageFavoritesTest.js",
   "7-manageCommentsTest.js",
   "8-manageRatingsTest.js",
-  "9-updateRecipeTest.js",
-  "10-deleteRecipeTest.js",
-  "11-updateUserTest.js",
-  "12-deleteUserTest.js",
+  "9-createTipTest.js",
+  "10-manageFavoriteTipsTest.js",
+  "11-updateRecipeTest.js",
+  "12-deleteRecipeTest.js",
+  "13-updateUserTest.js",
+  "14-deleteUserTest.js",
 ];
 
 (async () => {

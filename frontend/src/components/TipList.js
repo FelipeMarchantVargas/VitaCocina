@@ -9,6 +9,7 @@ const TipList = () => {
   const [tips, setTips] = useState([]);
   const [newTip, setNewTip] = useState({ title: "", content: "" });
   const [isAdmin, setIsAdmin] = useState(false);
+  const [favorites, setFavorites] = useState([]);
   // const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,6 +55,26 @@ const TipList = () => {
     }
   };
 
+  const handleFavorite = async (e, tipId) => {
+    e.stopPropagation();
+    try {
+      const token = localStorage.getItem("authToken");
+      if (favorites.includes(tipId)) {
+        await axios.delete(`/api/users/favorites/tips/${tipId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFavorites(favorites.filter((id) => id !== tipId));
+      } else {
+        await axios.post(`/api/users/favorites/tips/${tipId}`, {}, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setFavorites([...favorites, tipId]);
+      }
+    } catch (err) {
+      console.error("Error updating favorites:", err);
+    }
+  };
+
   return (
     <div>
       <NavBar />
@@ -63,6 +84,9 @@ const TipList = () => {
           <div key={tip._id} className="tip-card">
             <h1>{tip.title}</h1>
             <p>{tip.content}</p>
+            <button onClick={(e) => handleFavorite(e, tip._id)}>
+              {favorites.includes(tip._id) ? "Quitar de favoritos" : "Agregar a favoritos"}
+            </button>
           </div>
         ))}
       </div>

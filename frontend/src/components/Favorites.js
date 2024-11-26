@@ -7,6 +7,7 @@ import NavBar from "./NavBar";
 
 const Favorites = () => {
   const [favorites, setFavorites] = useState([]);
+  const [favoriteTips, setFavoriteTips] = useState([]);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userName, setUserName] = useState("");
   const navigate = useNavigate();
@@ -27,7 +28,8 @@ const Favorites = () => {
         const res = await axios.get("/api/users/favorites", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setFavorites(res.data);
+        setFavorites(res.data.favoriteRecipes);
+        setFavoriteTips(res.data.favoriteTips);
       } catch (err) {
         console.error("Error fetching favorites:", err);
       }
@@ -73,6 +75,19 @@ const Favorites = () => {
                   <li key={index}>{instruction}</li>
                 ))}
               </ol>
+            </div>
+          ))
+        )}
+      </div>
+      <h1>Tips Favoritos</h1>
+      <div className="tip-list">
+        {favoriteTips.length === 0 ? (
+          <p>No tienes tips favoritos</p>
+        ) : (
+          favoriteTips.map((tip) => (
+            <div key={tip._id} className="tip-card">
+              <h1>{tip.title}</h1>
+              <p>{tip.content}</p>
             </div>
           ))
         )}

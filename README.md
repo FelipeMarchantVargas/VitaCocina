@@ -6,6 +6,7 @@ Este documento proporciona instrucciones detalladas para la instalación y ejecu
 
 * [Click aquí para ver el video de la entrega 1.](https://youtu.be/B7Y-aXVVrFA)  
 * [Click aquí para ver el video de la entrega 2.](https://youtu.be/JpEzjdX463Y)
+* [Click aquí para ver el video de la entrega 3.](https://youtu.be/1EBf_79gnr8)
 
 ## Requisitos Previos
 

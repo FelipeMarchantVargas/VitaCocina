@@ -13,7 +13,7 @@ Antes de comenzar, asegúrate de tener instalado el siguiente componente en tu s
 Primero, clona el repositorio del proyecto desde GitHub:
 
 ```bash
-git clone https://github.com/equipo-6-VC/VitaCocina
+git clone https://github.com/FelipeMarchantVargas/VitaCocina
 cd VitaCocina
 ```
 
